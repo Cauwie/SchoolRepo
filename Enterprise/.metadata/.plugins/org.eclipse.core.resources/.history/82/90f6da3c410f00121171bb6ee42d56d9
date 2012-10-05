@@ -52,9 +52,9 @@
 				
 			</p:dataTable>
 			
-			<h:commandButton value="Export results to Excel">
+			<p:button value="Export results to Excel">
 	  			<p:dataExporter type="xls" target="techresults" fileName="tech_results"/>
-			</h:commandButton>
+			</p:button>
 		</h:form>
     </h:body>
 </html>
