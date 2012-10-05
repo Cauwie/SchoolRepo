@@ -47,10 +47,12 @@
 				  <h:outputText value="Make your search criteria more specific if there are too many results.." />
 				</f:facet> 
 				
-				<h:commandLink value="Export results to Excel">
-       				 <p:dataExporter type="xls" target="techresults" fileName="tech_results"/>
-   				</h:commandLink>
+				
 			</h:dataTable>
+			
+			<h:commandLink value="Export results to Excel">
+	  			<p:dataExporter type="xls" target="techresults" fileName="tech_results"/>
+			</h:commandLink>
 		</h:form>
     </h:body>
 </html>
