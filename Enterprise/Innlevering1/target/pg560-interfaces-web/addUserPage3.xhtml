@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Brukerinformasjon</title>
+</h:head>
+<h:body>
+	<h3>Legg inn bruker (Side 3 av 3)</h3>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputLabel for="city" value="By" />
+			<h:inputText id="city" value="${addUserBean.city}" />
+			<h:outputLabel for="country" value="Land" />
+   			<h:selectOneMenu value="#{addUserBean.country}" required="true">
+ 				<h:selectItems value="#{technologySearchBean.technologies}"  var="technology" itemLabel="#{technology.description}" itemValue="#{technology.description}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Forrige" action="#{addUserController.navigateToPage2}" />
+			<h:commandButton value="Bekreft" action="#{addUserController.navigateToConfirmationPage}" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
+
