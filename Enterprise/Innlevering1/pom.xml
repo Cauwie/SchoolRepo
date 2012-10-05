@@ -102,6 +102,12 @@
 			<groupId>org.richfaces.core</groupId>
 			<artifactId>richfaces-core-impl</artifactId>
 		</dependency>
+		<dependency>  
+		    <groupId>org.primefaces</groupId>  
+		    <artifactId>primefaces</artifactId>  
+		    <version>3.4.1</version>  
+		</dependency>  
+				
 	</dependencies>
 
 	<build>
@@ -272,6 +278,12 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<repositories>
+		<repository>  
+		    <id>prime-repo</id>  
+		    <name>PrimeFaces Maven Repository</name>  
+		    <url>http://repository.primefaces.org</url>  
+		    <layout>default</layout>  
+		</repository>  
 		<repository>
 			<id>glassfish</id>
 			<url>http://download.java.net/maven/glassfish</url>
@@ -322,13 +334,14 @@
 					http://eclipse.ialto.org/rt/eclipselink/maven.repo/</name>
 			<url>http://mirror.csclub.uwaterloo.ca/eclipse/rt/eclipselink/maven.repo/</url>
 		</repository>
-
+<!--  
 		<repository>
 			<id>prime-repo</id>
 			<name>Prime Technology Maven Repository</name>
 			<url>http://repository.prime.com.tr/</url>
 			<layout>default</layout>
 		</repository>
+		-->
 	</repositories>
 
 </project>

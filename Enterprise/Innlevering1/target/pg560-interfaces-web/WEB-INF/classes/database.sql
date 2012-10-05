@@ -8,6 +8,7 @@ create table PG560_JEE_TECHNOLOGY(
 	description varchar(300) not null
 );
 
-insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values('test','test','test','test');
-
-insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values('test2','test2','test2','test2');
+	
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'Java EE', '6', '316', 'This JSR is to develop Java EE 6, a release of the Java Platform, Enterprise Edition targeted to ship in 2008.');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAX-RS', '1.1', '311', 'This JSR will develop an API for providing support for RESTful(Representational State Transfer) Web Services in the Java Platform.');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAX-WS', '2.2', '224', 'The JAX-WS 2.0 specification is the next generation web services API replacing JAX-RPC 1.0.');

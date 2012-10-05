@@ -35,4 +35,26 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 		}
 		return technologies;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Technology> searchTechnologies(String acronyms, String version, String jsf, String description) {
+		Query query = getEntityManager().createQuery("SELECT t FROM Technology t " +
+				"WHERE t.acronyms LIKE :acronyms " +
+				"AND t.version LIKE :version " +
+				"AND t.jsr LIKE :jsr " +
+				"AND t.description LIKE :description");
+		
+		query.setParameter("acronyms","%" + acronyms + "%");
+		query.setParameter("version", "%" + version + "%");
+		query.setParameter("jsr","%" + jsf + "%");
+		query.setParameter("description","%" + description + "%");
+		
+		List<Technology> searchResults = null; 
+		try {
+			searchResults = query.getResultList();
+		} catch (NoResultException e) {
+			logger.info("Fikk ingen treff");
+		}
+		return searchResults;
+	}
 }

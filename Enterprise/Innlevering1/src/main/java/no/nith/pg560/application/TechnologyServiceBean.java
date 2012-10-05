@@ -19,13 +19,14 @@ public class TechnologyServiceBean {
 	
 	@PostConstruct
 	public void init(){
-		
 		technologies = repository.getTechnologies();	
-		System.out.println(technologies);
 	}
 	
 	public List<Technology> getTechnologyList(){
 		return technologies;
 	}
-
+	
+	public List<Technology> searchTechnologies(String acronym, String version, String jsf, String description) {
+		return repository.searchTechnologies(acronym, version, jsf, description);
+	}
 }

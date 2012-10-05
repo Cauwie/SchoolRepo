@@ -10,7 +10,8 @@ public class CommonRepository<T> {
     @PersistenceContext(unitName = "pg560")
     private EntityManager entityManager;
 
-    private final Class<T> domainType;
+    
+	private Class<T> domainType;
 
     protected CommonRepository(Class<T> domainType) {
         this.domainType = domainType;

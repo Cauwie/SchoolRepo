@@ -7,7 +7,6 @@ import javax.inject.Named;
 
 import no.nith.pg560.application.TechnologyServiceBean;
 import no.nith.pg560.common.JeeTechnologyPageNavigation;
-import no.nith.pg560.domain.Technology;
 
 
 @Named
@@ -21,11 +20,12 @@ public class TechnologySearchController {
 	private SearchTechnologyBean searchTechnologyBean;
 	
 	@Inject
-	TechnologyServiceBean technologyServiceBean;
+	private TechnologyServiceBean technologyServiceBean;
 	
 	public String searchTechnology(){
 		conversation.begin();
 		searchTechnologyBean.setTechnoligies(technologyServiceBean.getTechnologyList());
+		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getAcronyms(), searchTechnologyBean.getVersion(), searchTechnologyBean.getJsr(), searchTechnologyBean.getDescription()));
 		return JeeTechnologyPageNavigation.SEARCH_PAGE;
 	}
 }
