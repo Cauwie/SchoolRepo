@@ -23,9 +23,8 @@ public class TechnologySearchController {
 	private TechnologyServiceBean technologyServiceBean;
 	
 	public String searchTechnology(){
-		conversation.begin();
 		searchTechnologyBean.setTechnoligies(technologyServiceBean.getTechnologyList());
 		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getAcronyms(), searchTechnologyBean.getVersion(), searchTechnologyBean.getJsr(), searchTechnologyBean.getDescription()));
-		return JeeTechnologyPageNavigation.SEARCH_PAGE;
+		return JeeTechnologyPageNavigation.INDEX_PAGE;
 	}
 }
