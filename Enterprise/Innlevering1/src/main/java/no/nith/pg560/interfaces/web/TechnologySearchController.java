@@ -23,7 +23,6 @@ public class TechnologySearchController {
 	private TechnologyServiceBean technologyServiceBean;
 	
 	public String searchTechnology(){
-		searchTechnologyBean.setTechnoligies(technologyServiceBean.getTechnologyList());
 		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getAcronyms(), searchTechnologyBean.getVersion(), searchTechnologyBean.getJsr(), searchTechnologyBean.getDescription()));
 		return JeeTechnologyPageNavigation.INDEX_PAGE;
 	}
