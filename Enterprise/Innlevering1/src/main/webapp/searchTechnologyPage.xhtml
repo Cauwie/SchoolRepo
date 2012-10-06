@@ -8,10 +8,9 @@
         <title>Jee Technology Search</title>
     </h:head>
     <h:body>
-        <h3>Jee Technology Search Results</h3>
         <h:form>
 			<p:dataTable id="techresults" value="#{searchTechnologyBean.searchResults}" var="technology" bgcolor="#F1F1F1" border="10" cellpadding="5" cellspacing="3" first="0" width="50%" dir="LTR" frame="hsides" rules="all" summary="Random" paginator="true" rows="10"  
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                  rowsPerPageTemplate="5,10,15">
 				<f:facet name="header">
 				  <h:outputText value="Search Results" />
@@ -46,15 +45,15 @@
 				</p:column>
 				
 				<f:facet name="footer">
-				  <h:outputText value="Make your search criteria more specific if there are too many results.." />
+				  	<h:commandButton value="Export results to Excel">
+	  					<p:dataExporter type="xls" target="techresults" fileName="tech_results"/>
+					</h:commandButton>
 				</f:facet> 
 				
 				
 			</p:dataTable>
 			
-			<h:commandButton value="Export results to Excel">
-	  			<p:dataExporter type="xls" target="techresults" fileName="tech_results"/>
-			</h:commandButton>
+			
 		</h:form>
     </h:body>
 </html>
