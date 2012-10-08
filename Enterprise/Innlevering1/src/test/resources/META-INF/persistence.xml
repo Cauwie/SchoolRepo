@@ -5,7 +5,7 @@
              version="2.0">
     <persistence-unit name="pg560-test" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>no.nith.pg560.domain.User</class>
+        <class>no.nith.pg560.domain.Technology</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/APP;create=true"/>
