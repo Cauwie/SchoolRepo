@@ -41,7 +41,9 @@ public class TechnologyServiceBeanTest {
     @Test
     public void searchForTechnologies() throws Exception {
     	when(technologyJpaRepository.searchTechnologies("testAcro", "testVersion", "testJSR", "testDescription")).thenReturn(buildTechnologies());
-        Technology technology = technologyServiceBean.getTechnologyList().get(0);
+        List<Technology> technologies = technologyServiceBean.getTechnologyList();
+        
+        Technology technology = technologies.get(0);
         assertNotNull(technology);
         assertEquals(buildTechnologies(), technologyServiceBean.getTechnologyList());
     }

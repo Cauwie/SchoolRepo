@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 /**
  * Domain object exposing the PG560_JEE_TECHNOLOGY database. 
  */
@@ -65,5 +67,11 @@ public class Technology {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@Override
+	public String toString(){
+		
+		return ReflectionToStringBuilder.reflectionToString(this);
 	}
 }
