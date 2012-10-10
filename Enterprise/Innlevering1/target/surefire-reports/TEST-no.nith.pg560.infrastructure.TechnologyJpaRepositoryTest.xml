@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.237" errors="1" skipped="0" tests="1" name="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest">
+<testsuite failures="0" time="1.314" errors="0" skipped="0" tests="1" name="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="sun.boot.library.path" value="c:\Program Files\Java\jdk1.7.0_07\jre\bin"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_07\jre\bin"/>
     <property name="java.vm.version" value="23.3-b01"/>
+    <property name="user.country.format" value="NO"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
@@ -11,48 +12,49 @@
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="file.encoding.pkg" value="sun.io"/>
     <property name="user.script" value=""/>
-    <property name="user.country" value="NO"/>
+    <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="Service Pack 1"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="c:\SchoolRepo\Enterprise\Innlevering1"/>
-    <property name="java.runtime.version" value="1.7.0_07-b10"/>
+    <property name="user.dir" value="C:\SchoolRepo\Enterprise\Innlevering1"/>
+    <property name="java.runtime.version" value="1.7.0_07-b11"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="java.endorsed.dirs" value="c:\Program Files\Java\jdk1.7.0_07\jre\lib\endorsed"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.7.0_07\jre\lib\endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="java.io.tmpdir" value="C:\Users\ZENZOR~1\AppData\Local\Temp\"/>
+    <property name="java.io.tmpdir" value="C:\Users\PC\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="c:/Program Files/Apache Software Foundation/apache-maven-3.0.4/bin/m2.conf"/>
+    <property name="classworlds.conf" value="C:\Program Files\Maven\apache-maven-3.0.4\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="c:\Program Files\Java\jdk1.7.0_07\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;c:\Users\Zenzor XPS\bin;.;C:\Program Files (x86)\Git\local\bin;C:\Program Files (x86)\Git\mingw\bin;C:\Program Files (x86)\Git\bin;c:\Program Files\Common Files\Microsoft Shared\Windows Live;c:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;c:\Windows\system32;c:\Windows;c:\Windows\System32\Wbem;c:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files\Intel\WiFi\bin\;c:\Program Files\Common Files\Intel\WirelessCommon\;c:\Program Files (x86)\Windows Live\Shared;c:\Program Files (x86)\Common Files\Roxio Shared\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\12.0\DLLShared\;c:\Program Files (x86)\Roxio\OEM\AudioCore\;c:\Program Files (x86)\Common Files\Roxio Shared\10.0\DLLShared\;c:\Program Files\Java\jdk1.7.0_07\bin;c:\Program Files\Apache Software Foundation\apache-maven-3.0.4\bin;c:\glassfish3\glassfish\bin;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.7.0_07\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\PC\AppData\Local\GitHub\PortableGit_8810fd5c2c79c73adcc73fd0825f3b32fdb816e7\cmd;C:\Users\PC\AppData\Local\GitHub\PortableGit_8810fd5c2c79c73adcc73fd0825f3b32fdb816e7\bin;C:\Users\PC\AppData\Local\GitHub\PortableGit_8810fd5c2c79c73adcc73fd0825f3b32fdb816e7\mingw\bin;C:\Users\PC\AppData\Local\Apps\2.0\V1XKDJY0.WOZ\8Z5Q3TGW.4M4\gith..tion_8f45a2159c87c850_0001.0000_28f7e256aa96e800;C:\Windows\Microsoft.NET\Framework\v4.0.30319;C:\Program Files (x86)\JavaFX\javafx-sdk1.2\bin;C:\Program Files (x86)\JavaFX\javafx-sdk1.2\emulator\bin;C:\windows\system32;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Program Files\Java\jdk1.7.0\bin;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\Android\android-sdk\tools;C:\Program Files\Intel\DMIX;C:\Program Files (x86)\Windows Live\Shared; C:\bin; C:\Program Files\Oracle\JavaFX 2.0 SDK;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Maven\apache-maven-3.0.4\bin;C:\Program Files\Java\jdk1.7.0_07\bin;C:\glassfish3\bin;C:\Ruby192\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="6.1"/>
-    <property name="user.home" value="C:\Users\Zenzor XPS"/>
+    <property name="user.home" value="C:\Users\PC"/>
     <property name="user.timezone" value="Europe/Berlin"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.7"/>
     <property name="file.encoding" value="Cp1252"/>
-    <property name="user.name" value="Zenzor XPS"/>
-    <property name="java.class.path" value="c:/Program Files/Apache Software Foundation/apache-maven-3.0.4/boot/plexus-classworlds-2.4.jar"/>
+    <property name="user.name" value="PC"/>
+    <property name="java.class.path" value="C:\Program Files\Maven\apache-maven-3.0.4\boot\plexus-classworlds-2.4.jar"/>
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.home" value="c:\Program Files\Java\jdk1.7.0_07\jre"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_07\jre"/>
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="user.language" value="no"/>
+    <property name="user.language" value="en"/>
+    <property name="user.language.format" value="no"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
     <property name="java.version" value="1.7.0_07"/>
-    <property name="java.ext.dirs" value="c:\Program Files\Java\jdk1.7.0_07\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
-    <property name="sun.boot.class.path" value="c:\Program Files\Java\jdk1.7.0_07\jre\lib\resources.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\rt.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\sunrsasign.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\jsse.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\jce.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\charsets.jar;c:\Program Files\Java\jdk1.7.0_07\jre\lib\jfr.jar;c:\Program Files\Java\jdk1.7.0_07\jre\classes"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.7.0_07\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_07\jre\classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="maven.home" value="c:\Program Files\Apache Software Foundation\apache-maven-3.0.4"/>
+    <property name="maven.home" value="C:\Program Files\Maven\apache-maven-3.0.4"/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -60,63 +62,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="1.232" classname="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest" name="testGetTechnologies">
-    <error message="An exception occurred while creating a query in EntityManager: 
-Exception Description: Problem compiling [select t from Technology t]. 
-[14, 24] The abstract schema type &apos;Technology&apos; is unknown." type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: An exception occurred while creating a query in EntityManager: 
-Exception Description: Problem compiling [select t from Technology t]. 
-[14, 24] The abstract schema type &apos;Technology&apos; is unknown.
-	at org.eclipse.persistence.internal.jpa.EntityManagerImpl.createQuery(EntityManagerImpl.java:1512)
-	at no.nith.pg560.infrastructure.TechnologyJpaRepository.getTechnologies(TechnologyJpaRepository.java:28)
-	at no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest.testGetTechnologies(TechnologyJpaRepositoryTest.java:17)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:601)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
-	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:601)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
-	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
-	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-Caused by: Exception [EclipseLink-0] (Eclipse Persistence Services - 2.4.0.v20120608-r11652): org.eclipse.persistence.exceptions.JPQLException
-Exception Description: Problem compiling [select t from Technology t]. 
-[14, 24] The abstract schema type &apos;Technology&apos; is unknown.
-	at org.eclipse.persistence.internal.jpa.jpql.HermesParser.buildException(HermesParser.java:150)
-	at org.eclipse.persistence.internal.jpa.jpql.HermesParser.validate(HermesParser.java:339)
-	at org.eclipse.persistence.internal.jpa.jpql.HermesParser.populateQueryImp(HermesParser.java:270)
-	at org.eclipse.persistence.internal.jpa.jpql.HermesParser.buildQuery(HermesParser.java:157)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.buildEJBQLDatabaseQuery(EJBQueryImpl.java:138)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.buildEJBQLDatabaseQuery(EJBQueryImpl.java:112)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.&lt;init&gt;(EJBQueryImpl.java:98)
-	at org.eclipse.persistence.internal.jpa.EJBQueryImpl.&lt;init&gt;(EJBQueryImpl.java:82)
-	at org.eclipse.persistence.internal.jpa.EntityManagerImpl.createQuery(EntityManagerImpl.java:1510)
-	... 33 more
-</error>
-    <system-out>[EL Info]: 2012-10-08 13:41:04.363--ServerSession(1151506535)--EclipseLink, version: Eclipse Persistence Services - 2.4.0.v20120608-r11652
-[EL Info]: connection: 2012-10-08 13:41:04.506--ServerSession(1151506535)--file:/c:/SchoolRepo/Enterprise/Innlevering1/target/test-classes/_pg560-test login successful
-[EL Warning]: metamodel: 2012-10-08 13:41:04.517--The collection of metamodel types is empty. Model classes may not have been found during entity search for Java SE and some Java EE container managed persistence units.  Please verify that your entity classes are referenced in persistence.xml using either &lt;class&gt; elements or a global &lt;exclude-unlisted-classes&gt;false&lt;/exclude-unlisted-classes&gt; element
-</system-out>
-  </testcase>
+  <testcase time="1.313" classname="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest" name="testGetTechnologies"/>
 </testsuite>

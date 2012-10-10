@@ -32,19 +32,32 @@ public class TechnologyServiceBeanTest {
     @Test
     public void getAllTechnologies() throws Exception {
     	when(technologyJpaRepository.getTechnologies()).thenReturn(buildTechnologies());
+    	technologyServiceBean.init();
     	List<Technology> technologies = technologyServiceBean.getTechnologyList();
-        Technology technology = technologies.get(0);
-        assertNotNull(technology);
-        assertEquals(buildTechnologies(), technologyServiceBean.getTechnologyList());
+
+    	Technology technology = technologies.get(0);
+    	Technology technology2 = buildTechnologies().get(0);
+        
+    	assertNotNull(technology);
+        assertEquals(technology2.getAcronyms(), technology.getAcronyms());
+        assertEquals(technology2.getDescription(), technology.getDescription());
+        assertEquals(technology2.getJsr(), technology.getJsr());
+        assertEquals(technology2.getVersion(), technology.getVersion());
+        assertEquals(technology2.getId(), technology.getId());
     }
     
     @Test
     public void searchForTechnologies() throws Exception {
-    	when(technologyJpaRepository.searchTechnologies("testAcro", "testVersion", "testJSR", "testDescription")).thenReturn(buildTechnologies());
-        List<Technology> technologies = technologyServiceBean.getTechnologyList();
-        Technology technology = technologies.get(0);
-        assertNotNull(technology);
-        assertEquals(buildTechnologies(), technologyServiceBean.getTechnologyList());
+    	when(technologyJpaRepository.searchTechnologies("testAcro", "", "", "testDescription")).thenReturn(buildTechnologies());
+    	List<Technology> technologies = technologyServiceBean.searchTechnologies("testAcro", "", "", "testDescription");
+        
+    	Technology technology = technologies.get(0);
+    	Technology technology2 = buildTechnologies().get(0);
+        
+    	assertNotNull(technology);
+        assertEquals(technology2.getAcronyms(), technology.getAcronyms());
+        assertEquals(technology2.getDescription(), technology.getDescription());
+        assertEquals(technology2.getId(), technology.getId());
     }
     
     private List<Technology> buildTechnologies() {
@@ -57,10 +70,10 @@ public class TechnologyServiceBeanTest {
     	technology.setDescription("testDescription");
     	
     	Technology technology2 = new Technology();
-    	technology.setAcronyms("testAcro2");
-    	technology.setVersion("testVersion2");
-    	technology.setJsr("testJSR2");
-    	technology.setDescription("testDescription2");
+    	technology2.setAcronyms("testAcro2");
+    	technology2.setVersion("testVersion2");
+    	technology2.setJsr("testJSR2");
+    	technology2.setDescription("testDescription2");
 
     	technologies.add(technology);
     	technologies.add(technology2);

@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
  
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
  
@@ -17,6 +18,7 @@ public class Export implements Serializable {
     private static final long serialVersionUID = 1L;
     private String htmlBuffer;
      
+
      
     public Export() {
          

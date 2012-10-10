@@ -2,8 +2,6 @@ package no.nith.pg560.interfaces.web;
 
 import javax.enterprise.context.Conversation;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,8 +22,17 @@ public class TechnologySearchController {
 	@Inject
 	private TechnologyServiceBean technologyServiceBean;
 	
+	@Inject
+	private Export export;
+	
 	public String searchTechnology(){
+		if (conversation.isTransient()) {
+		    conversation.begin();
+		}
+			
 		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getAcronyms(), searchTechnologyBean.getVersion(), searchTechnologyBean.getJsr(), searchTechnologyBean.getDescription()));
+
+		//conversation.end();
 		return JeeTechnologyPageNavigation.INDEX_PAGE;
 	}
 }
