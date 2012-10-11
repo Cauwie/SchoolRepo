@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Jee Technology Search</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:dataTable id="techresults"
+			value="#{searchTechnologyBean.searchResults}" var="technology"
+			bgcolor="#F1F1F1" border="10" cellpadding="5" cellspacing="3"
+			first="0" width="50%" dir="LTR" frame="hsides" rules="all"
+			summary="Random" paginator="true" rows="10"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+			<f:facet name="header">
+				<h:outputText value="Search Results" />
+			</f:facet>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Acronyms" />
+				</f:facet>
+				<h:outputText value="#{technology.acronyms}"></h:outputText>
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Version" />
+				</f:facet>
+				<h:outputText value="#{technology.version}"></h:outputText>
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="JSR" />
+				</f:facet>
+				<h:outputText value="#{technology.jsr}"></h:outputText>
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Description" />
+				</f:facet>
+				<h:outputText value="#{technology.description}"></h:outputText>
+			</p:column>
+
+			<f:facet name="footer">
+				<h:commandButton id="btnExcelExport" value="Export results to Excel" >
+					<p:dataExporter type="xls" target="techresults"
+						fileName="tech_results" />
+				</h:commandButton>
+			</f:facet>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>
