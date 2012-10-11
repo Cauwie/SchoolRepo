@@ -21,11 +21,11 @@
 				<p:outputLabel for="version" value="Version" />
 				<p:outputLabel for="jsr" value="JSR" />
 				<p:outputLabel for="description" value="Description" />
-				<p:inputText id="acronyms" value="${searchTechnologyBean.acronyms}" />
-				<p:inputText id="version" value="${searchTechnologyBean.version}" />
-				<p:inputText id="jsr" value="${searchTechnologyBean.jsr}" />
+				<p:inputText id="acronyms" value="${searchTechnologyBean.searchAcronyms}" />
+				<p:inputText id="version" value="${searchTechnologyBean.searchVersion}" />
+				<p:inputText id="jsr" value="${searchTechnologyBean.searchJsr}" />
 				<p:inputText id="description"
-					value="${searchTechnologyBean.description}" />
+					value="${searchTechnologyBean.searchDescription}" />
 			</p:panelGrid>
 			
 			<p:commandButton value="Search"
