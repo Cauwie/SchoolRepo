@@ -39,10 +39,10 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 	@SuppressWarnings("unchecked")
 	public List<Technology> searchTechnologies(String acronyms, String version, String jsf, String description) {
 		Query query = getEntityManager().createQuery("SELECT t FROM Technology t " +
-				"WHERE t.acronyms LIKE :acronyms " +
-				"AND t.version LIKE :version " +
-				"AND t.jsr LIKE :jsr " +
-				"AND t.description LIKE :description");
+				"WHERE upper(t.acronyms) LIKE upper(:acronyms) " +
+				"AND upper(t.version) LIKE upper(:version) " +
+				"AND upper(t.jsr) LIKE upper(:jsr) " +
+				"AND upper(t.description) LIKE upper(:description) ");
 		
 		query.setParameter("acronyms","%" + acronyms + "%");
 		query.setParameter("version", "%" + version + "%");
