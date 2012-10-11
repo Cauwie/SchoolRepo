@@ -17,9 +17,7 @@ public class Export implements Serializable {
    
     private static final long serialVersionUID = 1L;
     private String htmlBuffer;
-     
-
-     
+    
     public Export() {
          
     }
