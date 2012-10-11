@@ -48,8 +48,8 @@ public class TechnologyServiceBeanTest {
     
     @Test
     public void searchForTechnologies() throws Exception {
-    	when(technologyJpaRepository.searchTechnologies("testAcro", "", "", "testDescription")).thenReturn(buildTechnologies());
-    	List<Technology> technologies = technologyServiceBean.searchTechnologies("testAcro", "", "", "testDescription");
+    	when(technologyJpaRepository.searchTechnologies("testAcro", "testVersion", "testJSR", "testDescription")).thenReturn(buildTechnologies());
+    	List<Technology> technologies = technologyServiceBean.searchTechnologies("testAcro", "testVersion", "testJSR", "testDescription");
         
     	Technology technology = technologies.get(0);
     	Technology technology2 = buildTechnologies().get(0);
