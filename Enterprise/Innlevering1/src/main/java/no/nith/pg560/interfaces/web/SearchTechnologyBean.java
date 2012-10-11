@@ -15,41 +15,45 @@ public class SearchTechnologyBean implements Serializable {
 	private static final long serialVersionUID = 7919694216675534863L;
 	
 	private List<Technology> searchResults;
-	private String acronyms;
-	private String version;
-	private String jsr;
-	private String description;
+	private String searchAcronyms;
+	private String searchVersion;
+	private String searchJsr;
+	private String searchDescription;
 	
-	public String getAcronyms() {
-		return acronyms;
+	public String getSearchAcronyms() {
+		return searchAcronyms;
 	}
 
-	public void setAcronyms(String acronyms) {
-		this.acronyms = acronyms;
+	public void setSearchAcronyms(String searchAcronyms) {
+		this.searchAcronyms = searchAcronyms;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getSearchVersion() {
+		return searchVersion;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setSearchVersion(String searchVersion) {
+		this.searchVersion = searchVersion;
 	}
 
-	public String getJsr() {
-		return jsr;
+	public String getSearchJsr() {
+		return searchJsr;
 	}
 
-	public void setJsr(String jsr) {
-		this.jsr = jsr;
+	public void setSearchJsr(String searchJsr) {
+		this.searchJsr = searchJsr;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getSearchDescription() {
+		return searchDescription;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSearchDescription(String searchDescription) {
+		this.searchDescription = searchDescription;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override

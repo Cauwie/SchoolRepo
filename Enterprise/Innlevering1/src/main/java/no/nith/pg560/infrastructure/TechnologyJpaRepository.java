@@ -39,25 +39,6 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 	@SuppressWarnings("unchecked")
 	public List<Technology> searchTechnologies(String acronyms, String version, String jsf, String description) {
 		
-//		StringBuilder sbQuery = new StringBuilder();
-//		
-//		sbQuery.append("SELECT t FROM Technology t ");
-//		
-//		if (!acronyms.isEmpty()) {
-//			sbQuery.append("AND t.acronyms LIKE :acronyms ");
-//		}
-//		else if (!version.isEmpty()) {
-//			sbQuery.append("AND t.version LIKE :version ");
-//		} 
-//		else if (!jsf.isEmpty()) {
-//			sbQuery.append("AND t.jsr LIKE :jsr ");
-//		}
-//		else if (!description.isEmpty()) {
-//			sbQuery.append("AND t.description LIKE :description ");
-//		}
-//		
-//		sbQuery.append(";");
-		
 		Query query = getEntityManager().createQuery("SELECT t FROM Technology t " +
 				"WHERE t.acronyms LIKE :acronyms " +
 				"AND t.version LIKE :version " +
