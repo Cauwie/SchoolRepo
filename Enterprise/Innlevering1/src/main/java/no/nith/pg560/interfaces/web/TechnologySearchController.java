@@ -30,7 +30,7 @@ public class TechnologySearchController {
 		    conversation.begin();
 		}
 			
-		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getAcronyms(), searchTechnologyBean.getVersion(), searchTechnologyBean.getJsr(), searchTechnologyBean.getDescription()));
+		searchTechnologyBean.setSearchResults(technologyServiceBean.searchTechnologies(searchTechnologyBean.getSearchAcronyms(), searchTechnologyBean.getSearchVersion(), searchTechnologyBean.getSearchJsr(), searchTechnologyBean.getSearchDescription()));
 
 		//conversation.end();
 		return JeeTechnologyPageNavigation.INDEX_PAGE;
