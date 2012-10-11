@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.464" errors="0" skipped="0" tests="1" name="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest">
+<testsuite failures="0" time="1.434" errors="0" skipped="0" tests="1" name="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest">
   <properties>
-    <property name="http.agent" value="Sonar"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="c:\Program Files\Java\jdk1.7.0_07\jre\bin"/>
     <property name="java.vm.version" value="23.3-b01"/>
@@ -27,7 +26,6 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="net.sourceforge.cobertura.datafile" value="c:\SchoolRepo\Enterprise\Innlevering1\target\cobertura\cobertura.ser"/>
     <property name="classworlds.conf" value="c:/Program Files/Apache Software Foundation/apache-maven-3.0.4/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.library.path" value="c:\Program Files\Java\jdk1.7.0_07\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;c:\Users\Zenzor XPS\bin;.;C:\Program Files (x86)\Git\local\bin;C:\Program Files (x86)\Git\mingw\bin;C:\Program Files (x86)\Git\bin;c:\Program Files\Common Files\Microsoft Shared\Windows Live;c:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;c:\Windows\system32;c:\Windows;c:\Windows\System32\Wbem;c:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files\Intel\WiFi\bin\;c:\Program Files\Common Files\Intel\WirelessCommon\;c:\Program Files (x86)\Windows Live\Shared;c:\Program Files (x86)\Common Files\Roxio Shared\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\DLLShared\;c:\Program Files (x86)\Common Files\Roxio Shared\OEM\12.0\DLLShared\;c:\Program Files (x86)\Roxio\OEM\AudioCore\;c:\Program Files (x86)\Common Files\Roxio Shared\10.0\DLLShared\;c:\Program Files\Java\jdk1.7.0_07\bin;c:\Program Files\Apache Software Foundation\apache-maven-3.0.4\bin;c:\glassfish3\glassfish\bin;."/>
@@ -45,7 +43,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="c:\Program Files\Java\jdk1.7.0_07\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher sonar:sonar"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="no"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -59,9 +57,8 @@
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="project.build.outputDirectory" value="c:\SchoolRepo\Enterprise\Innlevering1\target\generated-classes\cobertura"/>
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="1.463" classname="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest" name="testGetTechnologies"/>
+  <testcase time="1.432" classname="no.nith.pg560.infrastructure.TechnologyJpaRepositoryTest" name="testGetTechnologies"/>
 </testsuite>
