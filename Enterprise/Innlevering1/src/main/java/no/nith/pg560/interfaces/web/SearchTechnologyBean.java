@@ -7,8 +7,6 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import no.nith.pg560.domain.Technology;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 @Named
 @ConversationScoped
 public class SearchTechnologyBean implements Serializable {
@@ -65,7 +63,9 @@ public class SearchTechnologyBean implements Serializable {
 	}
 
 	@Override
-	public String toString(){
-		return ReflectionToStringBuilder.reflectionToString(this);
+	public String toString() {
+		return "SearchTechnologyBean [searchAcronyms=" + searchAcronyms + ", searchVersion="
+				+ searchVersion + ", searchJsr=" + searchJsr
+				+ ", searchDescription=" + searchDescription + "]";
 	}
 }

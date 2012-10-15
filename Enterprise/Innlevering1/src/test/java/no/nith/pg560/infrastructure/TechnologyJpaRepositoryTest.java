@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 
 public class TechnologyJpaRepositoryTest extends CommonInfrastructureIT {
 	
-	private List<Technology> technologyList;
 	private TechnologyJpaRepository technologyRepo;
 	
 	@Before
@@ -21,7 +20,6 @@ public class TechnologyJpaRepositoryTest extends CommonInfrastructureIT {
 		technologyRepo = new TechnologyJpaRepository(getEntityManager());
 		buildTechnologyList();
 	}
-	
 
 	@Test
 	public void testGetTechnologies() {

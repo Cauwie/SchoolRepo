@@ -52,15 +52,6 @@ public class CommonInfrastructureIT {
 
     	technologies.add(technology);
     	technologies.add(technology2);
-    	
-//    	getEntityManager().createQuery("insert into PG560_JEE_TECHNOLOGY" 
-//    								+ "(acronyms, version, jsr, description) "
-//    								+ "values(" 
-//    								+ " '" + technology.getAcronyms() + "', '" 
-//    								+ technology.getVersion() + "', '" 
-//    								+ technology.getJsr() + "', '" 
-//    								+ technology.getDescription() + "');").executeUpdate();
-//        tr.commit();
         
         return technologies;
     }

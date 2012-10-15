@@ -43,4 +43,16 @@ public class TechnologyTest {
 		technology.setDescription("desc");
 		assertEquals("desc", technology.getDescription());
 	}
+	
+	@Test
+	public void testToString() {
+		technology.setId(1);
+		technology.setAcronyms("a");
+		technology.setVersion("0.0");
+		technology.setJsr("000");
+		technology.setDescription("desc");
+		String toString = "Technology [id=1, acronyms=a, version=0.0, jsr=000, description=desc]";
+		
+		assertEquals(toString, technology.toString());
+	}
 }
