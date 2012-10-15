@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>PG560</groupId>
-	<artifactId>pg560-interfaces-web</artifactId>
+	<artifactId>pg560-technology-searchpage</artifactId>
 	<packaging>war</packaging>
-	<name>pg560-interfaces-web</name>
+	<name>pg560-technology-searchpage</name>
 	<version>1.0.0-SNAPSHOT</version>
-	<description>pg560-interfaces-web</description>
+	<description>pg560-technology-searchpage</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -145,7 +145,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>pg560-interfaces-web</finalName>
+		<finalName>pg560-technology-searchpage</finalName>
 		<plugins>
 			<plugin>
 				<inherited>true</inherited>

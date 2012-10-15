@@ -11,3 +11,8 @@ create table PG560_JEE_TECHNOLOGY(
 insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'Java EE', '6', '316', 'This JSR is to develop Java EE 6, a release of the Java Platform, Enterprise Edition targeted to ship in 2008.');
 insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAX-RS', '1.1', '311', 'This JSR will develop an API for providing support for RESTful(Representational State Transfer) Web Services in the Java Platform.');
 insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAX-WS', '2.2', '224', 'The JAX-WS 2.0 specification is the next generation web services API replacing JAX-RPC 1.0.');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JPA', '2.0', '317', 'The Java Persistence API is the Java API for the management of persistence and object/relational mapping for Java EE and Java SE environments');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'EJB', '3.0', '318', 'Enterprise JavaBeans (EJB) technology is the server-side component architecture for Java Platform, Enterprise Edition (Java EE).');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAXB', '2.2', '222', 'JAXB is an XML to Java Binding standard.  Implementations of JAXB enable binding of XML to and from Java.');
+insert into PG560_JEE_TECHNOLOGY(acronyms, version, jsr, description) values( 'JAX-RPC', '1.1', '101', 'Java API for XML-Based RPC.');
+
