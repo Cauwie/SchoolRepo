@@ -55,11 +55,6 @@ public class SearchTechnologyBean implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	@Override
-	public String toString(){
-		return ReflectionToStringBuilder.reflectionToString(this);
-	}
 	
 	public void setSearchResults(List<Technology> searchResults) {
 		this.searchResults = searchResults;
@@ -67,5 +62,10 @@ public class SearchTechnologyBean implements Serializable {
 
 	public List<Technology> getSearchResults() {
 		return searchResults;
+	}
+
+	@Override
+	public String toString(){
+		return ReflectionToStringBuilder.reflectionToString(this);
 	}
 }
