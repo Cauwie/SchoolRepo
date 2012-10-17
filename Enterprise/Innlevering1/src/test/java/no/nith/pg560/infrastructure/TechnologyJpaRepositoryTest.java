@@ -3,11 +3,9 @@ package no.nith.pg560.infrastructure;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import no.nith.pg560.common.CommonRepository;
 import no.nith.pg560.domain.Technology;
 
 import org.junit.Before;
