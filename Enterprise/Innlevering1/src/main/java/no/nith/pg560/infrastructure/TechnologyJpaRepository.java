@@ -31,7 +31,7 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 		try {
 			technologies = query.getResultList();
 		} catch (NoResultException e) {
-			logger.info("Fikk ingen treff");
+			logger.info("Søk etter alt i databasen gav ingen treff");
 		}
 		return technologies;
 	}
@@ -54,7 +54,11 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 		try {
 			searchResults = query.getResultList();
 		} catch (NoResultException e) {
-			logger.info("Fikk ingen treff");
+			logger.info("Søk etter acronyms: \"" + acronyms 
+					+ "\", version: \"" + version 
+					+ "\", jsf: \"" + jsf
+					+ "\", description: \"" + description
+					+ "\", i databasen gav ingen treff");
 		}
 		return searchResults;
 	}

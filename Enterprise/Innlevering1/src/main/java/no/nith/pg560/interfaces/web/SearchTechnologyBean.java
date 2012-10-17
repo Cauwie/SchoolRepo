@@ -58,6 +58,10 @@ public class SearchTechnologyBean implements Serializable {
 		return searchResults;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchTechnologyBean [searchAcronyms=" + searchAcronyms + ", searchVersion="

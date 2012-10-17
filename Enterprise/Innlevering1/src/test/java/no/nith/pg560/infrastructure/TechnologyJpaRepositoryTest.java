@@ -20,7 +20,8 @@ import static org.mockito.Mockito.when;
 
 public class TechnologyJpaRepositoryTest {
 
-	private TechnologyJpaRepository techRepo;
+	@Mock
+	private TechnologyJpaRepository technologyJpaRepository;
 	
 	@Mock
 	private EntityManager em;
@@ -32,14 +33,14 @@ public class TechnologyJpaRepositoryTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		techRepo = new TechnologyJpaRepository(em);
+		technologyJpaRepository = new TechnologyJpaRepository(em);
 		when(em.createQuery(Mockito.anyString())).thenReturn(query);
 		when(query.getResultList()).thenReturn(buildTechnologyList());
 	}
 	
 	@Test
 	public void testSearchTechnologies() {
-		Technology technology = techRepo.searchTechnologies("Java", "6", "316", "This JSR").get(0);
+		Technology technology = technologyJpaRepository.searchTechnologies("Java", "6", "316", "This JSR").get(0);
 		Technology technology2 = buildTechnologyList().get(0);
 		
 		assertEquals(technology.getAcronyms(), technology2.getAcronyms());
@@ -50,7 +51,7 @@ public class TechnologyJpaRepositoryTest {
 	
 	@Test
 	public void testGetTechnologies() {
-		Technology technology = techRepo.getTechnologies().get(0);
+		Technology technology = technologyJpaRepository.getTechnologies().get(0);
 		Technology technology2 = buildTechnologyList().get(0);
 		
 		assertEquals(technology.getAcronyms(), technology2.getAcronyms());
