@@ -3,32 +3,55 @@ package no.nith.pg560.infrastructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import no.nith.pg560.common.CommonRepository;
 import no.nith.pg560.domain.Technology;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 public class TechnologyJpaRepositoryTest {
+
+	private TechnologyJpaRepository techRepo;
 	
 	@Mock
-	private TechnologyJpaRepository technologyJpaRepository;
+	private EntityManager em;
+	
+	@Mock
+	private Query query;
 	
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		techRepo = new TechnologyJpaRepository(em);
+		when(em.createQuery(Mockito.anyString())).thenReturn(query);
+		when(query.getResultList()).thenReturn(buildTechnologyList());
+	}
+	
+	@Test
+	public void testGetTechnologies() {
+		Technology technology = techRepo.getTechnologies().get(0);
+		Technology technology2 = buildTechnologyList().get(0);
+		
+		assertEquals(technology.getAcronyms(), technology2.getAcronyms());
+		assertEquals(technology.getVersion(), technology2.getVersion());
+		assertEquals(technology.getJsr(), technology2.getJsr());
+		assertEquals(technology.getDescription(), technology2.getDescription());
 	}
 	
 	@Test
 	public void testSearchTechnologies() {
-		when(technologyJpaRepository.searchTechnologies("Java", "6", "316", "This JSR")).thenReturn(buildTechnologyList());
-		
-		Technology technology = technologyJpaRepository.searchTechnologies("Java", "6", "316", "This JSR").get(0);
+		Technology technology = techRepo.searchTechnologies("Java", "6", "316", "This JSR").get(0);
 		Technology technology2 = buildTechnologyList().get(0);
 		
 		assertEquals(technology.getAcronyms(), technology2.getAcronyms());
