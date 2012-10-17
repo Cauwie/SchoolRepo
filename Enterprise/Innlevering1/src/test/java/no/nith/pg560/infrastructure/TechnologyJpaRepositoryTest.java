@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+<<<<<<< HEAD
+=======
+import javax.persistence.Persistence;
+>>>>>>> c8fac6d0af89ad7dea7db98b141768756ef39cb2
 import javax.persistence.Query;
 
 import no.nith.pg560.domain.Technology;
@@ -27,9 +31,20 @@ public class TechnologyJpaRepositoryTest {
 	
 	@Mock
 	private Query query;
+<<<<<<< HEAD
+=======
+	
+	@Mock
+	private EntityManager em;
+	
+	@Mock
+	private TechnologyJpaRepository technologyJpaRepository;
+>>>>>>> c8fac6d0af89ad7dea7db98b141768756ef39cb2
 	
 	@Before
 	public void setup() {
+		em = Persistence.createEntityManagerFactory("pg560-test", System.getProperties()).createEntityManager();
+		query = em.createQuery("SELECT t from Technology t");
 		MockitoAnnotations.initMocks(this);
 		techRepo = new TechnologyJpaRepository(em);
 		when(em.createQuery(Mockito.anyString())).thenReturn(query);
@@ -37,9 +52,18 @@ public class TechnologyJpaRepositoryTest {
 	}
 	
 	@Test
+<<<<<<< HEAD
 	public void testGetTechnologies() {
 		Technology technology = techRepo.getTechnologies().get(0);
 		Technology technology2 = buildTechnologyList().get(0);
+=======
+	public void testSearchTechnologies() {
+		
+		technologyJpaRepository = new TechnologyJpaRepository(em);
+		when(technologyJpaRepository.getEntityManager()).thenReturn(em);
+		when(em.createQuery(null)).thenReturn(query);
+		when(query.getResultList()).thenReturn(buildTechnologyList());
+>>>>>>> c8fac6d0af89ad7dea7db98b141768756ef39cb2
 		
 		assertEquals(technology.getAcronyms(), technology2.getAcronyms());
 		assertEquals(technology.getVersion(), technology2.getVersion());
