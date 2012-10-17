@@ -22,9 +22,6 @@ public class TechnologySearchController {
 	@Inject
 	private TechnologyServiceBean technologyServiceBean;
 	
-	@Inject
-	private Export export;
-	
 	public String searchTechnology(){
 		if (conversation.isTransient()) {
 		    conversation.begin();
