@@ -19,7 +19,7 @@ public class CommonRepository<T> {
 
     protected CommonRepository(Class<T> domainType, EntityManager em) {
         this(domainType);
-        entityManager = em;
+        setEntityManager(em);
     }
 
     protected void setEntityManager(EntityManager entityManager) {

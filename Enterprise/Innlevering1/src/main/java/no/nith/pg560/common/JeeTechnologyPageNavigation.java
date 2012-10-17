@@ -6,8 +6,4 @@ package no.nith.pg560.common;
 public final class JeeTechnologyPageNavigation {
     public static final String INDEX_PAGE = "index";
     public static final String SEARCH_PAGE = "searchTechnologyPage";
-
-    private JeeTechnologyPageNavigation() {
-
-    }
 }

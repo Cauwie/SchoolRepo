@@ -49,10 +49,6 @@ public class SearchTechnologyBean implements Serializable {
 	public void setSearchDescription(String searchDescription) {
 		this.searchDescription = searchDescription;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 	public void setSearchResults(List<Technology> searchResults) {
 		this.searchResults = searchResults;
