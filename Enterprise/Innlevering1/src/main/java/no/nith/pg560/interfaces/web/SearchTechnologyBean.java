@@ -3,12 +3,12 @@ package no.nith.pg560.interfaces.web;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import no.nith.pg560.domain.Technology;
 
 @Named
-@ConversationScoped
+@SessionScoped
 public class SearchTechnologyBean implements Serializable {
 	private static final long serialVersionUID = 7919694216675534863L;
 	
