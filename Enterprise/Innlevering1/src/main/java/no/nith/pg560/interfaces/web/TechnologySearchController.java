@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import no.nith.pg560.application.TechnologyServiceBean;
-import no.nith.pg560.common.JeeTechnologyPageNavigation;
 
 
 @Named
@@ -22,7 +21,7 @@ public class TechnologySearchController {
 	@Inject
 	private TechnologyServiceBean technologyServiceBean;
 	
-	public String searchTechnology(){
+	public void searchTechnology(){
 		if (conversation.isTransient()) {
 		    conversation.begin();
 		}
@@ -33,8 +32,5 @@ public class TechnologySearchController {
 						searchTechnologyBean.getSearchVersion(),
 						searchTechnologyBean.getSearchJsr(),
 						searchTechnologyBean.getSearchDescription()));
-
-		//conversation.end();
-		return JeeTechnologyPageNavigation.INDEX_PAGE;
 	}
 }

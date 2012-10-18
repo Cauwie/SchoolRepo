@@ -4,23 +4,24 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import no.nith.pg560.common.CommonRepository;
 import no.nith.pg560.domain.Technology;
 
 import org.apache.log4j.Logger;
 
-public class TechnologyJpaRepository  extends CommonRepository<Technology> {
+public class TechnologyJpaRepository {
+	@PersistenceContext(unitName = "pg560")
+	private EntityManager entityManager;
+	
 	private Logger logger = Logger.getLogger(TechnologyJpaRepository.class);
 	
-	
 	public TechnologyJpaRepository() {
-		super(Technology.class);
+		
 	}
 
 	public TechnologyJpaRepository(EntityManager em) {
-		super(Technology.class, em);
+		setEntityManager(em);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,4 +63,14 @@ public class TechnologyJpaRepository  extends CommonRepository<Technology> {
 		}
 		return searchResults;
 	}
+	
+
+
+    protected void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

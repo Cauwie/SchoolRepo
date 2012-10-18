@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class TechnologyJpaRepositoryTest {
 
-	@Mock
+
 	private TechnologyJpaRepository technologyJpaRepository;
 	
 	@Mock
