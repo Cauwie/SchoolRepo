@@ -1,13 +1,11 @@
 package no.nith.pg560.infrastructure;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import no.nith.pg560.domain.Technology;
-
 import org.apache.log4j.Logger;
 
 public class TechnologyJpaRepository {
@@ -15,28 +13,7 @@ public class TechnologyJpaRepository {
 	private EntityManager entityManager;
 	
 	private Logger logger = Logger.getLogger(TechnologyJpaRepository.class);
-	
-	public TechnologyJpaRepository() {
-		
-	}
 
-	public TechnologyJpaRepository(EntityManager em) {
-		setEntityManager(em);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Technology> getTechnologies() {
-		Query query = getEntityManager().createQuery("select t from Technology t");
-		
-		List<Technology> technologies = null; 
-		try {
-			technologies = query.getResultList();
-		} catch (NoResultException e) {
-			logger.info("Søk etter alt i databasen gav ingen treff");
-		}
-		return technologies;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public List<Technology> searchTechnologies(String acronyms, String version, String jsf, String description) {
 		
@@ -64,9 +41,7 @@ public class TechnologyJpaRepository {
 		return searchResults;
 	}
 	
-
-
-    protected void setEntityManager(EntityManager entityManager) {
+    public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

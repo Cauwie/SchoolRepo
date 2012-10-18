@@ -2,7 +2,6 @@ package no.nith.pg560.interfaces.web;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import no.nith.pg560.domain.Technology;

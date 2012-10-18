@@ -28,23 +28,6 @@ public class TechnologyServiceBeanTest {
     	technologyServiceBean = new TechnologyServiceBean();
         MockitoAnnotations.initMocks(this);
     }
-
-    @Test
-    public void getAllTechnologies() throws Exception {
-    	when(technologyJpaRepository.getTechnologies()).thenReturn(buildTechnologies());
-    	technologyServiceBean.init();
-    	List<Technology> technologies = technologyServiceBean.getTechnologyList();
-
-    	Technology technology = technologies.get(0);
-    	Technology technology2 = buildTechnologies().get(0);
-        
-    	assertNotNull(technology);
-        assertEquals(technology2.getAcronyms(), technology.getAcronyms());
-        assertEquals(technology2.getDescription(), technology.getDescription());
-        assertEquals(technology2.getJsr(), technology.getJsr());
-        assertEquals(technology2.getVersion(), technology.getVersion());
-        assertEquals(technology2.getId(), technology.getId());
-    }
     
     @Test
     public void searchForTechnologies() throws Exception {
