@@ -15,7 +15,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/pg560-interfaces-web/*</url-pattern>
+        <url-pattern>/pg560-technology-searchpage/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
