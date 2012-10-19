@@ -6,6 +6,12 @@ import javax.inject.Inject;
 import no.nith.pg560.domain.Technology;
 import no.nith.pg560.infrastructure.TechnologyJpaRepository;
 
+/**
+ * 
+ * @author David Emanuelsen and Alexander Hill
+ *
+ */
+
 @Singleton
 public class TechnologyServiceBean {
 	

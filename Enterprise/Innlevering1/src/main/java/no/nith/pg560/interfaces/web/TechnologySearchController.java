@@ -11,6 +11,7 @@ import no.nith.pg560.common.PageNavigation;
  * @author David Emanuelsen and Alexander Hill
  *
  */
+
 @Named
 @RequestScoped
 public class TechnologySearchController {
