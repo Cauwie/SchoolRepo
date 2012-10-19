@@ -8,6 +8,11 @@ import javax.persistence.Query;
 import no.nith.pg560.domain.Technology;
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author David Emanuelsen and Alexander Hill
+ *
+ */
 public class TechnologyJpaRepository {
 	@PersistenceContext(unitName = "pg560")
 	private EntityManager entityManager;

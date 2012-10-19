@@ -6,6 +6,12 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import no.nith.pg560.domain.Technology;
 
+/**
+ * 
+ * @author David Emanuelsen and Alexander Hill
+ *
+ */
+
 @Named
 @SessionScoped
 public class SearchTechnologyBean implements Serializable {
