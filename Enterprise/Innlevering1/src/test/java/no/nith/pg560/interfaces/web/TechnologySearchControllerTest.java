@@ -30,7 +30,8 @@ public class TechnologySearchControllerTest extends CommonInfrastructureIT {
 		searchTechnologyBean = new SearchTechnologyBean();
 		technologySearchController.setSearchTechnologyBean(searchTechnologyBean);
 		technologySearchController.setTechnologyServiceBean(technologyServiceBean);
-		when(technologyServiceBean.searchTechnologies(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(buildTechnologies());
+		when(technologyServiceBean.searchTechnologies(Mockito.anyString(), Mockito.anyString(), 
+					Mockito.anyString(), Mockito.anyString())).thenReturn(buildTechnologies());
 	}
 	
 	@Test
