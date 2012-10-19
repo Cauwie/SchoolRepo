@@ -8,8 +8,13 @@ import no.nith.pg560.application.TechnologyServiceBean;
 /**
  * 
  * @author David Emanuelsen and Alexander Hill
+<<<<<<< HEAD
  * Class to function as a back-end connection with html.
  * 
+=======
+ *	
+ *	Class to function as a back-end connection with html.
+>>>>>>> c0ee6c621698b76721aa02f2acbadfb4d09cee47
  */
 
 @Named
