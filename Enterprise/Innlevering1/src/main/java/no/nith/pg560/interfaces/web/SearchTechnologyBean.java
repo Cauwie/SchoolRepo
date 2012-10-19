@@ -10,6 +10,9 @@ import no.nith.pg560.domain.Technology;
  * 
  * @author David Emanuelsen and Alexander Hill
  *
+ * Session scoped bean which keeps track of input in form of search criteria, 
+ * and the results these give.
+ * 
  */
 
 @Named

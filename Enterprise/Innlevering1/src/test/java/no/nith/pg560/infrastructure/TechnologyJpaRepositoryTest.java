@@ -1,6 +1,9 @@
 package no.nith.pg560.infrastructure;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import no.nith.pg560.common.CommonInfrastructureIT;
@@ -46,5 +49,12 @@ public class TechnologyJpaRepositoryTest extends CommonInfrastructureIT {
 		assertEquals(technology.getVersion(), technology2.getVersion());
 		assertEquals(technology.getJsr(), technology2.getJsr());
 		assertEquals(technology.getDescription(), technology2.getDescription());
+	}
+	
+	@Test
+	public void testNoResultWhenSearching() {
+		when(query.getResultList()).thenThrow(new NoResultException());
+		List<Technology> results = technologyJpaRepository.searchTechnologies(" ", " ", " ", " ");
+		assertNull(results);
 	}
 }
