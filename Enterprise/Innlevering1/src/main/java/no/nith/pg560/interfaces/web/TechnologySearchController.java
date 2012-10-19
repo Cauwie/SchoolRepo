@@ -9,7 +9,8 @@ import no.nith.pg560.common.PageNavigation;
 /**
  * 
  * @author David Emanuelsen and Alexander Hill
- *
+ *	
+ *	Class to function as a back-end connection with html.
  */
 
 @Named
