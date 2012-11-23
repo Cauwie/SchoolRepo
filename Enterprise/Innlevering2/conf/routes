@@ -1,0 +1,19 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                                   controllers.Application.index()
+
+# User
+GET     /users                              controllers.Users.retrieveAll()
+GET     /user/:email                        controllers.Users.retrieve(email:String)
+POST    /user                               controllers.Users.persist()
+DELETE  /user/:email                        controllers.Users.delete(email:String)
+PUT     /user                               controllers.Users.update()
+
+# Category
+GET     /categories                         controllers.Categories.retrieveAll()
+POST    /category                           controllers.Categories.persist()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                       controllers.Assets.at(path="/public", file)
