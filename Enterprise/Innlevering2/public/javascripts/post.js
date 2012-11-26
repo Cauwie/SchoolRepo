@@ -9,25 +9,6 @@
 $(function() {
 
     //The Category model
-    var Category = Backbone.Model.extend({
-        url: '/category',
-
-        //Empty Constructor
-        initialize: function() { }
-
-    });
-
-    //The Category collection
-    var CategoryList = Backbone.Collection.extend({
-        model: Category,
-        url: '/categories',
-
-        parse: function (obj) {
-            return obj;
-        }
-    });
-
-    //The Post model
     var Post = Backbone.Model.extend({
         url: '/post',
 
@@ -36,9 +17,9 @@ $(function() {
 
     });
 
-    //The Post collection
+    //The Category collection
     var PostList = Backbone.Collection.extend({
-        model: Post,
+        model: Category,
         url: '/posts',
 
         parse: function (obj) {
@@ -47,39 +28,13 @@ $(function() {
     });
 
     //Create global category list
-    var Categories = new CategoryList();
+    var Posts = new CategoryList();
 
     //The Category view element
     var CategoryView = Backbone.View.extend({
         //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
         tagName: 'div',
         className: 'well sidebar-nav',
-
-        //Cache the template defined in the main html, using Underscore.JS
-        template: _.template($('#sidebar-template').html()),
-
-        initialize: function () {
-            this.collection.bind('reset', this.render, this);
-            this.collection.bind('add', this.render, this);
-        },
-
-        //Our render-function bootstraps the model JSON data into the template
-        render: function() {
-            this.$el.html(this.template({
-                categories: this.collection.toJSON()
-            }));
-
-            return this; //To allow for daisy-chaining calls
-        }
-    });
-
-    //Create global posts list
-    var Posts = new PostList();
-
-    var PostsView = Backbone.View.extend({
-        //The DOM element is a div with class="well posts-view" (because of Twitter Bootstrap)
-        tagName: 'div',
-        className: 'well posts-view',
 
         //Cache the template defined in the main html, using Underscore.JS
         template: _.template($('#posts-template').html()),
@@ -99,8 +54,6 @@ $(function() {
         }
     });
 
-
-
     //This view resembles the the main area of our app
     var YabeApp = Backbone.View.extend({
 
@@ -109,44 +62,41 @@ $(function() {
 
         //Declare UI events
         events: {
-            'keydown input#categoryName'    : 'onCategoryNameChange',
-            'click button#addCategory'      : 'onCategoryAdd'
+            'keydown input#postName'    : 'onPostNameChange',
+            'click button#addCategory'      : 'onPostAdd'
         },
 
         //Fetch the categories and show the CategoryView
         initialize: function() {
             //Store a reference to "this" as this view-object in the specified methods
             //This is really just because javascript gives us a rather useless "this" in for example event-handlers
-            _.bindAll(this, 'onCategoryNameChange', 'onCategoryAdd');
+            _.bindAll(this, 'onPostNameChange', 'onPostAdd');
 
             //Load the categories from the server
             Categories.fetch();
 
             //Instantiate the category view with the Categories as the "collection" property
-            var catView = new CategoryView({collection: Categories}).render();
+            var catView = new CategoryView({collection: Posts}).render();
             //And add it to the DOM
             this.$('#sidebar').append(catView.render().el);
 
-            var postsView = new PostsView({collection: Posts}).render();
-            this.$('#posts').append(postsView.render().el);
-
             //Store a reference to the UI components for convenience
-            this.addButton = $('button#addCategory');
-            this.input = $('input#categoryName');
+            this.addButton = $('button#addPost');
+            this.input = $('input#postName');
         },
 
         //Called every time the text in the category-name input changes
-        onCategoryNameChange: function(event) {
+        onPostNameChange: function(event) {
             //Show the add-button if its hidden and text is entered
             if(this.addButton.is(':hidden') && this.input.val())
                 this.addButton.show('fast');
         },
 
         //Called every time the Add-button is clicked
-        onCategoryAdd: function(event) {
+        onPostAdd: function(event) {
 
             //Add the new category to the collection
-            Categories.create({name: this.input.val()});
+            Posts.create({name: this.input.val()});
 
             //Clear the input field
             this.input.val('');

@@ -52,6 +52,9 @@
                         </button>
                      </div>
                 </div>
+                <div id="posts" class="span9">
+
+                </div>
             </div>
         </div>
         <!--- End page body --->
@@ -68,6 +71,16 @@
                 <% }); %>
             </ul>
         </script>
+
+        <script type="text/template" id="posts-template">
+            <h1>List of posts:</h1>
+            <% _.each( posts, function( post ){ %>
+            <div class="post">
+                <%- post.title %>
+            </div>
+            <% }); %>
+        </script>
+
         <!--- End Templates --->
 
         <!--- Imported at the bottom of the page so loading goes faster in browser -->

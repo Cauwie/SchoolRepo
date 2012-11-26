@@ -27,25 +27,6 @@ $(function() {
         }
     });
 
-    //The Post model
-    var Post = Backbone.Model.extend({
-        url: '/post',
-
-        //Empty Constructor
-        initialize: function() { }
-
-    });
-
-    //The Post collection
-    var PostList = Backbone.Collection.extend({
-        model: Post,
-        url: '/posts',
-
-        parse: function (obj) {
-            return obj;
-        }
-    });
-
     //Create global category list
     var Categories = new CategoryList();
 
@@ -73,34 +54,6 @@ $(function() {
         }
     });
 
-    //Create global posts list
-    var Posts = new PostList();
-
-    var PostsView = Backbone.View.extend({
-        //The DOM element is a div with class="well posts-view" (because of Twitter Bootstrap)
-        tagName: 'div',
-        className: 'well posts-view',
-
-        //Cache the template defined in the main html, using Underscore.JS
-        template: _.template($('#posts-template').html()),
-
-        initialize: function () {
-            this.collection.bind('reset', this.render, this);
-            this.collection.bind('add', this.render, this);
-        },
-
-        //Our render-function bootstraps the model JSON data into the template
-        render: function() {
-            this.$el.html(this.template({
-                posts: this.collection.toJSON()
-            }));
-
-            return this; //To allow for daisy-chaining calls
-        }
-    });
-
-
-
     //This view resembles the the main area of our app
     var YabeApp = Backbone.View.extend({
 
@@ -126,9 +79,6 @@ $(function() {
             var catView = new CategoryView({collection: Categories}).render();
             //And add it to the DOM
             this.$('#sidebar').append(catView.render().el);
-
-            var postsView = new PostsView({collection: Posts}).render();
-            this.$('#posts').append(postsView.render().el);
 
             //Store a reference to the UI components for convenience
             this.addButton = $('button#addCategory');

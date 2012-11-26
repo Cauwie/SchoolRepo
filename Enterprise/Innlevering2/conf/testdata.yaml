@@ -27,3 +27,37 @@ tags:
     - !!models.Tag
         name:           Tag One
         dateCreated:    2012-10-10
+
+posts:
+    - !!models.Post
+        title:          Post one
+        datePosted:     2012-10-10
+        content:        This is post one
+        author:         !!models.User
+                        email: aksel@agresvig.com
+        category:        !!models.Category
+                        name:  Category One
+    - !!models.Post
+        title:          Post Two
+        datePosted:     2012-10-10
+        content:        This is post two
+        author:         !!models.User
+                        email: aksel@agresvig.com
+        category:       !!models.Category
+                        name:  Category One
+    - !!models.Post
+        title:          Post Three
+        datePosted:     2012-10-10
+        content:        This is post three
+        author:         !!models.User
+                        email: aksel@agresvig.com
+        category:       !!models.Category
+                        name:  Category Two
+    - !!models.Post
+        title:          Post Four
+        datePosted:     2012-10-10
+        content:        This is post four
+        author:         !!models.User
+                        email: aksel@agresvig.com
+        category:       !!models.Category
+                        name:  Category Two
