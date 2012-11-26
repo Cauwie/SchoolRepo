@@ -97,7 +97,7 @@ public class Users extends Controller {
             user.save();
             //user.
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
         }
         return ok(Json.toJson(user)).as("application/json");

@@ -34,12 +34,28 @@ public class Categories extends Controller {
         return ok(Json.toJson(categories)).as("application/json");
     }
 
+    /**
+     * Retrieves {@link Category} from db by email
+     * @param id id (unique ID)
+     * @return {@link Category} object as JSON
+     */
     public static Result retrieve(String id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Logger.debug("Getting Category with id: " + id);
+        Category category = Category.find.byId(id);
+        if (category == null) {
+            return notFound(id);
+        }
+        return ok(Json.toJson(category)).as("application/json");  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public static Result delete(String id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Logger.debug("Deleting Category with id: " + id);
+        Category category = Category.find.byId(id);
+        if (category == null) {
+            return notFound(id);
+        }
+        category.delete();
+        return ok(id).as("application/text");
     }
 
     /**
@@ -69,6 +85,19 @@ public class Categories extends Controller {
     }
 
     public static Result update() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        JsonNode request = request().body().asJson();
+        Logger.info("Updating Category from JSON: " + request.asText());
+
+        Category category = null;
+        ObjectMapper mapper = new ObjectMapper();
+        //Attempt to parse JSON
+        try {
+            category = mapper.readValue(request, Category.class);
+            category.save();
+        } catch (Exception e) {
+            Logger.error(e.getMessage(), e.getCause());
+            return badRequest(e.getCause().getMessage());
+        }
+        return ok(Json.toJson(category)).as("application/json");
     }
 }
