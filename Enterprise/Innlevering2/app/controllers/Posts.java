@@ -34,12 +34,23 @@ public class Posts extends Controller {
         return ok(Json.toJson(posts)).as("application/json");
     }
 
-    public static Result retrieve(String id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public static Result retrieve(String title) {
+        Logger.debug("Getting Category with name: " + title);
+        Post post = Post.find.byId(title);
+        if (post == null) {
+            return notFound(title);
+        }
+        return ok(Json.toJson(post)).as("application/json");
     }
 
-    public static Result delete(String id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public static Result delete(String title) {
+        Logger.debug("Deleting Post with title: " + title);
+        Post post = Post.find.byId(title);
+        if (post == null) {
+            return notFound(title);
+        }
+        post.delete();
+        return ok(title).as("application/text");
     }
 
     /**
@@ -52,11 +63,16 @@ public class Posts extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Saving Post from JSON: " + request.asText());
 
-        Post post = null;
         ObjectMapper mapper = new ObjectMapper();
+        Post post = null;
         //Attempt to parse JSON
         try {
             post = mapper.readValue(request, Post.class);
+
+            if (post.content.isEmpty()) {
+                Logger.error("Missing 'content' node");
+                return badRequest("Missing 'content' node");
+            }
             post.save();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
@@ -81,9 +97,8 @@ public class Posts extends Controller {
         try {
             post = mapper.readValue(request, Post.class);
             post.save();
-            //user.
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
         }
         return ok(Json.toJson(post)).as("application/json");

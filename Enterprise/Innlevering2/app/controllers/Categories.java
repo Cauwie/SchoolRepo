@@ -36,26 +36,26 @@ public class Categories extends Controller {
 
     /**
      * Retrieves {@link Category} from db by email
-     * @param id id (unique ID)
+     * @param name name (unique ID)
      * @return {@link Category} object as JSON
      */
-    public static Result retrieve(String id) {
-        Logger.debug("Getting Category with id: " + id);
-        Category category = Category.find.byId(id);
+    public static Result retrieve(String name) {
+        Logger.debug("Getting Category with name: " + name);
+        Category category = Category.find.byId(name);
         if (category == null) {
-            return notFound(id);
+            return notFound(name);
         }
-        return ok(Json.toJson(category)).as("application/json");  //To change body of implemented methods use File | Settings | File Templates.
+        return ok(Json.toJson(category)).as("application/json");
     }
 
-    public static Result delete(String id) {
-        Logger.debug("Deleting Category with id: " + id);
-        Category category = Category.find.byId(id);
+    public static Result delete(String name) {
+        Logger.debug("Deleting Category with name: " + name);
+        Category category = Category.find.byId(name);
         if (category == null) {
-            return notFound(id);
+            return notFound(name);
         }
         category.delete();
-        return ok(id).as("application/text");
+        return ok(name).as("application/text");
     }
 
     /**
