@@ -7,6 +7,24 @@
 
 //Load the application once the DOM is ready, using jQuery.ready:
 $(function() {
+    //The Post model
+    var Post = Backbone.Model.extend({
+        url: '/post',
+
+        //Empty Constructor
+        initialize: function() { }
+
+    });
+
+    //The Post collection
+    var PostList = Backbone.Collection.extend({
+        model: Post,
+        url: '/posts',
+
+        parse: function (obj) {
+            return obj;
+        }
+    });
 
     //The Category model
     var Category = Backbone.Model.extend({
@@ -27,22 +45,30 @@ $(function() {
         }
     });
 
-    //The Post model
-    var Post = Backbone.Model.extend({
-        url: '/post',
 
-        //Empty Constructor
-        initialize: function() { }
+    //Create global posts list
+    var Posts = new PostList();
 
-    });
+    var PostView = Backbone.View.extend({
+        //The DOM element is a div with class="well posts-view" (because of Twitter Bootstrap)
+        tagName: 'div',
+        className: 'well posts-view',
 
-    //The Post collection
-    var PostList = Backbone.Collection.extend({
-        model: Post,
-        url: '/posts',
+        //Cache the template defined in the main html, using Underscore.JS
+        template: _.template($('#posts-template').html()),
 
-        parse: function (obj) {
-            return obj;
+        initialize: function () {
+            this.collection.bind('reset', this.render, this);
+            this.collection.bind('add', this.render, this);
+        },
+
+        //Our render-function bootstraps the model JSON data into the template
+        render: function() {
+            this.$el.html(this.template({
+                posts: this.collection.toJSON()
+            }));
+
+            return this; //To allow for daisy-chaining calls
         }
     });
 
@@ -73,32 +99,6 @@ $(function() {
         }
     });
 
-    //Create global posts list
-    var Posts = new PostList();
-
-    var PostsView = Backbone.View.extend({
-        //The DOM element is a div with class="well posts-view" (because of Twitter Bootstrap)
-        tagName: 'div',
-        className: 'well posts-view',
-
-        //Cache the template defined in the main html, using Underscore.JS
-        template: _.template($('#posts-template').html()),
-
-        initialize: function () {
-            this.collection.bind('reset', this.render, this);
-            this.collection.bind('add', this.render, this);
-        },
-
-        //Our render-function bootstraps the model JSON data into the template
-        render: function() {
-            this.$el.html(this.template({
-                posts: this.collection.toJSON()
-            }));
-
-            return this; //To allow for daisy-chaining calls
-        }
-    });
-
 
 
     //This view resembles the the main area of our app
@@ -122,13 +122,16 @@ $(function() {
             //Load the categories from the server
             Categories.fetch();
 
+            //Load the posts from the server
+            Posts.fetch();
+
             //Instantiate the category view with the Categories as the "collection" property
             var catView = new CategoryView({collection: Categories}).render();
             //And add it to the DOM
             this.$('#sidebar').append(catView.render().el);
 
-            var postsView = new PostsView({collection: Posts}).render();
-            this.$('#posts').append(postsView.render().el);
+            var postView = new PostView({collection: Posts}).render();
+            this.$('#posts').append(postView.render().el);
 
             //Store a reference to the UI components for convenience
             this.addButton = $('button#addCategory');
