@@ -40,20 +40,18 @@
         <div id="page-container" class="container-fluid">
             <div class="row-fluid">
                 <div id="sidebar" class="span3">
-                </div>
-                <div id="main-content" class="span9">
-                    <div class="hero-unit">
-                        <h1>Welcome to YABE!</h1>
-                        <p>Let's add a category.</p>
+                    <div class="well sidebar-nav">
+                        <h2 class="nav-header">Add a new category</h2>
                         <input type="text" id="categoryName" placeholder="Type category name..." />
-                        <br>
                         <button type="button" id="addCategory" style="display: none;" class="btn btn-primary">
                             Add
                         </button>
-                     </div>
+                    </div>
                 </div>
-                <div id="posts" class="span9">
+                <div id="main-content" class="span9">
+                    <div class="posts">
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,6 +68,7 @@
                 </a></li>
                 <% }); %>
             </ul>
+
         </script>
 
         <script type="text/template" id="posts-template">
@@ -80,7 +79,6 @@
             </div>
             <% }); %>
         </script>
-
         <!--- End Templates --->
 
         <!--- Imported at the bottom of the page so loading goes faster in browser -->

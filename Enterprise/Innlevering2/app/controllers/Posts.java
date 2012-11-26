@@ -24,7 +24,7 @@ import static play.mvc.Results.ok;
 public class Posts extends Controller {
 
     /**
-     * Gets list of all categories in the database
+     * Gets list of all posts in the database
      *  @return
      */
     public static Result retrieveAll() {
