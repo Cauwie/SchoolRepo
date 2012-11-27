@@ -64,7 +64,7 @@ window.PostView = Backbone.View.extend({
 
             success:function () {
                 alert('Post deleted successfully');
-                window.history.back();
+                app.showView("#main-content", new PostListView({model:app.postList}));
             }
         });
         return false;

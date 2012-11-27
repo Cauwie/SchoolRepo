@@ -40,16 +40,20 @@ var AppRouter = Backbone.Router.extend({
 
     newPost:function () {
         this.before(function () {
-            app.showView('#main-content', new PostView({model:new Post()}));
+            var categories = app.categories;
+            var users = app.users;
+            app.showView('#main-content', new PostView({model:new Post(), model2:categories, model3:users}));
         });
     },
 
     showView:function (selector, view) {
-        if (this.currentView)
-            this.currentView.close();
-        $(selector).html(view.render().el);
-        this.currentView = view;
-        return view;
+        this.before(function() {
+            if (this.currentView)
+                this.currentView.close();
+            $(selector).html(view.render().el);
+            this.currentView = view;
+            return view;
+        });
     },
 
     byCategory:function (category) {
@@ -68,12 +72,25 @@ var AppRouter = Backbone.Router.extend({
                 $('#posts').html(new PostListView({model:app.postList}).render().el);
                 if (callback) callback();
             }});
+        }
+
+        if (this.categories) {
+            if (callback) callback();
+        } else {
             this.categories = new CategoryCollection();
             this.categories.fetch({success:function() {
                 $('#sidebar').html(new CategoryView({model:app.categories}).render().el);
+                if (callback) callback();
             }});
+        }
+
+        if (this.users) {
+            if (callback) callback();
+        } else {
             this.users = new UserCollection();
-            this.users.fetch();
+            this.users.fetch({success:function() {
+                if (callback) callback();
+            }});
         }
     }
 });
