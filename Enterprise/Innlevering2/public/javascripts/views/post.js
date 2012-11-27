@@ -31,9 +31,9 @@ window.PostView = Backbone.View.extend({
     },
 
     events:{
-        "change input"  :   "change",
-        "click .save"   :   "savePost",
-        "click .delete" :   "deletePost"
+        "change input"          :   "change",
+        "click button#save"     :   "savePost",
+        "click button#delete"   :   "deletePost"
     },
 
     savePost:function () {
@@ -46,7 +46,7 @@ window.PostView = Backbone.View.extend({
         });
         if (this.model.isNew()) {
             var self = this;
-            app.post.create(this.model, {
+            app.postList.create(this.model, {
                 success:function () {
                     app.navigate('post/' + self.model.id, false);
                 }
@@ -59,7 +59,9 @@ window.PostView = Backbone.View.extend({
     },
 
     deletePost:function () {
+        alert("Heisann!");
         this.model.destroy({
+
             success:function () {
                 alert('Post deleted successfully');
                 window.history.back();

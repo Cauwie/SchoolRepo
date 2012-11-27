@@ -16,6 +16,9 @@ window.CategoryView = Backbone.View.extend({
     initialize: function () {
         this.model.bind('reset', this.render, this);
         this.model.bind('add', this.render, this);
+
+        this.addButton = $('button#addCategory');
+        this.input = $('input#categoryName');
     },
 
     //Our render-function bootstraps the model JSON data into the template
@@ -36,7 +39,6 @@ window.CategoryView = Backbone.View.extend({
 
     //Called every time the Add-button is clicked
     onCategoryAdd: function(event) {
-
         //Add the new category to the collection
         Categories.create({name: this.input.val()});
 
