@@ -50,6 +50,12 @@ public class SearchTechnologyBeanTest {
 		
 		assertEquals(list, searchTechnologyBean.getSearchResults());
 	}
+	
+	@Test
+	public void setGetSerialVersionUid() {
+		long id = SearchTechnologyBean.getSerialversionuid();
+		assertNotNull(id);
+	}
 
 	@Test
 	public void testToString() {

@@ -2,10 +2,18 @@ package no.nith.pg560.interfaces.web;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import no.nith.pg560.domain.Technology;
+
+/**
+ * 
+ * @author David Emanuelsen and Alexander Hill
+ *
+ * Session scoped bean which keeps track of input in form of search criteria, 
+ * and the results these give.
+ * 
+ */
 
 @Named
 @SessionScoped

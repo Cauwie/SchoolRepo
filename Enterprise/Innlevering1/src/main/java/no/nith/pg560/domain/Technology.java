@@ -8,8 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * 
+ * @author David Emanuelsen and Alexander Hill
  * Domain object exposing the PG560_JEE_TECHNOLOGY database. 
  */
+
 @Entity
 @Table(name = "PG560_JEE_TECHNOLOGY")
 public class Technology {
