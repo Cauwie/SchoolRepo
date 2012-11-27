@@ -1,32 +1,18 @@
-window.Employee = Backbone.Model.extend({
+//The User model
+window.User = Backbone.Model.extend({
+    url: '/user',
 
-    urlRoot:"../api/employees",
-
-    initialize:function () {
-        this.reports = new EmployeeCollection();
-        this.reports.url = '../api/users/' + this.id + '/reports';
-    }
+    //Empty Constructor
+    initialize: function() { }
 
 });
 
+//The User collection
 window.UserCollection = Backbone.Collection.extend({
+    model: Category,
+    url: '/users',
 
-    model: User,
-
-    url:"../api/users",
-
-    findByName:function (key) {
-        var url = (key == '') ? '../api/users' : "../api/users/search/" + key;
-        console.log('findByName: ' + key);
-        var self = this;
-        $.ajax({
-            url:url,
-            dataType:"json",
-            success:function (data) {
-                console.log("search success: " + data.length);
-                self.reset(data);
-            }
-        });
+    parse: function (obj) {
+        return obj;
     }
-
 });
