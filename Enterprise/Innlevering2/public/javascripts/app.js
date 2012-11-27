@@ -47,11 +47,11 @@ var AppRouter = Backbone.Router.extend({
     },
 
     showView:function (selector, view) {
-            if (this.currentView)
-                this.currentView.close();
-            $(selector).html(view.render().el);
-            this.currentView = view;
-            return view;
+        if (this.currentView)
+            this.currentView.close();
+        $(selector).html(view.render().el);
+        this.currentView = view;
+        return view;
     },
 
     byCategory:function (category) {
@@ -67,7 +67,7 @@ var AppRouter = Backbone.Router.extend({
         } else {
             this.postList = new PostCollection();
             this.postList.fetch({success:function () {
-                $('#posts').html(new PostListView({model:app.postList}).render().el);
+                $('#main-content').html(new PostListView({model:app.postList}).render().el);
                 if (callback) callback();
             }});
         }

@@ -9,7 +9,7 @@ window.PostView = Backbone.View.extend({
     initialize: function () {
         this.model.bind('change', this.render, this);
 
-        this.addTagBtn = $('button#addTag');
+        this.searchTag = $('button#searchTag');
         this.tagName = $('input#tagName');
     },
 
@@ -66,10 +66,9 @@ window.PostView = Backbone.View.extend({
     deletePost:function () {
         alert("Heisann!");
         this.model.destroy({
-
             success:function () {
-                alert('Post deleted successfully');
-                app.showView("#main-content", new PostListView({model:app.postList}));
+                alert('Wine deleted successfully');
+                window.history.back();
             }
         });
         return false;
@@ -77,13 +76,13 @@ window.PostView = Backbone.View.extend({
 
     addTag:function() {
         //Add the new category to the collection
-        this.model.tags.create({name: this.tagName.val()});
-
+        this.model.tags.add({name: this.searchTag.val()});
+        alert(this.model.tags.pop());
         //Clear the input field
-        this.tagName.val('');
+        this.searchTag.val('');
     },
 
     cancel:function() {
-        app.showView("main-content", app.postList);
+        app.showView("main-content", new PostListView({model:app.postList}));
     }
 });
