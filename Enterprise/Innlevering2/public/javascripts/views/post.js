@@ -8,6 +8,9 @@ window.PostView = Backbone.View.extend({
 
     initialize: function () {
         this.model.bind('change', this.render, this);
+
+        this.addTagBtn = $('button#addTag');
+        this.tagName = $('input#tagName');
     },
 
     //Our render-function bootstraps the model JSON data into the template
@@ -33,7 +36,9 @@ window.PostView = Backbone.View.extend({
     events:{
         "change input"          :   "change",
         "click button#save"     :   "savePost",
-        "click button#delete"   :   "deletePost"
+        "click button#delete"   :   "deletePost",
+        "click button#cancel"   :   "cancel",
+        "click button#addTag"   :   "addTag"
     },
 
     savePost:function () {
@@ -68,5 +73,17 @@ window.PostView = Backbone.View.extend({
             }
         });
         return false;
+    },
+
+    addTag:function() {
+        //Add the new category to the collection
+        this.model.tags.create({name: this.tagName.val()});
+
+        //Clear the input field
+        this.tagName.val('');
+    },
+
+    cancel:function() {
+        app.showView("main-content", app.postList);
     }
 });

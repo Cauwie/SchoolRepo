@@ -133,14 +133,20 @@
         </select>
 
         <label>Tags:</label>
-        <input type="text" id="tags" name="tags"  value="<%= post.tags %>"/>
 
+            <form class="navbar-search pull-right dropdown">
+                <input id="searchTag" type="text" class="search-query dropdown-toggle" placeholder="Search" autocomplete="off">
+                <button id="addTag" class="btn btn-info">Add</button>
+            </form>
+            <% _(post.tags).each(function(tag) { %>
+            <span class="label label-info"><%= tag.name %></span>
+            <% }); %>
         <label>Content:</label>
         <textarea id="content" name="content"><%= post.content %></textarea>
         <br>
         <button id="save" class="btn btn-success">Save</button>
         <button id="delete" class="btn btn-warning">Delete</button>
-        <button class="btn btn-failure">Cancel</button>
+        <button id="cancel" class="btn btn-failure">Cancel</button>
     </div>
 </script>
 <!--- End Templates --->

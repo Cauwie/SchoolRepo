@@ -47,13 +47,11 @@ var AppRouter = Backbone.Router.extend({
     },
 
     showView:function (selector, view) {
-        this.before(function() {
             if (this.currentView)
                 this.currentView.close();
             $(selector).html(view.render().el);
             this.currentView = view;
             return view;
-        });
     },
 
     byCategory:function (category) {

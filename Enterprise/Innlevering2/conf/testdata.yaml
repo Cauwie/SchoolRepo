@@ -25,7 +25,19 @@ categories:
 
 tags:
     - !!models.Tag
-        name:           Tag One
+        name:           html
+        dateCreated:    2012-10-10
+    - !!models.Tag
+        name:           css
+        dateCreated:    2012-10-10
+    - !!models.Tag
+        name:           java
+        dateCreated:    2012-10-10
+    - !!models.Tag
+        name:           ruby
+        dateCreated:    2012-10-10
+    - !!models.Tag
+        name:           random
         dateCreated:    2012-10-10
 
 posts:
@@ -36,7 +48,7 @@ posts:
         author:         !!models.User
                         email: aksel@agresvig.com
         category:        !!models.Category
-                        name:  Category One
+                         name:  Category One
     - !!models.Post
         title:          Post Two
         datePosted:     2012-10-10
