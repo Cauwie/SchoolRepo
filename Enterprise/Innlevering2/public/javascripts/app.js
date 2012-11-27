@@ -45,17 +45,36 @@ $(function() {
         }
     });
 
+    //The User model
+    var User = Backbone.Model.extend({
+        url: '/user',
+
+        //Empty Constructor
+        initialize: function() { }
+
+    });
+
+    //The User collection
+    var UserList = Backbone.Collection.extend({
+        model: Category,
+        url: '/users',
+
+        parse: function (obj) {
+            return obj;
+        }
+    });
+
 
     //Create global posts list
     var Posts = new PostList();
 
-    var PostView = Backbone.View.extend({
+    var PostsView = Backbone.View.extend({
         //The DOM element is a div with class="well posts-view" (because of Twitter Bootstrap)
         tagName: 'div',
         className: 'well posts-view',
 
         //Cache the template defined in the main html, using Underscore.JS
-        template: _.template($('#posts-template').html()),
+        template: _.template($('#all-posts-template').html()),
 
         initialize: function () {
             this.collection.bind('reset', this.render, this);
@@ -99,6 +118,78 @@ $(function() {
         }
     });
 
+    var PostView = Backbone.View.extend({
+        //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
+        tagName: 'div',
+        className: 'well posts-nav',
+
+        //Cache the template defined in the main html, using Underscore.JS
+        template: _.template($('#post-template').html()),
+
+        initialize: function () {
+            this.collection.bind('reset', this.render, this);
+            this.collection.bind('add', this.render, this);
+        },
+
+        //Our render-function bootstraps the model JSON data into the template
+        render: function() {
+            this.$el.html(this.template({
+                categories: this.collection.toJSON(),
+                users: this.collection.toJSON()
+            }));
+
+            return this; //To allow for daisy-chaining calls
+        },
+
+        change:function (event) {
+            var target = event.target;
+            console.log('changing ' + target.id + ' from: ' + target.defaultValue + ' to: ' + target.value);
+            // You could change your model on the spot, like this:
+            // var change = {};
+            // change[target.name] = target.value;
+            // this.model.set(change);
+        },
+
+
+        events:{
+            "change input"  :   "change",
+            "click .save"   :   "saveWine",
+            "click .delete" :   "deleteWine"
+        },
+
+        savePost:function () {
+            this.model.set({
+                title:$('#title').val(),
+                author:$('#author').val(),
+                category:$('#category').val(),
+                tags:$('#tags').val(),
+                content:$('#content').val(),
+            });
+            if (this.model.isNew()) {
+                var self = this;
+                app.post.create(this.model, {
+                    success:function () {
+                        app.navigate('post/' + self.model.id, false);
+                    }
+                });
+            } else {
+                this.model.save();
+            }
+
+            return false;
+        },
+
+        deletePost:function () {
+            this.model.destroy({
+                success:function () {
+                    alert('Post deleted successfully');
+                    window.history.back();
+                }
+            });
+            return false;
+        }
+    });
+
 
 
     //This view resembles the the main area of our app
@@ -110,14 +201,15 @@ $(function() {
         //Declare UI events
         events: {
             'keydown input#categoryName'    : 'onCategoryNameChange',
-            'click button#addCategory'      : 'onCategoryAdd'
+            'click button#addCategory'      : 'onCategoryAdd',
+            'click button#newPostBtn'       : 'onNewPost'
         },
 
         //Fetch the categories and show the CategoryView
         initialize: function() {
             //Store a reference to "this" as this view-object in the specified methods
             //This is really just because javascript gives us a rather useless "this" in for example event-handlers
-            _.bindAll(this, 'onCategoryNameChange', 'onCategoryAdd');
+            _.bindAll(this, 'onCategoryNameChange', 'onCategoryAdd', 'onNewPost');
 
             //Load the categories from the server
             Categories.fetch();
@@ -130,12 +222,13 @@ $(function() {
             //And add it to the DOM
             this.$('#sidebar').append(catView.render().el);
 
-            var postView = new PostView({collection: Posts}).render();
+            var postView = new PostsView({collection: Posts}).render();
             this.$('#posts').append(postView.render().el);
 
             //Store a reference to the UI components for convenience
             this.addButton = $('button#addCategory');
             this.input = $('input#categoryName');
+            //this.posts = $('div#posts');
         },
 
         //Called every time the text in the category-name input changes
@@ -153,7 +246,13 @@ $(function() {
 
             //Clear the input field
             this.input.val('');
-        }
+        },
+
+         //Called every time the Add-button is clicked
+         onNewPost: function(event) {
+            //Show the add-button if its hidden and text is entered
+           // this.posts.hide();
+         }
     });
 
     var App = new YabeApp;

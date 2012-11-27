@@ -71,11 +71,12 @@ public class Categories extends Controller {
         JsonNode nameNode = request.get("name");
 
         Category category = null;
-        if(nameNode == null) {
-            Logger.error("Missing 'name' node");
-            return badRequest("Missing 'name' node");
-        }
+
         try {
+            if (category.name.isEmpty()) {
+                Logger.error("Missing 'content' node");
+                return badRequest("Missing 'content' node");
+            }
             category = Category.create(nameNode.asText());
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
@@ -93,6 +94,10 @@ public class Categories extends Controller {
         //Attempt to parse JSON
         try {
             category = mapper.readValue(request, Category.class);
+            if (category.name.isEmpty()) {
+                Logger.error("Missing 'content' node");
+                return badRequest("Missing 'content' node");
+            }
             category.save();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
