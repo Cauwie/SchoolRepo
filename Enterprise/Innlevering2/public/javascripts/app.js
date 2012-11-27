@@ -26,7 +26,9 @@ var AppRouter = Backbone.Router.extend({
     },
 
     list:function () {
-        this.before();
+        this.before(function() {
+            app.showView('#main-content', new PostListView({model:app.postList}));
+        });
     },
 
     postDetails:function (title) {

@@ -47,7 +47,7 @@ window.PostView = Backbone.View.extend({
             author:$('#author').val(),
             category:$('#category').val(),
             tags:$('#tags').val(),
-            content:$('#content').val(),
+            content:$('#content').val()
         });
         if (this.model.isNew()) {
             var self = this;
@@ -67,7 +67,7 @@ window.PostView = Backbone.View.extend({
         alert("Heisann!");
         this.model.destroy({
             success:function () {
-                alert('Wine deleted successfully');
+                alert('Post deleted successfully');
                 window.history.back();
             }
         });
@@ -76,8 +76,9 @@ window.PostView = Backbone.View.extend({
 
     addTag:function() {
         //Add the new category to the collection
-        this.model.tags.add({name: this.searchTag.val()});
+
         alert(this.model.tags.pop());
+        this.model.tags.add({name: this.searchTag.val()});
         //Clear the input field
         this.searchTag.val('');
     },
