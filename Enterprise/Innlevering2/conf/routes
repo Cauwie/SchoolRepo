@@ -15,7 +15,8 @@ PUT     /user                               controllers.Users.update()
 GET     /categories                         controllers.Categories.retrieveAll()
 POST    /category                           controllers.Categories.persist()
 
-# Category
+# Post
+GET     /post/:title                        controllers.Posts.retrieve(title:String)
 GET     /posts                              controllers.Posts.retrieveAll()
 POST    /post                               controllers.Posts.persist()
 

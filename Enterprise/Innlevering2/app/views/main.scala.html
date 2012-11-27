@@ -42,15 +42,19 @@
                 <div id="sidebar" class="span3">
                     <div class="well sidebar-nav">
                         <h2 class="nav-header">Add a new category</h2>
-                        <input type="text" id="categoryName" placeholder="Type category name..." />
+                        <input type="text" id="categoryName" placeholder="Type category name..."/>
                         <button type="button" id="addCategory" style="display: none;" class="btn btn-primary">
                             Add
                         </button>
                     </div>
                 </div>
                 <div id="main-content" class="span9">
-                    <div class="posts">
 
+                    <div id="posts">
+                        <h1>Welcome to Yet Another Blog Engine!</h1>
+                             <button id="newPostBtn" type="button" class="btn btn-success">
+                                 New Post
+                             </button>
                     </div>
                 </div>
             </div>
@@ -68,16 +72,64 @@
                 </a></li>
                 <% }); %>
             </ul>
-
         </script>
 
-        <script type="text/template" id="posts-template">
-            <h1>List of posts:</h1>
+        <script type="text/template" id="all-posts-template">
             <% _.each( posts, function( post ){ %>
             <div class="post">
-                <%- post.title %>
+                <a href="<%-#post/post.title %>"><h2><%- post.title %></h2></a>
+                <%- post.datePosted %> <br>
+                <%- post.content %> <br>
+                <%- post.author.email %> <br>
+                <%- post.category.name %> <br>
+                <br>
+                <%- post.tags %><br>
+                <button type="button" class="btn">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-danger">
+                    Delete
+                </button>
             </div>
             <% }); %>
+        </script>
+
+        <script type="text/template" id="post-template">
+            <div class="form-left-col">
+                <label>Title:</label>
+                <input type="text" id="title" name="title" value="<%= title %>" disabled />
+
+                <label>Date posted:</label>
+                <input type="text" id="datePosted" name="datePosted" value="<%= datePosted %>" required/>
+
+                <label>Author:</label>
+                <select id="author" name="author">
+                    <option value="">--select a author--</option>
+                    <% _(author).each(function(author) { %>
+                    <option value="<%= pl.ID %>"><%= author.name %></option>
+                    <% }); %>
+                </select>
+
+                <label>Category:</label>
+                <select id="category" name="category">
+                    <option value="">--select a category--</option>
+                    <% _(category).each(function(category) { %>
+                    <option value="<%= category.name %>"><%= category.name %></option>
+                    <% }); %>
+                </select>
+
+                <label>Tags:</label>
+                <input type="text" id="region" name="region"  value="<%= region %>"/>
+
+                <button class="save">Save</button>
+                <button class="delete">Delete</button>
+            </div>
+
+            <div class="form-right-col">
+                <img height="300" src="../pics/<%= picture %>"/>
+                <label>Content:</label>
+                <textarea id="content" name="content"><%= content %></textarea>
+            </div>>
         </script>
         <!--- End Templates --->
 
