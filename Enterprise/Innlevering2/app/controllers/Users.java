@@ -95,7 +95,6 @@ public class Users extends Controller {
         try {
             user = mapper.readValue(request, User.class);
             user.save();
-            //user.
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
