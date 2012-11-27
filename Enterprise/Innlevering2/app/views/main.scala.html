@@ -112,7 +112,11 @@
         <select id="author" name="author" required>
             <option value="">--select a author--</option>
             <% _(users).each(function(user) { %>
-            <option value="<%= user.name %>"><%= user.email %></option>
+                <% if(post.author.email == user.email) { %>
+                    <option value="<%= user.name %>" selected="true"><%= user.email %></option>
+                <% } else { %>
+                    <option value="<%= user.name %>"><%= user.email %></option>
+                <% } %>
             <% }); %>
         </select>
 
@@ -120,7 +124,11 @@
         <select id="category" name="category" required>
             <option value="">--select a category--</option>
             <% _(categories).each(function(category) { %>
-            <option value="<%= category.name %>"><%= category.name %></option>
+                <% if(post.category.name == category.name) { %>
+                    <option value="<%= category.name %>" selected="true"><%= category.name %></option>
+                <% } else { %>
+                    <option value="<%= category.name %>"><%= category.name %></option>
+                <% } %>
             <% }); %>
         </select>
 
