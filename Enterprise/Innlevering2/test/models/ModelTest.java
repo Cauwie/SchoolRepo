@@ -156,10 +156,11 @@ public class ModelTest {
 
     @Test
     public void testCreateCategory() {
-        Category categoryTwo = new Category("Category two", new DateTime());
+        String categoryName = "Category two";
+        Category categoryTwo = new Category(categoryName, new DateTime());
         categoryTwo.save();
 
-        Category retrievedCategory = Category.find.byId("Category two");
+        Category retrievedCategory = Category.find.byId(categoryName);
         assertThat(retrievedCategory).isNotNull();
         assertThat(retrievedCategory.name).isNotEmpty();
         assertThat(retrievedCategory.dateCreated).isNotNull();
