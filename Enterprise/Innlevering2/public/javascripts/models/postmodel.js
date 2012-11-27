@@ -11,7 +11,6 @@ window.Post = Backbone.Model.extend({
     },
     //Empty Constructor
     initialize: function() { }
-
 });
 
 //The Category collection

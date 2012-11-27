@@ -40,7 +40,7 @@ window.CategoryView = Backbone.View.extend({
     //Called every time the Add-button is clicked
     onCategoryAdd: function(event) {
         //Add the new category to the collection
-        Categories.create({name: this.input.val()});
+        app.categories.create({name: this.input.val()});
 
         //Clear the input field
         this.input.val('');
