@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Category;
-import models.User;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import play.Logger;
