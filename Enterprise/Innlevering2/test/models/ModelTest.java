@@ -77,7 +77,7 @@ public class ModelTest {
     }
 
     private void loadAndSaveTestdata() {
-    	System.out.println("TEst:" + Thread.currentThread().getContextClassLoader());
+    	System.out.println("Test:" + Thread.currentThread().getContextClassLoader());
         InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("testdata.yaml");
         //Using Yaml instance with custom constructor here in order to support JodaTime dates with Yaml testing..
         Yaml yaml = new Yaml(new YamlJodaTimeConstructor());
@@ -119,6 +119,29 @@ public class ModelTest {
     }
 
     @Test
+    public void testDeleteUser() {
+        User aksel = User.find.byId(EMAIL);
+        assertThat(aksel).isNotNull();
+        aksel.delete();
+
+        User noOne = User.find.byId(EMAIL);
+        assertThat(noOne).isNull();
+    }
+
+    @Test
+    public void testUpdateUser() {
+        User aksel = User.find.byId(EMAIL);
+        assertThat(aksel).isNotNull();
+        aksel.firstName = "testname";
+        assertThat(aksel.firstName).isEqualTo("testname");
+        aksel.save();
+
+        User newAksel = User.find.byId(EMAIL);
+        assertThat(newAksel).isNotNull();
+        assertThat(newAksel.firstName).isEqualTo("testname");
+    }
+
+    @Test
     public void testRetrieveCategory() {
         List<Category> catList = Category.find.all();
 
@@ -144,6 +167,34 @@ public class ModelTest {
     }
 
     @Test
+    public void testDeleteCategory() {
+        Category categoryTwo = Category.find.byId(CATEGORY_ONE);
+        assertThat(categoryTwo).isNotNull();
+        categoryTwo.delete();
+
+        Category noCategory = Category.find.byId(CATEGORY_ONE);
+        assertThat(noCategory).isNull();
+    }
+
+    @Test
+     public void testUpdateCategory() {
+        String name = "test category";
+
+        Category categoryTwo = Category.find.byId(CATEGORY_ONE);
+
+        assertThat(categoryTwo).isNotNull();
+        categoryTwo.name = name;
+
+        assertThat(categoryTwo.name).isEqualTo(name);
+        categoryTwo.save();
+
+        Category categoryThree = Category.find.byId(CATEGORY_ONE);
+
+        assertThat(categoryThree).isNotNull();
+        assertThat(categoryThree.name).isEqualTo(name);
+    }
+
+    @Test
     public void testRetrieveTag() {
         List<Tag> tagList = Tag.find.all();
 
@@ -165,7 +216,17 @@ public class ModelTest {
         assertThat(retrievedTag).isNotNull();
         assertThat(retrievedTag.name).isNotEmpty();
         assertThat(retrievedTag.dateCreated).isNotNull();
+    }
 
+    @Test
+    public void testDeleteTag() {
+        Tag tag = Tag.find.byId(TAG_ONE);
+        assertThat(tag.name).isNotNull();
+        tag.delete();
+
+        Tag noTag = Tag.find.byId(TAG_ONE);
+        assertThat(tag.name).isNotEqualTo(TAG_ONE);
+        assertThat(tag).isNull();
     }
 
     @Test
