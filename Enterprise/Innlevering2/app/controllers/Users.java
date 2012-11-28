@@ -66,12 +66,22 @@ public class Users extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Saving User from JSON: " + request.asText());
 
+        JsonNode fNameNode = request.get("firstName");
+        JsonNode lNameNode = request.get("lastName");
+        JsonNode eMailNode = request.get("email");
+        JsonNode passNode = request.get("password");
+
         User user = null;
-        ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
         //Attempt to parse JSON
         try {
-            user = mapper.readValue(request, User.class);
-            user.save();
+            if (user.email.isEmpty()) {
+                Logger.error("Missing 'content' node");
+                return badRequest("Missing 'content' node");
+            }
+            user = User.create(fNameNode.asText(), lNameNode.asText(), eMailNode.asText(), passNode.asText());
+            //user = mapper.readValue(request, User.class);
+            //user.save();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());

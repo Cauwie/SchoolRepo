@@ -83,7 +83,7 @@ public class Posts extends Controller {
             post.save();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
-            return badRequest(e.getCause().getMessage());
+            return badRequest(e.getMessage());
         }
         return created(Json.toJson(post));
     }

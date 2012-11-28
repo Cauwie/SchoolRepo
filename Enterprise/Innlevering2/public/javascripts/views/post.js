@@ -116,3 +116,5 @@ window.PostView = Backbone.View.extend({
     cancel:function() {
         app.showView("main-content", new PostListView({model:app.postList}));
     }
+
+});
