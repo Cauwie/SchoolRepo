@@ -18,7 +18,14 @@ POST    /category                           controllers.Categories.persist()
 # Post
 GET     /post/:title                        controllers.Posts.retrieve(title:String)
 GET     /posts                              controllers.Posts.retrieveAll()
+GET     /posts/:name                        controllers.Posts.retrieveByCategory(name:String)
 POST    /post                               controllers.Posts.persist()
+
+# Tag
+GET     /tag/:name                          controllers.Tags.retrieve(name:String)
+GET     /tags                               controllers.Tags.retrieveAll()
+GET     /tags/search/:name                  controllers.Tags.retrieveByName(name:String)
+POST    /tag                                controllers.Tags.persist()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)

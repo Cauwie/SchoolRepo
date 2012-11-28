@@ -8,6 +8,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Tag extends Model {
@@ -43,6 +44,12 @@ public class Tag extends Model {
         Tag tag = new Tag(name, new DateTime());
         tag.save();
         return tag;
+    }
+
+    public static List<Tag> findByName(String name) {
+        return find.where()
+                .eq("name", "%" + name + "%")
+                .findList();
     }
 
     @Override

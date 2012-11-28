@@ -34,6 +34,13 @@ public class Posts extends Controller {
         return ok(Json.toJson(posts)).as("application/json");
     }
 
+    public static Result retrieveByCategory(String name) {
+        Logger.debug("Getting list of posts by category");
+
+        List<Post> posts = Post.findByCategory(name);
+        return ok(Json.toJson(posts)).as("application/json");
+    }
+
     public static Result retrieve(String title) {
         Logger.debug("Getting Category with name: " + title);
         Post post = Post.find.byId(title);

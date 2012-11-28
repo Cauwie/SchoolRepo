@@ -25,6 +25,12 @@ var AppRouter = Backbone.Router.extend({
         "category/:category":"byCategory"
     },
 
+    initialize: function() {
+        $('body').click(function () {
+            $('.dropdown').removeClass("open");
+        });
+    },
+
     list:function () {
         this.before(function() {
             app.showView('#main-content', new PostListView({model:app.postList}));
@@ -57,10 +63,10 @@ var AppRouter = Backbone.Router.extend({
     },
 
     byCategory:function (category) {
-        this.before(function() {
-            app.showView('#main-content', new PostListView({model:app.postList}));
-        });
+        this.postList.url = "posts/" + category;
+        this.postList.fetch();
 
+        app.showView('#main-content', new PostListView({model:app.postList}));
     },
 
     before:function (callback) {

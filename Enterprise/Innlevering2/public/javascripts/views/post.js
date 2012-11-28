@@ -9,6 +9,9 @@ window.PostView = Backbone.View.extend({
     initialize: function () {
         this.model.bind('change', this.render, this);
 
+        this.searchResults = new TagCollection();
+        this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
+
         this.searchTag = $('button#searchTag');
         this.tagName = $('input#tagName');
     },
@@ -20,6 +23,7 @@ window.PostView = Backbone.View.extend({
             categories: this.options.model2.toJSON(),
             users: this.options.model3.toJSON()
         }));
+        $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
 
         return this; //To allow for daisy-chaining calls
     },
@@ -38,14 +42,16 @@ window.PostView = Backbone.View.extend({
         "click button#save"     :   "savePost",
         "click button#delete"   :   "deletePost",
         "click button#cancel"   :   "cancel",
-        "click button#addTag"   :   "addTag"
+        "click button#addTag"   :   "addTag",
+        "keyup .search-query"   :   "search",
+        "keypress .search-query":   "onkeypress"
     },
 
     savePost:function () {
         this.model.set({
             title:$('#title').val(),
-            author:$('#author').val(),
-            category:$('#category').val(),
+            author:$('#author').find(":selected").text(),
+            category:$('#category').find(":selected").text(),
             tags:$('#tags').val(),
             content:$('#content').val()
         });
@@ -53,7 +59,8 @@ window.PostView = Backbone.View.extend({
             var self = this;
             app.postList.create(this.model, {
                 success:function () {
-                    app.navigate('post/' + self.model.id, false);
+                    alert("Post successfully saved!");
+                    app.navigate('post/' + self.model.title, false);
                 }
             });
         } else {
@@ -68,7 +75,7 @@ window.PostView = Backbone.View.extend({
         this.model.destroy({
             success:function () {
                 alert('Post deleted successfully');
-                window.history.back();
+                app.showView("main-content", new PostListView({model:app.postList}));
             }
         });
         return false;
@@ -81,6 +88,26 @@ window.PostView = Backbone.View.extend({
         this.model.tags.add({name: this.searchTag.val()});
         //Clear the input field
         this.searchTag.val('');
+    },
+
+    search: function () {
+       var key = $('#searchTag').val();
+       console.log('search ' + key);
+       this.searchResults.findByName(key);
+       setTimeout(function () {
+           $('.dropdown').addClass('open');
+       });
+    },
+
+    onkeypress: function (event) {
+       if (event.keyCode == 13) {
+           event.preventDefault();
+       }
+    },
+
+    select: function(menuItem) {
+       $('.nav li').removeClass('active');
+       $('.' + menuItem).addClass('active');
     },
 
     cancel:function() {
