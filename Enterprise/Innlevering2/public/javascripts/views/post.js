@@ -64,11 +64,14 @@ window.PostView = Backbone.View.extend({
     },
 
     deletePost:function () {
-        alert("Heisann!");
         this.model.destroy({
             success:function () {
-                alert('Post deleted successfully');
-                window.history.back();
+                alert('Post destroyed successfully');
+            }
+        });
+        app.postList.remove(this.model, {
+            success:function () {
+                alert('Post removed from list successfully');
             }
         });
         return false;
