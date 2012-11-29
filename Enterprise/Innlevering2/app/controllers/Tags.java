@@ -87,27 +87,4 @@ public class Tags extends Controller {
         }
         return created(Json.toJson(tag));
     }
-
-    /**
-     * Updates {@link Tag} from request body JSON data
-     * and saves to database
-     * @return The resulting {@link Tag} object as JSON
-     */
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result update() {
-        JsonNode request = request().body().asJson();
-        Logger.info("Updating Tag from JSON: " + request.asText());
-
-        Tag tag = null;
-        ObjectMapper mapper = new ObjectMapper();
-        //Attempt to parse JSON
-        try {
-            tag = mapper.readValue(request, Tag.class);
-            tag.save();
-        } catch (Exception e) {
-            Logger.error(e.getMessage(), e.getCause());
-            return badRequest(e.getCause().getMessage());
-        }
-        return ok(Json.toJson(tag)).as("application/json");
-    }
 }
