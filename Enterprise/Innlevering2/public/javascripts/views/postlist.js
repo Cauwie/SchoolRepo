@@ -28,6 +28,7 @@ window.PostListView = Backbone.View.extend({
 window.PostListView = Backbone.View.extend({
 
     tagName:'ul',
+    className:'nav nav-pills nav-stacked',
 
     initialize:function () {
         this.model.bind("reset", this.render, this);
@@ -48,6 +49,7 @@ window.PostListView = Backbone.View.extend({
 window.PostListItemView = Backbone.View.extend({
 
     tagName:"li",
+    className:'well',
 
     initialize:function () {
         this.template = _.template($('#post-item-template').html());

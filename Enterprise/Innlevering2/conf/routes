@@ -14,18 +14,26 @@ PUT     /user                               controllers.Users.update()
 # Category
 GET     /categories                         controllers.Categories.retrieveAll()
 POST    /category                           controllers.Categories.persist()
+PUT     /category                           controllers.Categories.update()
+DELETE  /category/:name                     controllers.Categories.delete(name:String)
 
 # Post
 GET     /post/:title                        controllers.Posts.retrieve(title:String)
 GET     /posts                              controllers.Posts.retrieveAll()
 GET     /posts/:name                        controllers.Posts.retrieveByCategory(name:String)
 POST    /post                               controllers.Posts.persist()
+PUT     /post                               controllers.Posts.update()
+DELETE  /post/:title                        controllers.Posts.delete(title:String)
+POST    /post/:title/addTag/:name           controllers.Posts.addTag(title:String, name:String)
+POST    /post/:title/removeTag/:name        controllers.Posts.removeTag(title:String, name:String)
 
 # Tag
 GET     /tag/:name                          controllers.Tags.retrieve(name:String)
 GET     /tags                               controllers.Tags.retrieveAll()
 GET     /tags/search/:name                  controllers.Tags.retrieveByName(name:String)
 POST    /tag                                controllers.Tags.persist()
+PUT     /tag                                controllers.Tags.update()
+DELETE  /tag/:name                          controllers.Tags.delete(name:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.at(path="/public", file)

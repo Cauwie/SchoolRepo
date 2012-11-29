@@ -1,13 +1,13 @@
 window.PostView = Backbone.View.extend({
     //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
-    tagName: 'div',
-    className: 'well posts-nav',
+    tagName: 'fieldset',
+    className: 'well',
 
     //Cache the template defined in the main html, using Underscore.JS
     template: _.template($('#post-template').html()),
 
     initialize: function () {
-        this.model.bind('change', this.render, this);
+        //this.model.bind('change', this.render, this);
 
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
@@ -32,9 +32,9 @@ window.PostView = Backbone.View.extend({
         var target = event.target;
         console.log('changing ' + target.id + ' from: ' + target.defaultValue + ' to: ' + target.value);
         // You could change your model on the spot, like this:
-         var change = {};
-         change[target.name] = target.value;
-         this.model.set(change);
+         //var change = {};
+         //change[target.name] = target.value;
+         //this.model.set(change);
     },
 
     events:{
@@ -44,7 +44,8 @@ window.PostView = Backbone.View.extend({
         "click button#cancel"   :   "cancel",
         "click button#addTag"   :   "addTag",
         "keyup .search-query"   :   "search",
-        "keypress .search-query":   "onkeypress"
+        "keypress .search-query":   "onkeypress",
+        "click .tagItem"        :   "addTag"
     },
 
     savePost:function () {
@@ -55,15 +56,18 @@ window.PostView = Backbone.View.extend({
             tags:$('#tags').val(),
             content:$('#content').val()
         });
+        alert(this.model.isNew());
         if (this.model.isNew()) {
+            alert("Save model");
             var self = this;
             app.postList.create(this.model, {
                 success:function () {
                     alert("Post successfully saved!");
-                    app.navigate('post/' + self.model.title, false);
+                    window.history.back();
                 }
             });
         } else {
+            alert("Update model");
             this.model.save();
         }
 
@@ -71,32 +75,32 @@ window.PostView = Backbone.View.extend({
     },
 
     deletePost:function () {
-        this.model.destroy({
-            success:function () {
-                alert('Post destroyed successfully');
-            }
-        });
-        app.postList.remove(this.model, {
-            success:function () {
-                alert('Post removed from list successfully');
-            }
-        });
+        if(confirm("Are you sure you want to delete this post?")){
+            this.model.destroy({
+                success:function () {
+                    alert('Post deleted successfully');
+                    window.history.back();
+                }
+            });
+        }
         return false;
     },
 
-    addTag:function() {
+    addTag:function(event) {
         //Add the new category to the collection
-
-        alert(this.model.tags.pop());
-        this.model.tags.add({name: this.searchTag.val()});
+        var tagName = $(event.target).text();
+        //alert(this.model.tags.pop());
+       alert(this.model.get('tags'));
+        this.model.get('tags').add(app.tags.get({name:tagName}));
+        alert("Added tag:" + tagName)
         //Clear the input field
         this.searchTag.val('');
     },
 
     search: function () {
-       var key = $('#searchTag').val();
-       console.log('search ' + key);
-       this.searchResults.findByName(key);
+       var name = $('#searchTag').val();
+       console.log('search ' + name);
+       this.searchResults.findByName(name);
        setTimeout(function () {
            $('.dropdown').addClass('open');
        });
@@ -114,5 +118,6 @@ window.PostView = Backbone.View.extend({
     },
 
     cancel:function() {
-        app.showView("main-content", new PostListView({model:app.postList}));
+        window.history.back();
     }
+});

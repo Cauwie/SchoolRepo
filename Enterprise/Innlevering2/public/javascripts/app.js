@@ -29,9 +29,13 @@ var AppRouter = Backbone.Router.extend({
         $('body').click(function () {
             $('.dropdown').removeClass("open");
         });
+
+        this.addButton = $('button#addCategory');
+        this.input = $('input#categoryName');
     },
 
     list:function () {
+        this.currentCategory = null;
         this.before(function() {
             app.showView('#main-content', new PostListView({model:app.postList}));
         });
@@ -63,21 +67,45 @@ var AppRouter = Backbone.Router.extend({
     },
 
     byCategory:function (category) {
-        this.postList.url = "posts/" + category;
-        this.postList.fetch();
+        this.currentCategory = category;
+        app.postList = null;
+        this.before(function () {
+            app.showView('#main-content', new PostListView({model:app.postList}));
+        });
+        /*this.before(function () {
+           // this.postList.url = "posts/" + category;
+           // this.postList.fetch();
 
-        app.showView('#main-content', new PostListView({model:app.postList}));
+            app.postList = new PostListView(app.postList.where({'category':category}));
+
+          */
+
     },
 
     before:function (callback) {
         if (this.postList) {
             if (callback) callback();
         } else {
-            this.postList = new PostCollection();
-            this.postList.fetch({success:function () {
-                $('#main-content').html(new PostListView({model:app.postList}).render().el);
-                if (callback) callback();
-            }});
+            if(this.currentCategory != null) {
+                this.postList = new PostCollection();
+                this.postList.url = "posts/" + this.currentCategory;
+                //alert("TRALA")
+                this.postList.fetch({success:function () {
+                    $('#main-content').html(new PostListView({model:app.postList}).render().el);
+                    //alert(app.postList.length())
+                    if (callback) callback();
+                }});
+            } else {
+                this.postList = new PostCollection();
+                 this.postList.url = "/posts";
+
+                 alert("TRALA");
+                 this.postList.fetch({success:function () {
+                     $('#main-content').html(new PostListView({model:app.postList}).render().el);
+                     //alert(app.postList.length())
+                     if (callback) callback();
+                 }});
+            }
         }
 
         if (this.categories) {
@@ -85,7 +113,7 @@ var AppRouter = Backbone.Router.extend({
         } else {
             this.categories = new CategoryCollection();
             this.categories.fetch({success:function() {
-                $('#sidebar').html(new CategoryView({model:app.categories}).render().el);
+                $('#sidebar-categories').html(new CategoryView({model:app.categories}).render().el);
                 if (callback) callback();
             }});
         }
@@ -95,6 +123,15 @@ var AppRouter = Backbone.Router.extend({
         } else {
             this.users = new UserCollection();
             this.users.fetch({success:function() {
+                if (callback) callback();
+            }});
+        }
+
+        if (this.tags) {
+            if (callback) callback();
+        } else {
+            this.tags = new TagCollection();
+            this.tags.fetch({success:function() {
                 if (callback) callback();
             }});
         }

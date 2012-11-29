@@ -10,12 +10,13 @@ create table category (
 ;
 
 create table post (
-  title                     varchar(255) not null,
+  id                        integer not null,
+  title                     varchar(255),
   date_posted               timestamp,
   content                   varchar(255),
   author_email              varchar(255),
   category_name             varchar(255),
-  constraint pk_post primary key (title))
+  constraint pk_post primary key (id))
 ;
 
 create table tag (
@@ -36,9 +37,9 @@ create table user (
 
 
 create table post_tag (
-  post_title                     varchar(255) not null,
+  post_id                        integer not null,
   tag_name                       varchar(255) not null,
-  constraint pk_post_tag primary key (post_title, tag_name))
+  constraint pk_post_tag primary key (post_id, tag_name))
 ;
 create sequence category_seq;
 
@@ -55,7 +56,7 @@ create index ix_post_category_2 on post (category_name);
 
 
 
-alter table post_tag add constraint fk_post_tag_post_01 foreign key (post_title) references post (title) on delete restrict on update restrict;
+alter table post_tag add constraint fk_post_tag_post_01 foreign key (post_id) references post (id) on delete restrict on update restrict;
 
 alter table post_tag add constraint fk_post_tag_tag_02 foreign key (tag_name) references tag (name) on delete restrict on update restrict;
 

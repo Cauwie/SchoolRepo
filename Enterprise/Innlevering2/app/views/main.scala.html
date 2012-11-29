@@ -15,7 +15,7 @@
 <body>
 
 <!--- Navigation --->
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -29,17 +29,6 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
-
-                   <!--
-                    <li>
-                        <form class="form-search">
-                            <div class="input-append">
-                                <input type="text" class="span2 search-query">
-                                <button type="submit" class="btn">Search</button>
-                            </div>
-                        </form>
-                    </li>
-                    -->
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -50,17 +39,24 @@
 <!--- Page body --->
 <div id="page-container" class="container-fluid">
     <div class="row-fluid">
-        <div id="sidebar" class="span3">
-            <div class="well sidebar-nav">
+        <div id="sidebar-nav" class="span3">
+            <div id="sidebar-add-categories" >
+                <div class="well sidebar-nav">
+                <h2 class="nav-header">Add a new category</h2>
+                <button type="button" id="addCategory" class="btn btn-primary span3 pull-right">
+                    Add
+                </button>
+                <input type="text" id="categoryName" class="span9 pull-left" placeholder="Type category name..."/>
+                </div>
+            </div>
+            <div id="sidebar-categories">
+                <div class="well sidebar-nav">
 
+                </div>
             </div>
         </div>
-        <div id="main-content" class="span9">
-            <h1>Welcome to Yet Another Blog Engine!</h1>
-            <button id="newPostBtn" type="button" class="btn btn-success">
-                New Post
-            </button>
-            <div id="posts">
+        <div id="main-content" class="span6">
+            <div id="well wrapper">
 
             </div>
         </div>
@@ -70,11 +66,7 @@
 
 <!--- Templates --->
 <script type="text/template" id="sidebar-template">
-    <h2 class="nav-header">Add a new category</h2>
-    <input type="text" id="categoryName" class="span9" placeholder="Type category name..."/>
-    <button type="button" id="addCategory" class="btn btn-primary span2">
-        Add
-    </button>
+
 
     <h2 class="nav-header">List of categories:</h2>
 
@@ -89,27 +81,36 @@
 
 <script type="text/template" id="post-item-template">
     <div class="post">
-        <a href="#post/<%= title %>" id="post"><h2><%= title %></h2></a>
-        <%= datePosted %> <br>
+        <a href="#post/<%= title %>" id="post"><h1><%= title %></h1></a>
+        <hr>
+        Posted:<%= datePosted %> <br>
         <%= content %> <br>
-        <%= author.email %> <br>
-        <%= category.name %> <br>
         <br>
         <%= tags %><br>
     </div>
+    <footer class="footer">
+        <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>
+        <div class="pull-right">Category: <%= category.name %> </div>
+    </footer>
 </script>
 
 <script type="text/template" id="post-template">
-    <div class="form-left-col">
-        <legend>Currently editing post <%= post.title %></legend>
+    <% if(post.title == null) { %>
+    <h1>New Post</h1>
+    <% } else { %>
+    <h1><%= post.title%></h1>
+    <% } %>
+
+    <hr class="inverse">
+    <div class="form-left-col span3">
         <label>Title:</label>
-        <input type="text" id="title" name="title" value="<%= post.title %>" required />
+        <input class="span12" type="text" id="title" name="title" value="<%= post.title %>" required />
 
         <label>Date posted:</label>
-        <input type="text" id="datePosted" name="datePosted" value="<%= post.datePosted %>" required/>
+        <input class="span12" type="text" id="datePosted" name="datePosted" value="<%= post.datePosted %>" required/>
 
         <label>Author:</label>
-        <select id="author" name="author" required>
+        <select class="span12" id="author" name="author" required>
             <option value="">--select a author--</option>
             <% _(users).each(function(user) { %>
                 <% if(post.author.email == user.email) { %>
@@ -121,7 +122,7 @@
         </select>
 
         <label>Category:</label>
-        <select id="category" name="category" required>
+        <select class="span12" id="category" name="category" required>
             <option value="">--select a category--</option>
             <% _(categories).each(function(category) { %>
                 <% if(post.category.name == category.name) { %>
@@ -133,24 +134,29 @@
         </select>
 
         <label>Tags:</label>
-
-            <form class="navbar-search pull-right dropdown">
-                <input id="searchTag" type="text" class="search-query dropdown-toggle" placeholder="Search" autocomplete="off">
+            <form class="navbar-search dropdown">
+                <input id="searchTag" type="text" class="search-query dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
             </form>
-            <% _(post.tags).each(function(tag) { %>
-            <span class="label label-info"><%= tag.name %></span>
-            <% }); %>
-        <label>Content:</label>
-        <textarea id="content" name="content"><%= post.content %></textarea>
+        <br>
+        <% _(post.tags).each(function(tag) { %>
+        <span class="label label-info"><%= tag.name %></span>
+        <% }); %>
         <br>
         <button id="save" class="btn btn-success">Save</button>
         <button id="delete" class="btn btn-warning">Delete</button>
         <a href="#" id="cancel" class="btn btn-failure">Cancel</a>
+
+        <br>
+
+    </div>
+    <div class="form-right-col span8">
+        <label>Content:</label>
+        <textarea class="span12" id="content" name="content"><%= post.content %></textarea>
     </div>
 </script>
 
 <script type="text/template" id="tag-item">
-    <span class="label label-info"><%= name %></span>
+    <button class="label label-info tagItem"><%= name %></button>
 </script>
 <!--- End Templates --->
 

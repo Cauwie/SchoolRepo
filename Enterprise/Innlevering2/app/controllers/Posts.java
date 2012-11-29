@@ -4,6 +4,7 @@ import models.Post;
 import models.User;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.joda.time.DateTime;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.BodyParser;
@@ -70,21 +71,28 @@ public class Posts extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Saving Post from JSON: " + request.asText());
 
-        ObjectMapper mapper = new ObjectMapper();
+        JsonNode title = request.get("title");
+        JsonNode content = request.get("content");
+        JsonNode author = request.get("author");
+        JsonNode category = request.get("category");
+
+        Logger.info("Title: " + title.asText());
+        Logger.info("Content: " + content.asText());
+        Logger.info("Author: " + author.asText());
+        Logger.info("Category: " + category.asText());
+
         Post post = null;
         //Attempt to parse JSON
-        try {
-            post = mapper.readValue(request, Post.class);
 
-            if (post.content.isEmpty()) {
-                Logger.error("Missing 'content' node");
-                return badRequest("Missing 'content' node");
-            }
-            post.save();
-        } catch (Exception e) {
+        try {
+            post = Post.create(title.asText(), content.asText(),
+                    author.asText(), category.asText());
+            //post.save();
+        } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
         }
+
         return created(Json.toJson(post));
     }
 
@@ -95,6 +103,28 @@ public class Posts extends Controller {
      */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result update() {
+        /*
+        JsonNode request = request().body().asJson();
+        Logger.info("Saving Post from JSON: " + request.asText());
+
+        JsonNode title = request.get("title");
+        JsonNode content = request.get("content");
+        JsonNode author = request.get("email");
+        JsonNode category = request.get("category");
+
+        Post post = null;
+        //Attempt to parse JSON
+        try {
+            post = new Post(new DateTime(), title.asText(), content.asText(),
+                    author.asText(), category.asText());
+            post.save();
+        } catch (PersistenceException e) {
+            Logger.error(e.getMessage(), e.getCause());
+            return badRequest(e.getCause().getMessage());
+        }
+        return ok(Json.toJson(post)).as("application/json");
+
+           */
         JsonNode request = request().body().asJson();
         Logger.info("Updating Post from JSON: " + request.asText());
 
@@ -109,5 +139,19 @@ public class Posts extends Controller {
             return badRequest(e.getCause().getMessage());
         }
         return ok(Json.toJson(post)).as("application/json");
+    }
+
+    public static Result addTag(String title, String tagName) {
+        //Logger.debug("Addin Category with name: " + title);
+
+        addTag(tagName, title);
+
+        return ok();
+    }
+
+    public static Result removeTag(String title, String tagName) {
+        removeTag(tagName, title);
+
+        return ok();
     }
 }

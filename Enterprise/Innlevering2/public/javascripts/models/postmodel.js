@@ -1,13 +1,27 @@
 //The Category model
 window.Post = Backbone.Model.extend({
+    //idAttribute: 'datePosted',
     urlRoot: '/post',
     defaults:{
-        "title":" ",
-        "datePosted":"",
+        "title":null,
+        "datePosted":null,
         "author":"",
         "content":"",
-        "category":"",
-        "tags":""
+        "category":""
+    },
+
+    addTag:function (name) {
+        var url = (name == '') ? '/post' : "/post/" + this.model.get("id") + "/addTag/" + name;
+        console.log('Adding tag: ' + name);
+        var self = this;
+        $.ajax({
+            url:url,
+            dataType:"json",
+            success:function (data) {
+                console.log("search success: " + data.length);
+                self.reset(data);
+            }
+        });
     },
     //Empty Constructor
     initialize: function() { }
@@ -23,30 +37,3 @@ window.PostCollection = Backbone.Collection.extend({
         return obj;
     }
 });
-
-//The Category collection
-window.SortedPostCollection = Backbone.Collection.extend({
-    model: Post,
-
-    url: "/posts/" + this.name,
-    parse: function (obj) {
-        return obj;
-    }
-});
-
- //The Post model
-    var Post = Backbone.Model.extend({
-        url: '/post',
-
-        //Empty Constructor
-        initialize: function() { }
-
-    });
-
-    //The Post collection
-    var PostList = Backbone.Collection.extend({
-        model: Post,
-        parse: function (obj) {
-            return obj;
-        }
-    });

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.GeneratedValue;
 
 import org.joda.time.DateTime;
 
@@ -20,6 +21,10 @@ public class Post extends Model {
     public static final String TAGS_PROPNAME = "tags";
 
     @Id
+    @GeneratedValue
+    @Constraints.Required
+    public int id;
+
 	@Constraints.Required
 	@Formats.NonEmpty
 	public String title;
