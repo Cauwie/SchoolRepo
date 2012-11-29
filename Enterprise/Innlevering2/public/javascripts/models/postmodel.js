@@ -1,8 +1,9 @@
 //The Category model
 window.Post = Backbone.Model.extend({
     //idAttribute: 'title',
-    url: '/post',
+    urlRoot: '/post',
     defaults:{
+        "id":null,
         "title":null,
         "datePosted":null,
         "author":"",
@@ -22,7 +23,20 @@ window.Post = Backbone.Model.extend({
                 self.reset(data);
             }
         });
+    },    /*
+    methodToURL: {
+        'read': '/post',
+        'create': '/post',
+        'update': '/post',
     },
+
+    sync: function(method, model, options) {
+        options = options || {};
+        options.url = model.methodToURL[method.toLowerCase()];
+
+        Backbone.sync(method, model, options);
+    },
+    */
     //Empty Constructor
     initialize: function() { }
 });

@@ -97,14 +97,13 @@ var AppRouter = Backbone.Router.extend({
                 }});
             } else {
                 this.postList = new PostCollection();
-                 this.postList.url = "/posts";
+                this.postList.url = "/posts";
 
-                 alert("TRALA");
-                 this.postList.fetch({success:function () {
-                     $('#main-content').html(new PostListView({model:app.postList}).render().el);
-                     //alert(app.postList.length())
-                     if (callback) callback();
-                 }});
+                this.postList.fetch({success:function () {
+                 $('#main-content').html(new PostListView({model:app.postList}).render().el);
+                 //alert(app.postList.length())
+                 if (callback) callback();
+                }});
             }
         }
 

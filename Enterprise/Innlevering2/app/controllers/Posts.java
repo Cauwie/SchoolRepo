@@ -104,12 +104,11 @@ public class Posts extends Controller {
      * @return The resulting {@link User} object as JSON
      */
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result update() {
+    public static Result update(String id) {
 
         JsonNode request = request().body().asJson();
         Logger.info("Saving Post from JSON: " + request.asText());
 
-        JsonNode id = request.get("id");
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
@@ -122,7 +121,7 @@ public class Posts extends Controller {
 
         Post post = null;
         try {
-            post = Post.find.byId(id.asText());
+            post = Post.find.byId(id);
             post.title = title.asText();
             post.author = User.find.byId(author.asText());
             post.category = Category.find.byId(category.asText());

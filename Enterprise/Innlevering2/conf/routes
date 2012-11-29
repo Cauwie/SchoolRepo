@@ -21,7 +21,7 @@ GET     /post/:title                        controllers.Posts.retrieve(title:Str
 GET     /posts                              controllers.Posts.retrieveAll()
 GET     /posts/:name                        controllers.Posts.retrieveByCategory(name:String)
 POST    /post                               controllers.Posts.persist()
-PUT     /post                               controllers.Posts.update()
+PUT     /post/:title                        controllers.Posts.update(title:String)
 DELETE  /post/:title                        controllers.Posts.delete(title:String)
 
 # Tag

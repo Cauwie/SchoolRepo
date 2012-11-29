@@ -145,9 +145,11 @@
                 <input id="searchTag" type="text" class="search-query dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
             </form>
         <br>
-        <% _(post.tags).each(function(tag) { %>
-        <span class="label label-info"><%= tag.name %></span>
-        <% }); %>
+        <div id="tags">
+            <% _(post.tags).each(function(tag) { %>
+            <span class="label label-info"><%= tag.name %></span>
+            <% }); %>
+        </div>
         <br>
         <button id="save" class="btn btn-success">Save</button>
         <button id="delete" class="btn btn-warning">Delete</button>

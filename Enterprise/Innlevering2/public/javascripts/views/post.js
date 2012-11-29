@@ -71,6 +71,7 @@ window.PostView = Backbone.View.extend({
         } else {
             alert("Update model");
             this.model.save();
+            window.history.back();
         }
 
         return false;
@@ -82,7 +83,8 @@ window.PostView = Backbone.View.extend({
                 success:function () {
                     alert('Post deleted successfully');
                     window.history.back();
-                }
+                },
+                id:this.model.get('id')
             });
         }
         return false;
@@ -93,8 +95,8 @@ window.PostView = Backbone.View.extend({
         var tagName = $(event.target).text();
         //alert(this.model.tags.pop());
         alert(this.model.get('tags'));
-        this.model.get('tags').add(app.tags.get({name:tagName}));
-        alert("Added tag:" + tagName)
+        this.model.get('tags').set({name:app.tags.get({name:tagName})});
+        alert("Added tag:" + tagName);
         //Clear the input field
         this.searchTag.val('');
     },
