@@ -49,6 +49,7 @@ window.PostView = Backbone.View.extend({
     },
 
     savePost:function () {
+        var isNew = this.model.isNew();
         this.model.set({
             title:$('#title').val(),
             author:$('#author').find(":selected").text(),
@@ -56,8 +57,9 @@ window.PostView = Backbone.View.extend({
             tags:$('#tags').val(),
             content:$('#content').val()
         });
-        alert(this.model.isNew());
-        if (this.model.isNew()) {
+        alert($('#author').find(":selected").text());
+        alert(isNew);
+        if (isNew) {
             alert("Save model");
             var self = this;
             app.postList.create(this.model, {
@@ -90,7 +92,7 @@ window.PostView = Backbone.View.extend({
         //Add the new category to the collection
         var tagName = $(event.target).text();
         //alert(this.model.tags.pop());
-       alert(this.model.get('tags'));
+        alert(this.model.get('tags'));
         this.model.get('tags').add(app.tags.get({name:tagName}));
         alert("Added tag:" + tagName)
         //Clear the input field

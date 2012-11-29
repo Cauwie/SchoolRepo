@@ -1,7 +1,7 @@
 //The Category model
 window.Post = Backbone.Model.extend({
-    //idAttribute: 'datePosted',
-    urlRoot: '/post',
+    //idAttribute: 'title',
+    url: '/post',
     defaults:{
         "title":null,
         "datePosted":null,

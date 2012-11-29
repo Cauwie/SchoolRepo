@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Category;
 import models.Post;
 import models.User;
 import org.codehaus.jackson.JsonNode;
@@ -103,20 +104,31 @@ public class Posts extends Controller {
      */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result update() {
-        /*
+
         JsonNode request = request().body().asJson();
         Logger.info("Saving Post from JSON: " + request.asText());
 
+        JsonNode id = request.get("id");
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
-        JsonNode author = request.get("email");
+        JsonNode author = request.get("author");
         JsonNode category = request.get("category");
+        Logger.info("Title: " + title.asText());
+        Logger.info("Content: " + content.asText());
+
+        Logger.info("Category: " + category.asText());
+        Logger.info("Author: " + author.asText());
 
         Post post = null;
         //Attempt to parse JSON
         try {
-            post = new Post(new DateTime(), title.asText(), content.asText(),
-                    author.asText(), category.asText());
+            post = Post.find.byId(id.asText());
+            post.title = title.asText();
+            post.author = User.find.byId(author.asText());
+            post.category = Category.find.byId(category.asText());
+            post.content = content.asText();
+            //new Post(new DateTime(), title.asText(), ,
+                    //, Category.find.byId(category.asText()));
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
@@ -124,21 +136,23 @@ public class Posts extends Controller {
         }
         return ok(Json.toJson(post)).as("application/json");
 
-           */
-        JsonNode request = request().body().asJson();
-        Logger.info("Updating Post from JSON: " + request.asText());
 
-        Post post = null;
-        ObjectMapper mapper = new ObjectMapper();
-        //Attempt to parse JSON
-        try {
-            post = mapper.readValue(request, Post.class);
-            post.save();
-        } catch (Exception e) {
-            Logger.error(e.getMessage(), e.getCause());
-            return badRequest(e.getCause().getMessage());
-        }
-        return ok(Json.toJson(post)).as("application/json");
+        /*
+                JsonNode request = request().body().asJson();
+                Logger.info("Updating Post from JSON: " + request.asText());
+
+                Post post = null;
+                ObjectMapper mapper = new ObjectMapper();
+                //Attempt to parse JSON
+                try {
+                    post = mapper.readValue(request, Post.class);
+                    post.save();
+                } catch (Exception e) {
+                    Logger.error(e.getMessage(), e.getCause());
+                    return badRequest(e.getCause().getMessage());
+                }
+                return ok(Json.toJson(post)).as("application/json");
+                */
     }
 
     public static Result addTag(String title, String tagName) {
