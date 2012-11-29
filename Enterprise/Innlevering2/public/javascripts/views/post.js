@@ -81,6 +81,7 @@ window.PostView = Backbone.View.extend({
         if(confirm("Are you sure you want to delete this post?")){
             this.model.destroy({
                 success:function () {
+                    app.postList.remove(this.model);
                     alert('Post deleted successfully');
                     window.history.back();
                 },
