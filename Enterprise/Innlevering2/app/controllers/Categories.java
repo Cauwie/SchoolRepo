@@ -50,7 +50,7 @@ public class Categories extends Controller {
     public static Result delete(String name) {
         Logger.debug("Deleting Category with name: " + name);
         Category category = Category.find.byId(name);
-        if (category == null) {
+        if(category == null) {
             return notFound(name);
         }
         category.delete();
@@ -82,26 +82,5 @@ public class Categories extends Controller {
             return badRequest(e.getCause().getMessage());
         }
         return created(Json.toJson(category));
-    }
-
-    public static Result update() {
-        JsonNode request = request().body().asJson();
-        Logger.info("Updating Category from JSON: " + request.asText());
-
-        Category category = null;
-        ObjectMapper mapper = new ObjectMapper();
-        //Attempt to parse JSON
-        try {
-            category = mapper.readValue(request, Category.class);
-            if (category.name.isEmpty()) {
-                Logger.error("Missing 'content' node");
-                return badRequest("Missing 'content' node");
-            }
-            category.save();
-        } catch (Exception e) {
-            Logger.error(e.getMessage(), e.getCause());
-            return badRequest(e.getCause().getMessage());
-        }
-        return ok(Json.toJson(category)).as("application/json");
     }
 }

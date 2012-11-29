@@ -53,7 +53,7 @@ public class Users extends Controller {
             return notFound(email);
         }
         user.delete();
-        return ok(email).as("application/text");
+        return ok(Json.toJson(email)).as("application/text");
     }
 
     /**
@@ -72,7 +72,6 @@ public class Users extends Controller {
         JsonNode passNode = request.get("password");
 
         User user = null;
-        //ObjectMapper mapper = new ObjectMapper();
         //Attempt to parse JSON
         try {
             if (user.email.isEmpty()) {
@@ -80,8 +79,6 @@ public class Users extends Controller {
                 return badRequest("Missing 'content' node");
             }
             user = User.create(fNameNode.asText(), lNameNode.asText(), eMailNode.asText(), passNode.asText());
-            //user = mapper.readValue(request, User.class);
-            //user.save();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
@@ -99,12 +96,21 @@ public class Users extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Updating User from JSON: " + request.asText());
 
+        JsonNode fNameNode = request.get("firstName");
+        JsonNode lNameNode = request.get("lastName");
+        JsonNode eMailNode = request.get("email");
+        JsonNode passNode = request.get("password");
+        JsonNode adminNode = request.get("isAdmin");
+
         User user = null;
-        ObjectMapper mapper = new ObjectMapper();
         //Attempt to parse JSON
         try {
-            user = mapper.readValue(request, User.class);
-            user.save();
+            user = User.find.byId(eMailNode.asText());
+            user.firstName = fNameNode.asText();
+            user.lastName = lNameNode.asText();
+            user.password = passNode.asText();
+            user.isAdmin = adminNode.asBoolean();
+
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
