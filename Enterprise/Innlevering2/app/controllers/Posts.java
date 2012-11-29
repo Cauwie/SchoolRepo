@@ -13,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.persistence.PersistenceException;
+import java.util.Iterator;
 import java.util.List;
 
 import static play.mvc.Results.badRequest;
@@ -113,59 +114,24 @@ public class Posts extends Controller {
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
         JsonNode category = request.get("category");
-        Logger.info("Title: " + title.asText());
-        Logger.info("Content: " + content.asText());
-
-        Logger.info("Category: " + category.asText());
-        Logger.info("Author: " + author.asText());
+        JsonNode tags = request.get("tags");
+        Iterator<JsonNode> i = request.getElements();
+        while (i.hasNext()){
+            Logger.info(i.next().asText());
+        }
 
         Post post = null;
-        //Attempt to parse JSON
         try {
             post = Post.find.byId(id.asText());
             post.title = title.asText();
             post.author = User.find.byId(author.asText());
             post.category = Category.find.byId(category.asText());
             post.content = content.asText();
-            //new Post(new DateTime(), title.asText(), ,
-                    //, Category.find.byId(category.asText()));
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
         }
         return ok(Json.toJson(post)).as("application/json");
-
-
-        /*
-                JsonNode request = request().body().asJson();
-                Logger.info("Updating Post from JSON: " + request.asText());
-
-                Post post = null;
-                ObjectMapper mapper = new ObjectMapper();
-                //Attempt to parse JSON
-                try {
-                    post = mapper.readValue(request, Post.class);
-                    post.save();
-                } catch (Exception e) {
-                    Logger.error(e.getMessage(), e.getCause());
-                    return badRequest(e.getCause().getMessage());
-                }
-                return ok(Json.toJson(post)).as("application/json");
-                */
-    }
-
-    public static Result addTag(String title, String tagName) {
-        //Logger.debug("Addin Category with name: " + title);
-
-        addTag(tagName, title);
-
-        return ok();
-    }
-
-    public static Result removeTag(String title, String tagName) {
-        removeTag(tagName, title);
-
-        return ok();
     }
 }
