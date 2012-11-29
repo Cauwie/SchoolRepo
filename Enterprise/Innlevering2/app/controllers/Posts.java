@@ -60,7 +60,7 @@ public class Posts extends Controller {
             return notFound(title);
         }
         post.delete();
-        return ok(title).as("application/text");
+        return ok(Json.toJson(post)).as("application/text");
     }
 
     /**
@@ -89,7 +89,6 @@ public class Posts extends Controller {
         try {
             post = Post.create(title.asText(), content.asText(),
                     author.asText(), category.asText());
-            //post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
@@ -115,6 +114,7 @@ public class Posts extends Controller {
         JsonNode author = request.get("author");
         JsonNode category = request.get("category");
         JsonNode tags = request.get("tags");
+
         Iterator<JsonNode> i = request.getElements();
         while (i.hasNext()){
             Logger.info(i.next().asText());

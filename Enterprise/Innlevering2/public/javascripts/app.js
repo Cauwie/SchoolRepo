@@ -99,7 +99,6 @@ var AppRouter = Backbone.Router.extend({
                 this.postList = new PostCollection();
                  this.postList.url = "/posts";
 
-                 alert("TRALA");
                  this.postList.fetch({success:function () {
                      $('#main-content').html(new PostListView({model:app.postList}).render().el);
                      //alert(app.postList.length())
