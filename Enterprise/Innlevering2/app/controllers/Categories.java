@@ -68,11 +68,11 @@ public class Categories extends Controller {
         Logger.info("Saving Category from JSON: " + request.asText());
 
         JsonNode nameNode = request.get("name");
-
+        Logger.info("Name: " + nameNode.asText());
         Category category = null;
 
         try {
-            if (category.name.isEmpty()) {
+            if (nameNode.asText().isEmpty()) {
                 Logger.error("Missing 'content' node");
                 return badRequest("Missing 'content' node");
             }

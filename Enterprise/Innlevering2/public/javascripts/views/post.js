@@ -38,14 +38,15 @@ window.PostView = Backbone.View.extend({
     },
 
     events:{
-        "change input"          :   "change",
-        "click button#save"     :   "savePost",
-        "click button#delete"   :   "deletePost",
-        "click button#cancel"   :   "cancel",
-        "click button#addTag"   :   "addTag",
-        "keyup .search-query"   :   "search",
-        "keypress .search-query":   "onkeypress",
-        "click .tagItem"        :   "addTag"
+        "change input"                  :   "change",
+        "click button#save"             :   "savePost",
+        "click button#delete"           :   "deletePost",
+        "click button#cancel"           :   "cancel",
+        "click button#addTag"           :   "addTag",
+        "click button#hidePostErrors"   :   "hideErrors",
+        "keyup .search-query"           :   "search",
+        "keypress .search-query"        :   "onkeypress",
+        "click .tagItem"                :   "addTag"
     },
 
     savePost:function () {
@@ -57,24 +58,56 @@ window.PostView = Backbone.View.extend({
             tags:$('#tags').val(),
             content:$('#content').val()
         });
-        alert($('#author').find(":selected").text());
-        alert(isNew);
-        if (isNew) {
-            alert("Save model");
-            var self = this;
-            app.postList.create(this.model, {
-                success:function () {
-                    alert("Post successfully saved!");
-                    window.history.back();
-                }
-            });
-        } else {
-            alert("Update model");
-            this.model.save();
-            window.history.back();
+        var validPost = this.validatePost();
+        if(validPost){
+            if (isNew) {
+                alert("Save model");
+                var self = this;
+                app.postList.create(this.model, {
+                    success:function () {
+                        alert("Post successfully saved!");
+                        window.history.back();
+                    }
+                });
+            } else {
+                alert("Update model");
+                this.model.save();
+                window.history.back();
+            }
         }
-
         return false;
+    },
+
+    validatePost:function () {
+        alert("Hei");
+        var errors = "";
+        var result = true;
+
+        if(!$('#title').val()) {
+            errors = "You need to define a <b>title</b>. <br>";
+            result = false;
+        }
+        //sjekk forfatter
+        if($('#author').find(":selected").text() == "--select a author--") {
+            errors = errors + "You need to select an <b>author</b> <br>";
+            result = false;
+        }
+        //sjekk kategori
+
+        if($('#category').find(":selected").text() == "--select a category--") {
+            errors = errors + "You need to select a <b>category</b> <br>";
+            result = false;
+        }
+        //sjekk content
+        if($('#content').val().length > 256) {
+            errors = errors + "The maximum length of <b>content</b> is <b>256</b> <br>";
+            result = false;
+        }
+        if(!result) {
+            $("#errorMessages").html(errors);
+            $('#post-errors').show();
+        }
+        return result;
     },
 
     deletePost:function () {
@@ -124,5 +157,9 @@ window.PostView = Backbone.View.extend({
 
     cancel:function() {
         window.history.back();
+    },
+
+    hideErrors:function() {
+        $('#post-errors').hide();
     }
 });

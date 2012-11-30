@@ -2,7 +2,7 @@
 window.CategoryView = Backbone.View.extend({
     //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
     tagName: 'div',
-    className: 'well sidebar-nav',
+    className: 'sidebar-nav',
 
     //Cache the template defined in the main html, using Underscore.JS
     template: _.template($('#sidebar-template').html()),
@@ -26,11 +26,8 @@ window.CategoryView = Backbone.View.extend({
     },
 
     //Called every time the Add-button is clicked
-    onCategoryAdd: function(event) {
-        //Add the new category to the collection
-        app.categories.create({name: app.input.val()});
-
-        //Clear the input field
-        app.input.val('');
+    onCategoryAdd: function() {
+        app.categories.create({name:$('input#categoryName').val()});
+        $('input#categoryName').val('');
     }
 });

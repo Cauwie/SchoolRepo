@@ -1,374 +1,197 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 
 <html>
-<head>
-    <title>Welcome to YABE</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <style>
-        body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-    </style>
-</head>
-<body>
+    <head>
+        <title>Welcome to YABE</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+    </head>
+    <body>
 
-<!--- Navigation --->
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#">YABE!</a>
-            <div class="nav-collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+    <!--- Navigation --->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="#">YABE!</a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
-</div>
-<!--- End navigation --->
+    <!--- End navigation --->
 
-<!--- Page body --->
-<div id="page-container" class="container-fluid">
-    <div class="row-fluid">
-        <div id="sidebar-nav" class="span3">
-            <div id="sidebar-add-categories" >
+    <!--- Page body --->
+    <div id="page-container" class="container-fluid">
+        <div class="row-fluid">
+            <div id="sidebar-nav" class="span3">
+
+            </div>
+            <div id="main-wrapper" class="span6">
+                <div id="main-content" class="span12">
+                </div>
+            </div>
+
+            <div id="right-sidebar" class="span3">
                 <div class="well sidebar-nav">
+                    <a href="#post/new" id="newPost" class="btn btn-success span12 pull-center">
+                        New Post
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- End page body --->
+
+    <!--- Templates --->
+    <script type="text/template" id="sidebar-template">
+        <div id="sidebar-add-categories" >
+            <div class="well sidebar-nav">
                 <h2 class="nav-header">Add a new category</h2>
                 <button type="button" id="addCategory" class="btn btn-primary span3 pull-right">
                     Add
                 </button>
                 <input type="text" id="categoryName" class="span9 pull-left" placeholder="Type category name..."/>
-                </div>
-            </div>
-            <div id="sidebar-categories">
-                <div class="well sidebar-nav">
-
-                </div>
             </div>
         </div>
-        <div id="main-content" class="span6">
-            <div id="well wrapper">
-
-            </div>
-        </div>
-        <div id="right-sidebar" class="span3">
+        <div id="sidebar-categories">
             <div class="well sidebar-nav">
-                <a href="#post/new" id="newPost" class="btn btn-success span12 pull-center">
-                    New Post
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!--- End page body --->
+                <h2 class="nav-header">List of categories:</h2>
 
-<!--- Templates --->
-<script type="text/template" id="sidebar-template">
-
-
-    <h2 class="nav-header">List of categories:</h2>
-
-    <ul class="nav nav-list">
-        <% _.each( categories, function( category ){ %>
-        <li><a href="#category/<%=category.name%>">
-            <%- category.name %>
-        </a></li>
-        <% }); %>
-    </ul>
-</script>
-
-<script type="text/template" id="post-item-template">
-    <div class="post">
-        <a href="#post/<%= title %>" id="post"><h1><%= title %></h1></a>
-        <hr>
-        Posted:<%= datePosted %> <br>
-        <%= content %> <br>
-        <br>
-        <%= tags %><br>
-    </div>
-    <footer class="footer">
-        <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>
-        <div class="pull-right">Category: <%= category.name %> </div>
-    </footer>
-</script>
-
-<script type="text/template" id="post-template">
-    <% if(post.title == null) { %>
-    <h1>New Post</h1>
-    <% } else { %>
-    <h1><%= post.title%></h1>
-    <% } %>
-
-    <hr class="inverse">
-    <div class="form-left-col span3">
-        <label>Title:</label>
-        <input class="span12" type="text" id="title" name="title" value="<%= post.title %>" required />
-
-        <label>Date posted:</label>
-        <input class="span12" type="text" id="datePosted" name="datePosted" value="<%= post.datePosted %>" required/>
-
-        <label>Author:</label>
-        <select class="span12" id="author" name="author" required>
-            <option value="">--select a author--</option>
-            <% _(users).each(function(user) { %>
-                <% if(post.author.email == user.email) { %>
-                    <option value="<%= user.name %>" selected="true"><%= user.email %></option>
-                <% } else { %>
-                    <option value="<%= user.name %>"><%= user.email %></option>
-                <% } %>
-            <% }); %>
-        </select>
-
-        <label>Category:</label>
-        <select class="span12" id="category" name="category" required>
-            <option value="">--select a category--</option>
-            <% _(categories).each(function(category) { %>
-                <% if(post.category.name == category.name) { %>
-                    <option value="<%= category.name %>" selected="true"><%= category.name %></option>
-                <% } else { %>
-                    <option value="<%= category.name %>"><%= category.name %></option>
-                <% } %>
-            <% }); %>
-        </select>
-
-        <label>Tags:</label>
-            <form class="navbar-search dropdown">
-                <input id="searchTag" type="text" class="search-query dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
-            </form>
-        <br>
-        <div id="tags">
-            <% _(post.tags).each(function(tag) { %>
-            <span class="label label-info"><%= tag.name %></span>
-            <% }); %>
-        </div>
-        <br>
-        <button id="save" class="btn btn-success">Save</button>
-        <button id="delete" class="btn btn-warning">Delete</button>
-        <a href="#" id="cancel" class="btn btn-failure">Cancel</a>
-
-        <br>
-
-    </div>
-    <div class="form-right-col span8">
-        <label>Content:</label>
-        <textarea class="span12" id="content" name="content"><%= post.content %></textarea>
-    </div>
-</script>
-
-<script type="text/template" id="tag-item">
-    <button class="label label-info tagItem"><%= name %></button>
-</script>
-<!--- End Templates --->
-
-<!--- Imported at the bottom of the page so loading goes faster in browser -->
-<script src="@routes.Assets.at("javascripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/lib/underscore-1.4.2-dev.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/lib/backbone-0.9.2-dev.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/categorymodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/postmodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/usermodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/tagmodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/post.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/postlist.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/tags.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/categories.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
-</body>
-=======
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Welcome to YABE</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <style>
-        body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-    </style>
-</head>
-<body>
-
-<!--- Navigation --->
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#" onClick="window.location='/'">YABE!</a>
-            <div class="nav-collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                <ul class="nav nav-list">
+                    <% _.each( categories, function( category ){ %>
+                    <li><a href="#category/<%=category.name%>">
+                        <%- category.name %>
+                    </a></li>
+                    <% }); %>
                 </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </div>
-</div>
-<!--- End navigation --->
-
-<!--- Page body --->
-<div id="page-container" class="container-fluid">
-    <div class="row-fluid">
-        <div id="sidebar-nav" class="span3">
-            <div id="sidebar-add-categories" >
-                <div class="well sidebar-nav">
-                <h2 class="nav-header">Add a new category</h2>
-                <button type="button" id="addCategory" class="btn btn-primary span3 pull-right">
-                    Add
-                </button>
-                <input type="text" id="categoryName" class="span9 pull-left" placeholder="Type category name..."/>
-                </div>
-            </div>
-            <div id="sidebar-categories">
-                <div class="well sidebar-nav">
-
-                </div>
             </div>
         </div>
-        <div id="main-content" class="span6">
-            <div id="well wrapper">
+    </script>
 
+    <script type="text/template" id="post-item-template">
+        <div class="post">
+            <a href="#post/<%= title %>" id="post"><h1><%= title %></h1></a>
+            <hr>
+            Posted:<%= datePosted %> <br>
+            <%= content %> <br>
+            <br>
+            <%= tags %><br>
+        </div>
+        <footer class="footer">
+            <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>
+            <div class="pull-right">Category: <%= category.name %> </div>
+        </footer>
+    </script>
+
+    <script type="text/template" id="post-template">
+        <% if(post.title == null) { %>
+        <h1>New Post</h1>
+        <% } else { %>
+        <h1><%= post.title%></h1>
+        <% } %>
+
+        <hr class="inverse">
+        <div id="post-errors" class="alert alert-error span11" hidden>
+            <button id="hidePostErrors" type="button" class="close" >×</button>
+            <h4>Validation errors:</h4>
+            <div id="errorMessages">
             </div>
         </div>
-        <div id="right-sidebar" class="span3">
-            <div class="well sidebar-nav">
-                <a href="#post/new" id="newPost" class="btn btn-success span12 pull-center">
-                    New Post
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<!--- End page body --->
+        <div class="form-left-col span11">
+            <label>Title:</label>
+            <input class="span12" type="text" id="title" name="title" value="<%= post.title %>" required />
+            <label>Author:</label>
+            <select class="span12" id="author" name="author" required>
+                <option value="">--select a author--</option>
+                <% _(users).each(function(user) { %>
+                    <% if(post.author.email == user.email) { %>
+                        <option value="<%= user.name %>" selected="true"><%= user.email %></option>
+                    <% } else { %>
+                        <option value="<%= user.name %>"><%= user.email %></option>
+                    <% } %>
+                <% }); %>
+            </select>
 
-<!--- Templates --->
-<script type="text/template" id="sidebar-template">
+            <label>Category:</label>
+            <select class="span12" id="category" name="category" required>
+                <option value="">--select a category--</option>
+                <% _(categories).each(function(category) { %>
+                    <% if(post.category.name == category.name) { %>
+                        <option value="<%= category.name %>" selected="true"><%= category.name %></option>
+                    <% } else { %>
+                        <option value="<%= category.name %>"><%= category.name %></option>
+                    <% } %>
+                <% }); %>
+            </select>
 
-
-    <h2 class="nav-header">List of categories:</h2>
-
-    <ul class="nav nav-list">
-        <% _.each( categories, function( category ){ %>
-        <li><a href="#category/<%=category.name%>">
-            <%- category.name %>
-        </a></li>
-        <% }); %>
-    </ul>
-</script>
-
-<script type="text/template" id="post-item-template">
-    <div class="post">
-        <a href="#post/<%= title %>" id="post"><h1><%= title %></h1></a>
-        <hr>
-        Posted:<%= datePosted %> <br>
-        <%= content %> <br>
-        <br>
-        <%= tags %><br>
-    </div>
-    <footer class="footer">
-        <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>
-        <div class="pull-right">Category: <%= category.name %> </div>
-    </footer>
-</script>
-
-<script type="text/template" id="post-template">
-    <% if(post.title == null) { %>
-    <h1>New Post</h1>
-    <% } else { %>
-    <h1><%= post.title%></h1>
-    <% } %>
-
-    <hr class="inverse">
-    <div class="form-left-col span3">
-        <label>Title:</label>
-        <input class="span12" type="text" id="title" name="title" value="<%= post.title %>" required />
-
-        <label>Date posted:</label>
-        <input class="span12" type="text" id="datePosted" name="datePosted" value="<%= post.datePosted %>" required/>
-
-        <label>Author:</label>
-        <select class="span12" id="author" name="author" required>
-            <option value="">--select a author--</option>
-            <% _(users).each(function(user) { %>
-                <% if(post.author.email == user.email) { %>
-                    <option value="<%= user.name %>" selected="true"><%= user.email %></option>
-                <% } else { %>
-                    <option value="<%= user.name %>"><%= user.email %></option>
-                <% } %>
-            <% }); %>
-        </select>
-
-        <label>Category:</label>
-        <select class="span12" id="category" name="category" required>
-            <option value="">--select a category--</option>
-            <% _(categories).each(function(category) { %>
-                <% if(post.category.name == category.name) { %>
-                    <option value="<%= category.name %>" selected="true"><%= category.name %></option>
-                <% } else { %>
-                    <option value="<%= category.name %>"><%= category.name %></option>
-                <% } %>
-            <% }); %>
-        </select>
-
-        <label>Tags:</label>
+            <label>Tags:</label>
             <form class="navbar-search dropdown">
                 <input id="searchTag" type="text" class="search-query dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
             </form>
-        <br>
-        <% _(post.tags).each(function(tag) { %>
-        <span class="label label-info"><%= tag.name %></span>
-        <% }); %>
-        <br>
-        <button id="save" class="btn btn-success">Save</button>
-        <button id="delete" class="btn btn-warning">Delete</button>
-        <a href="#" id="cancel" class="btn btn-failure">Cancel</a>
+            <br>
+            <div id="tags">
+                <% _(post.tags).each(function(tag) { %>
+                <span class="label label-info"><%= tag.name %></span>
+                <% }); %>
+            </div>
+            <br>
 
-        <br>
+        </div>
+        <div class="form-right-col span11">
+            <label>Content:</label>
+            <textarea class="span12" id="content" name="content"><%= post.content %></textarea>
+        </div>
+        <div class="span11">
+            <button id="save" class="pull-right btn btn-success">Save</button>
+            <% if(post.id != null) { %>
+                <button id="delete" class="pull-right btn btn-warning">Delete</button>
+            <% }  %>
+            <a href="#" id="cancel" class="pull-right btn btn-failure">Cancel</a>
+        </div>
+    </script>
 
-    </div>
-    <div class="form-right-col span8">
-        <label>Content:</label>
-        <textarea class="span12" id="content" name="content"><%= post.content %></textarea>
-    </div>
-</script>
+    <script type="text/template" id="tag-item">
+        <button class="label label-info tagItem"><%= name %></button>
+    </script>
 
-<script type="text/template" id="tag-item">
-    <button class="label label-info tagItem"><%= name %></button>
-</script>
-<!--- End Templates --->
+    <script type="text/template" id="alert-template">
 
-<!--- Imported at the bottom of the page so loading goes faster in browser -->
-<script src="@routes.Assets.at("javascripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/lib/underscore-1.4.2-dev.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/lib/backbone-0.9.2-dev.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/categorymodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/postmodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/usermodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/models/tagmodel.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/post.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/postlist.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/tags.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/views/categories.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
-<script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
-</body>
->>>>>>> f4b0720104d28afb7c0b68bb4da8f72199c6d6a0
+    </script>
+    <!--- End Templates --->
+
+    <!--- Imported at the bottom of the page so loading goes faster in browser -->
+    <script src="@routes.Assets.at("javascripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/lib/underscore-1.4.2-dev.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/lib/backbone-0.9.2-dev.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/models/categorymodel.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/models/postmodel.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/models/usermodel.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/models/tagmodel.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.at("javascripts/views/error.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/views/post.js")" type="text/javascript"></script>
+
+    <script src="@routes.Assets.at("javascripts/views/postlist.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/views/tags.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/views/categories.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")" type="text/javascript"></script>
+    </body>
+
 </html>
