@@ -2,11 +2,8 @@ package models;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
+import javax.validation.Constraint;
 
 import org.joda.time.DateTime;
 
@@ -27,6 +24,7 @@ public class Post extends Model {
 
 	@Constraints.Required
 	@Formats.NonEmpty
+    @Column(unique=true)
 	public String title;
 	
 	@Formats.DateTime(pattern="yyyy-MM-dd")
@@ -44,7 +42,7 @@ public class Post extends Model {
 	@ManyToOne
     public Category category;
 	
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.PERSIST)
     public List<Tag> tags;
 	
 	public static Finder<String, Post> find = new Finder<String, Post>(

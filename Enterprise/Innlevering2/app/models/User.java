@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import helper.CustomDateTimeDeserializer;
 import helper.CustomDateTimeSerializer;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
@@ -65,5 +66,9 @@ public class User extends Model {
         User user = new User(firstName, lastName, new DateTime(), email, password, false);
         user.save();
         return user;
+    }
+
+    public void delete() {
+        super.delete();
     }
 }

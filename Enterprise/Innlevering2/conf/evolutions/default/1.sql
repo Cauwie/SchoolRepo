@@ -16,6 +16,7 @@ create table post (
   content                   varchar(255),
   author_email              varchar(255),
   category_name             varchar(255),
+  constraint uq_post_title unique (title),
   constraint pk_post primary key (id))
 ;
 

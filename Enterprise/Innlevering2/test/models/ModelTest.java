@@ -135,7 +135,7 @@ public class
         assertThat(aksel).isNotNull();
         aksel.firstName = "testname";
         assertThat(aksel.firstName).isEqualTo("testname");
-        aksel.save();
+        aksel.update();
 
         User newAksel = User.find.byId(EMAIL);
         assertThat(newAksel).isNotNull();
@@ -204,6 +204,7 @@ public class
 
         Tag tag = Tag.find.byId(TAG_ONE);
 
+        assertThat(tag).isNotNull();
         assertThat(tag.name).isEqualTo(TAG_ONE);
         DateTime createDate = new DateTime(2012, 10, 10, 0, 0);
         compareDate(createDate, tag.dateCreated);
@@ -223,12 +224,13 @@ public class
     @Test
     public void testDeleteTag() {
         Tag tag = Tag.find.byId(TAG_ONE);
-        assertThat(tag.name).isNotNull();
+        assertThat(tag).isNotNull();
+        assertThat(tag.name).isNotEmpty();
         tag.delete();
 
         Tag noTag = Tag.find.byId(TAG_ONE);
-        assertThat(tag.name).isNotEqualTo(TAG_ONE);
-        assertThat(tag).isNull();
+        assertThat(noTag).isNull();
+        assertThat(noTag.name).isNotEqualTo(TAG_ONE);
     }
 
     @Test
@@ -237,8 +239,9 @@ public class
 
         List<Post> postList = Post.find.all();
         assertThat(postList).isNotEmpty();
+        assertThat(postList.get(0).title).isEqualTo(POST_ONE);
 
-        Post postOne = Post.find.byId(POST_ONE);
+        Post postOne = Post.find.all().get(0);
 
         assertThat(postOne).isNotNull();
         compareDate(postOne.datePosted, new DateTime());
@@ -271,7 +274,7 @@ public class
     @Test
     public void testAddRemoveTags() {
         createPost();
-        Post post = Post.find.byId(POST_ONE);
+        Post post = Post.find.all().get(0);
         assertThat(post.tags).hasSize(1);
 
         String tagTwo = "Tag Two";
