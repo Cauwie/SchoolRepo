@@ -45,23 +45,23 @@ public class Posts extends Controller {
         return ok(Json.toJson(posts)).as("application/json");
     }
 
-    public static Result retrieve(String title) {
-        Logger.debug("Getting Category with name: " + title);
-        Post post = Post.find.byId(title);
+    public static Result retrieve(int id) {
+        Logger.debug("Getting Category with name: " + id);
+        Post post = Post.find.byId(id);
         if (post == null) {
-            return notFound(title);
+            return notFound(String.valueOf(id));
         }
         return ok(Json.toJson(post)).as("application/json");
     }
 
-    public static Result delete(String title) {
-        Logger.debug("Deleting Post with title: " + title);
-        Post post = Post.find.byId(title);
+    public static Result delete(int id) {
+        Logger.debug("Deleting Post with title: " + id);
+        Post post = Post.find.byId(id);
         if (post == null) {
-            return notFound(title);
+            return notFound(String.valueOf(id));
         }
         post.delete();
-        return ok(title).as("application/text");
+        return ok(String.valueOf(id)).as("application/text");
     }
 
     /**
@@ -90,13 +90,14 @@ public class Posts extends Controller {
 
         try {
             post = Post.create(title.asText(), content.asText(),
-                    author.asText(), category.asText());
+                    author.get("email").asText(), category.get("name").asText());
 
             Iterator<JsonNode> tagsIterator = tags.getElements();
 
             while (tagsIterator.hasNext()) {
                 JsonNode n = tagsIterator.next();
-                Post.addTag(post.id, n.get("id").asText());
+                Post.addTag(post.id, n.get("name").asText());
+                Logger.info(n.asText());
             }
             post.save();
         } catch (PersistenceException e) {
@@ -113,7 +114,7 @@ public class Posts extends Controller {
      * @return The resulting {@link User} object as JSON
      */
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result update(String id) {
+    public static Result update(int id) {
 
         JsonNode request = request().body().asJson();
         Logger.info("Saving Post from JSON: " + request.asText());
@@ -123,18 +124,24 @@ public class Posts extends Controller {
         JsonNode author = request.get("author");
         JsonNode category = request.get("category");
         JsonNode tags = request.get("tags");
-        Iterator<JsonNode> i = request.getElements();
-        while (i.hasNext()){
-            Logger.info(i.next().asText());
-        }
+
 
         Post post = null;
         try {
             post = Post.find.byId(id);
+
             post.title = title.asText();
             post.author = User.find.byId(author.asText());
             post.category = Category.find.byId(category.asText());
             post.content = content.asText();
+
+            Iterator<JsonNode> tagsIterator = tags.getElements();
+
+            while (tagsIterator.hasNext()) {
+                JsonNode n = tagsIterator.next();
+                Post.addTag(post.id, n.get("name").asText());
+                Logger.info(tagsIterator.next().asText());
+            }
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());

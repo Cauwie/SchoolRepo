@@ -113,7 +113,7 @@ public class
     public void testCreatePost() {
         Post createdPost = Post.create("title", "content", EMAIL, CATEGORY_ONE);
 
-        Post post = Post.find.byId(String.valueOf(createdPost.id));
+        Post post = Post.find.byId(createdPost.id);
         assertThat(post).isNotNull();
         assertThat(post.title).isEqualToIgnoringCase("title");
         assertThat(post.author.email).isEqualToIgnoringCase(EMAIL);
@@ -123,27 +123,28 @@ public class
 
     @Test
     public void testUpdatePost() {
-        String testName = "testname";
-        User aksel = User.find.byId(EMAIL);
-        assertThat(aksel).isNotNull();
-        aksel.firstName = testName;
-        assertThat(aksel.firstName).isEqualTo(testName);
-        aksel.save();
+        createPost();
+        String testContent = "testContent";
+        Post post = Post.find.byId(POST_ONE_ID);
+        assertThat(post).isNotNull();
+        post.content = testContent;
+        assertThat(post.content).isEqualTo(testContent);
+        post.save();
 
-        User newAksel = User.find.byId(EMAIL);
-        assertThat(newAksel).isNotNull();
-        assertThat(newAksel.firstName).isEqualTo(testName);
+        Post postTwo = Post.find.byId(POST_ONE_ID);
+        assertThat(postTwo).isNotNull();
+        assertThat(postTwo.content).isEqualTo(testContent);
     }
 
     @Test
     public void testDeletePost() {
         Post createdPost = Post.create("title", "content", EMAIL, CATEGORY_ONE);
 
-        Post post = Post.find.byId(String.valueOf(createdPost.id));
+        Post post = Post.find.byId(createdPost.id);
         assertThat(post).isNotNull();
         post.delete();
 
-        post = Post.find.byId(String.valueOf(createdPost.id));
+        post = Post.find.byId(createdPost.id);
         assertThat(post).isNull();
     }
 
@@ -301,7 +302,7 @@ public class
     public void testAddRemoveTags() {
         createTag();
         createPost();
-        Post post = Post.find.byId(String.valueOf(POST_ONE_ID));
+        Post post = Post.find.byId(POST_ONE_ID);
         assertThat(post).isNotNull();
         assertThat(post.tags).hasSize(1);
 
@@ -310,17 +311,17 @@ public class
 
         //Test add
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId(String.valueOf(POST_ONE_ID));
+        post = Post.find.byId(POST_ONE_ID);
         assertThat(post.tags).hasSize(2);
 
         //Check that we cant add same tag twice
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId(String.valueOf(POST_ONE_ID));
+        post = Post.find.byId(POST_ONE_ID);
         assertThat(post.tags).hasSize(2);
 
         //Test remove
         Post.removeTag(POST_ONE_ID, TAG_ONE);
-        post = Post.find.byId(String.valueOf(POST_ONE_ID));
+        post = Post.find.byId(POST_ONE_ID);
         assertThat(post.tags).hasSize(1);
         assertThat(post.tags.get(0).name).isEqualTo(tagTwo);
     }
