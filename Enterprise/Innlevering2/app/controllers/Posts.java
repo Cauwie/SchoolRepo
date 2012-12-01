@@ -72,6 +72,11 @@ public class Posts extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result persist() {
         JsonNode request = request().body().asJson();
+
+        if (request.isNull()) {
+            Logger.info("The Request was empty.");
+            return badRequest("The Request was empty.");
+        }
         Logger.info("Saving Post from JSON: " + request.asText());
 
         JsonNode title = request.get("title");
@@ -90,14 +95,14 @@ public class Posts extends Controller {
 
         try {
             post = Post.create(title.asText(), content.asText(),
-                    author.get("email").asText(), category.get("name").asText());
+                    author.asText(), category.asText());
 
             Iterator<JsonNode> tagsIterator = tags.getElements();
 
             while (tagsIterator.hasNext()) {
-                JsonNode n = tagsIterator.next();
-                Post.addTag(post.id, n.get("name").asText());
-                Logger.info(n.asText());
+                JsonNode tag = tagsIterator.next();
+                Post.addTag(post.id, tag.asText());
+                Logger.info(tag.asText());
             }
             post.save();
         } catch (PersistenceException e) {
@@ -117,6 +122,12 @@ public class Posts extends Controller {
     public static Result update(String id) {
 
         JsonNode request = request().body().asJson();
+
+        if (request.isNull()) {
+            Logger.info("The Request was empty.");
+            return badRequest("The Request was empty.");
+        }
+
         Logger.info("Saving Post from JSON: " + request.asText());
 
         JsonNode title = request.get("title");
