@@ -87,7 +87,6 @@ public class Posts extends Controller {
         Logger.info("Tags: " + tags.asText());
 
         Post post = null;
-        //Attempt to parse JSON
 
         try {
             post = Post.create(title.asText(), content.asText(),
@@ -99,7 +98,7 @@ public class Posts extends Controller {
                 JsonNode n = tagsIterator.next();
                 Post.addTag(post.id, n.get("id").asText());
             }
-            //post.save();
+            post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());

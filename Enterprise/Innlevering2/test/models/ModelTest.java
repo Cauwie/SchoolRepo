@@ -6,6 +6,7 @@ import com.avaje.ebean.config.ServerConfig;
 import com.avaje.ebean.config.dbplatform.H2Platform;
 import com.avaje.ebeaninternal.api.SpiEbeanServer;
 import com.avaje.ebeaninternal.server.ddl.DdlGenerator;
+import com.sun.corba.se.impl.logging.POASystemException;
 import helper.YamlJodaTimeConstructor;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -106,6 +107,44 @@ public class
 
         DateTime createDate = new DateTime(1950, 06, 22, 0, 0);
         compareDate(aksel.dateOfBirth, createDate);
+    }
+
+    @Test
+    public void testCreatePost() {
+        Post createdPost = Post.create("title", "content", EMAIL, CATEGORY_ONE);
+
+        Post post = Post.find.byId(String.valueOf(createdPost.id));
+        assertThat(post).isNotNull();
+        assertThat(post.title).isEqualToIgnoringCase("title");
+        assertThat(post.author.email).isEqualToIgnoringCase(EMAIL);
+        assertThat(post.category.name).isEqualToIgnoringCase(CATEGORY_ONE);
+        assertThat(post.tags).isEmpty();
+    }
+
+    @Test
+    public void testUpdatePost() {
+        String testName = "testname";
+        User aksel = User.find.byId(EMAIL);
+        assertThat(aksel).isNotNull();
+        aksel.firstName = testName;
+        assertThat(aksel.firstName).isEqualTo(testName);
+        aksel.save();
+
+        User newAksel = User.find.byId(EMAIL);
+        assertThat(newAksel).isNotNull();
+        assertThat(newAksel.firstName).isEqualTo(testName);
+    }
+
+    @Test
+    public void testDeletePost() {
+        Post createdPost = Post.create("title", "content", EMAIL, CATEGORY_ONE);
+
+        Post post = Post.find.byId(String.valueOf(createdPost.id));
+        assertThat(post).isNotNull();
+        post.delete();
+
+        post = Post.find.byId(String.valueOf(createdPost.id));
+        assertThat(post).isNull();
     }
 
     @Test
@@ -262,7 +301,7 @@ public class
     public void testAddRemoveTags() {
         createTag();
         createPost();
-        Post post = Post.find.byId("" + POST_ONE_ID);
+        Post post = Post.find.byId(String.valueOf(POST_ONE_ID));
         assertThat(post).isNotNull();
         assertThat(post.tags).hasSize(1);
 
@@ -271,17 +310,17 @@ public class
 
         //Test add
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId("" + POST_ONE_ID);
+        post = Post.find.byId(String.valueOf(POST_ONE_ID));
         assertThat(post.tags).hasSize(2);
 
         //Check that we cant add same tag twice
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId("" + POST_ONE_ID);
+        post = Post.find.byId(String.valueOf(POST_ONE_ID));
         assertThat(post.tags).hasSize(2);
 
         //Test remove
         Post.removeTag(POST_ONE_ID, TAG_ONE);
-        post = Post.find.byId("" + POST_ONE_ID);
+        post = Post.find.byId(String.valueOf(POST_ONE_ID));
         assertThat(post.tags).hasSize(1);
         assertThat(post.tags.get(0).name).isEqualTo(tagTwo);
     }
