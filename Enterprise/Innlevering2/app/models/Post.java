@@ -47,7 +47,7 @@ public class Post extends Model {
     public List<Tag> tags;
 	
 	public static Finder<String, Post> find = new Finder<String, Post>(
-			String.class, Post.class);
+            String.class, Post.class);
 
     public Post() {
         super();
@@ -70,9 +70,7 @@ public class Post extends Model {
     public static Post create(String title, String content, String authorEmail, String categoryName) {
         Logger.info("Lagrer post");
         Post post = new Post(new DateTime(), title, content,
-                    User.find.byId(authorEmail), Category.find.byId(categoryName)
-                );
-
+                    User.find.byId(authorEmail), Category.find.byId(categoryName));
         post.save();
         return post;
     }
@@ -84,14 +82,14 @@ public class Post extends Model {
      * @param tagName Name of {@link Tag} to add. Must exist in database
      */
     public static void addTag(int id, String tagName) {
-        // Why use this? Post p = Post.find.setId(id).fetch("tags", "name").findUnique();
+        // Why use this? Post post = Post.find.setId(id).fetch("tags", "name").findUnique();
         Tag tag = Tag.find.byId(tagName);
         if(tag == null) return;
 
-        Post p = Post.find.byId("" + id);
-        if(!p.tags.contains(tag)) {
-            p.tags.add(tag);
-            p.saveManyToManyAssociations(TAGS_PROPNAME);
+        Post post = Post.find.byId(String.valueOf(id));
+        if(!post.tags.contains(tag)) {
+            post.tags.add(tag);
+            post.saveManyToManyAssociations(TAGS_PROPNAME);
         }
     }
 
@@ -101,7 +99,7 @@ public class Post extends Model {
      * @param tagName tag to remove
      */
     public static void removeTag(int id, String tagName) {
-        Post p = Post.find.byId("" + id);
+        Post p = Post.find.byId(String.valueOf(id));
         p.tags.remove(Tag.find.byId(tagName));
         p.saveManyToManyAssociations(TAGS_PROPNAME);
     }

@@ -46,23 +46,23 @@ public class Posts extends Controller {
         return ok(Json.toJson(posts)).as("application/json");
     }
 
-    public static Result retrieve(String title) {
-        Logger.debug("Getting Category with name: " + title);
-        Post post = Post.find.byId(title);
+    public static Result retrieve(String id) {
+        Logger.debug("Getting Category with name: " + id);
+        Post post = Post.find.byId(id);
         if (post == null) {
-            return notFound(title);
+            return notFound(id);
         }
         return ok(Json.toJson(post)).as("application/json");
     }
 
-    public static Result delete(String title) {
-        Logger.debug("Deleting Post with title: " + title);
-        Post post = Post.find.byId(title);
+    public static Result delete(String id) {
+        Logger.debug("Deleting Post with title: " + id);
+        Post post = Post.find.byId(id);
         if (post == null) {
-            return notFound(title);
+            return notFound(id);
         }
         post.delete();
-        return ok(title).as("application/text");
+        return ok(id).as("application/text");
     }
 
     /**
@@ -73,8 +73,13 @@ public class Posts extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result persist() {
         JsonNode request = request().body().asJson();
-        //Logger.info("Saving Post from JSON: " + request.asText());
-        Logger.info("Saving Post from JSON: " + request);
+
+        if (request.isNull()) {
+            Logger.info("The Request was empty.");
+            return badRequest("The Request was empty.");
+        }
+        Logger.info("Saving Post from JSON: " + request.asText());
+
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
@@ -118,28 +123,29 @@ public class Posts extends Controller {
     public static Result update(String id) {
 
         JsonNode request = request().body().asJson();
-        Logger.info("Saving Post from JSON: " + request);
+
+        if (request.isNull()) {
+            Logger.info("The Request was empty.");
+            return badRequest("The Request was empty.");
+        }
+
+        Logger.info("Saving Post from JSON: " + request.asText());
 
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
         JsonNode category = request.get("category");
         JsonNode tags = request.get("tags");
-        Iterator<JsonNode> i = request.getElements();
-
-        while (i.hasNext()){
-            Logger.info(i.next().asText());
-        }
 
         Post post = null;
         try {
             post = Post.find.byId(id);
+
             post.title = title.asText();
-            post.author = User.find.byId(author.asText());
-            post.category = Category.find.byId(category.asText());
+            post.author = User.find.byId(author.get("email").asText());
+            post.category = Category.find.byId(category.get("name").asText());
             post.content = content.asText();
 
-            Logger.info("Is array: " + tags);
             Iterator<JsonNode> tagsIterator = tags.getElements();
             while (tagsIterator.hasNext()) {
                 JsonNode n = tagsIterator.next();

@@ -123,16 +123,17 @@ public class
 
     @Test
     public void testUpdatePost() {
-        String testName = "testname";
-        User aksel = User.find.byId(EMAIL);
-        assertThat(aksel).isNotNull();
-        aksel.firstName = testName;
-        assertThat(aksel.firstName).isEqualTo(testName);
-        aksel.save();
+        createPost();
+        String testContent = "testContent";
+        Post post = Post.find.byId(String.valueOf(POST_ONE_ID));
+        assertThat(post).isNotNull();
+        post.content = testContent;
+        assertThat(post.content).isEqualTo(testContent);
+        post.save();
 
-        User newAksel = User.find.byId(EMAIL);
-        assertThat(newAksel).isNotNull();
-        assertThat(newAksel.firstName).isEqualTo(testName);
+        Post postTwo = Post.find.byId(String.valueOf(POST_ONE_ID));
+        assertThat(postTwo).isNotNull();
+        assertThat(postTwo.content).isEqualTo(testContent);
     }
 
     @Test
