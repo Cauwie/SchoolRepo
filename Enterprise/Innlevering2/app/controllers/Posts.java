@@ -102,8 +102,8 @@ public class Posts extends Controller {
             Iterator<JsonNode> tagsIterator = tags.getElements();
             Logger.info("Legger inn tags...");
             while (tagsIterator.hasNext()) {
-                JsonNode n = tagsIterator.next();
-                Post.addTag(post.id, n.get("name").asText());
+                JsonNode tag = tagsIterator.next();
+                Post.addTag(post.id, tag.get("name").asText());
             }
             post.save();
         } catch (PersistenceException e) {
@@ -142,15 +142,15 @@ public class Posts extends Controller {
             post = Post.find.byId(id);
 
             post.title = title.asText();
-            post.author = User.find.byId(author.get("email").asText());
-            post.category = Category.find.byId(category.get("name").asText());
+            post.author = User.find.byId(author.asText());
+            post.category = Category.find.byId(category.asText());
             post.content = content.asText();
 
             Iterator<JsonNode> tagsIterator = tags.getElements();
             while (tagsIterator.hasNext()) {
-                JsonNode n = tagsIterator.next();
-                Logger.info(n.get("name").asText());
-                Post.addTag(post.id, n.get("name").asText());
+                JsonNode tag = tagsIterator.next();
+                Logger.info(tag.get("name").asText());
+                Post.addTag(post.id, tag.get("name").asText());
             }
 
             post.save();
