@@ -91,7 +91,11 @@
             Posted:<%= datePosted %> <br>
             <%= content %> <br>
             <br>
-            <%= tags %><br>
+            <div>
+                <% _(tags).each(function(tag) { %>
+                <span class="tag label label-info"><%= tag.name %></span>
+                <% }); %>
+            </div><br>
         </div>
         <footer class="footer">
             <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>

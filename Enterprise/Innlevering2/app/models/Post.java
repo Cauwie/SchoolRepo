@@ -7,6 +7,7 @@ import javax.validation.Constraint;
 
 import org.joda.time.DateTime;
 
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -67,6 +68,7 @@ public class Post extends Model {
      * @param categoryName is the name (primary key) of the {@link Category} category, must exist in database
      */
     public static Post create(String title, String content, String authorEmail, String categoryName) {
+        Logger.info("Lagrer post");
         Post post = new Post(new DateTime(), title, content,
                     User.find.byId(authorEmail), Category.find.byId(categoryName));
         post.save();

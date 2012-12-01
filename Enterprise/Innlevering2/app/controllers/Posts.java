@@ -12,6 +12,7 @@ import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.util.parsing.json.JSONArray;
 
 import javax.persistence.PersistenceException;
 import java.util.Iterator;
@@ -95,15 +96,15 @@ public class Posts extends Controller {
         Post post = null;
 
         try {
+            Logger.info("Legger inn post...");
             post = Post.create(title.asText(), content.asText(),
                     author.asText(), category.asText());
-
+            Logger.info("Henter inn tags...");
             Iterator<JsonNode> tagsIterator = tags.getElements();
-
+            Logger.info("Legger inn tags...");
             while (tagsIterator.hasNext()) {
-                JsonNode tag = tagsIterator.next();
-                Post.addTag(post.id, tag.asText());
-                Logger.info(tag.asText());
+                JsonNode n = tagsIterator.next();
+                Post.addTag(post.id, n.get("name").asText());
             }
             post.save();
         } catch (PersistenceException e) {
@@ -147,12 +148,12 @@ public class Posts extends Controller {
             post.content = content.asText();
 
             Iterator<JsonNode> tagsIterator = tags.getElements();
-
             while (tagsIterator.hasNext()) {
-                JsonNode tagNode = tagsIterator.next();
-                Post.addTag(post.id, tagNode.get("name").asText());
-                Logger.info(tagsIterator.next().asText());
+                JsonNode n = tagsIterator.next();
+                Logger.info(n.get("name").asText());
+                Post.addTag(post.id, n.get("name").asText());
             }
+
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
