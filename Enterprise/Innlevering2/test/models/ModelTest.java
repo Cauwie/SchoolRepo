@@ -132,15 +132,16 @@ public class
 
     @Test
     public void testUpdateUser() {
+        String testName = "testname";
         User aksel = User.find.byId(EMAIL);
         assertThat(aksel).isNotNull();
-        aksel.firstName = "testname";
-        assertThat(aksel.firstName).isEqualTo("testname");
-        aksel.update();
+        aksel.firstName = testName;
+        assertThat(aksel.firstName).isEqualTo(testName);
+        aksel.save();
 
         User newAksel = User.find.byId(EMAIL);
         assertThat(newAksel).isNotNull();
-        assertThat(newAksel.firstName).isEqualTo("testname");
+        assertThat(newAksel.firstName).isEqualTo(testName);
     }
 
     @Test
@@ -180,41 +181,25 @@ public class
     }
 
     @Test
-     public void testUpdateCategory() {
-        String name = "test category";
-
-        Category categoryTwo = Category.find.byId(CATEGORY_ONE);
-
-        assertThat(categoryTwo).isNotNull();
-        categoryTwo.name = name;
-
-        assertThat(categoryTwo.name).isEqualTo(name);
-        categoryTwo.save();
-
-        Category categoryThree = Category.find.byId(CATEGORY_ONE);
-
-        assertThat(categoryThree).isNotNull();
-        assertThat(categoryThree.name).isEqualTo(name);
-    }
-
-    @Test
     public void testRetrieveTag() {
-        List<Tag> tagList = Tag.find.all();
+        createTag();
 
+        List<Tag> tagList = Tag.find.all();
         assertThat(tagList).isNotEmpty();
 
-        Tag tag = Tag.find.byId(TAG_ONE);
-
-        assertThat(tag).isNotNull();
-        assertThat(tag.name).isEqualTo(TAG_ONE);
         DateTime createDate = new DateTime(2012, 10, 10, 0, 0);
+        Tag tagTwo = new Tag("Tag two", createDate);
+        tagTwo.save();
+
+        Tag tag = Tag.find.byId("Tag two");
+        assertThat(tag).isNotNull();
+        assertThat(tag.name).isEqualTo("Tag two");
         compareDate(createDate, tag.dateCreated);
     }
 
     @Test
     public void testCreateTag() {
-        Tag tagTwo = new Tag("Tag two", new DateTime());
-        tagTwo.save();
+        Tag.create("Tag two");
 
         Tag retrievedTag = Tag.find.byId("Tag two");
         assertThat(retrievedTag).isNotNull();
@@ -224,6 +209,7 @@ public class
 
     @Test
     public void testDeleteTag() {
+        createTag();
         Tag tag = Tag.find.byId(TAG_ONE);
         assertThat(tag).isNotNull();
         assertThat(tag.name).isNotEmpty();
@@ -231,11 +217,11 @@ public class
 
         Tag noTag = Tag.find.byId(TAG_ONE);
         assertThat(noTag).isNull();
-        assertThat(noTag.name).isNotEqualTo(TAG_ONE);
     }
 
     @Test
     public void testCreateAndRetrieveNewPost() {
+        createTag();
         createPost();
 
         List<Post> postList = Post.find.all();
@@ -274,6 +260,7 @@ public class
 
     @Test
     public void testAddRemoveTags() {
+        createTag();
         createPost();
         Post post = Post.find.byId(POST_ONE_ID);
         assertThat(post).isNotNull();
@@ -314,6 +301,11 @@ public class
         POST_ONE_ID = "" + p.id;
         Post.addTag(POST_ONE_ID, TAG_ONE);
         return p;
+    }
+
+    private Tag createTag() {
+        Tag tag = Tag.create(TAG_ONE);
+        return tag;
     }
 
     private void compareDate(DateTime date1, DateTime date2) {
