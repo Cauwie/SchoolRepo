@@ -2,6 +2,7 @@ package controllers;
 
 import models.Category;
 import models.Post;
+import models.Tag;
 import models.User;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -77,11 +78,13 @@ public class Posts extends Controller {
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
         JsonNode category = request.get("category");
+        JsonNode tags = request.get("tags");
 
         Logger.info("Title: " + title.asText());
         Logger.info("Content: " + content.asText());
         Logger.info("Author: " + author.asText());
         Logger.info("Category: " + category.asText());
+        Logger.info("Tags: " + tags.asText());
 
         Post post = null;
         //Attempt to parse JSON
@@ -89,6 +92,13 @@ public class Posts extends Controller {
         try {
             post = Post.create(title.asText(), content.asText(),
                     author.asText(), category.asText());
+
+            Iterator<JsonNode> tagsIterator = tags.getElements();
+
+            while (tagsIterator.hasNext()) {
+                JsonNode n = tagsIterator.next();
+                Post.addTag(post.id, n.get("id").asText());
+            }
             //post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());

@@ -80,12 +80,12 @@ public class Post extends Model {
      * @param id Name of post to add tag to. Must exist in database
      * @param tagName Name of {@link Tag} to add. Must exist in database
      */
-    public static void addTag(String id, String tagName) {
+    public static void addTag(int id, String tagName) {
         // Why use this? Post p = Post.find.setId(id).fetch("tags", "name").findUnique();
         Tag tag = Tag.find.byId(tagName);
         if(tag == null) return;
 
-        Post p = Post.find.byId(id);
+        Post p = Post.find.byId("" + id);
         if(!p.tags.contains(tag)) {
             p.tags.add(tag);
             p.saveManyToManyAssociations(TAGS_PROPNAME);
@@ -97,8 +97,8 @@ public class Post extends Model {
      * @param id post to remove tag from
      * @param tagName tag to remove
      */
-    public static void removeTag(String id, String tagName) {
-        Post p = Post.find.byId(id);
+    public static void removeTag(int id, String tagName) {
+        Post p = Post.find.byId("" + id);
         p.tags.remove(Tag.find.byId(tagName));
         p.saveManyToManyAssociations(TAGS_PROPNAME);
     }

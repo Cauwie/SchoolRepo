@@ -36,7 +36,7 @@ public class
 
     //IDs
 	private static String EMAIL = "aksel@agresvig.com";
-    private static String POST_ONE_ID = "";
+    private static int POST_ONE_ID = 0;
 	private static String POST_ONE = "Post One";
 	private static String CATEGORY_ONE = "Category One";
     private static final String POST_CONTENT = "This is the first post!";
@@ -262,7 +262,7 @@ public class
     public void testAddRemoveTags() {
         createTag();
         createPost();
-        Post post = Post.find.byId(POST_ONE_ID);
+        Post post = Post.find.byId("" + POST_ONE_ID);
         assertThat(post).isNotNull();
         assertThat(post.tags).hasSize(1);
 
@@ -271,17 +271,17 @@ public class
 
         //Test add
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId(POST_ONE_ID);
+        post = Post.find.byId("" + POST_ONE_ID);
         assertThat(post.tags).hasSize(2);
 
         //Check that we cant add same tag twice
         Post.addTag(POST_ONE_ID, tagTwo);
-        post = Post.find.byId(POST_ONE_ID);
+        post = Post.find.byId("" + POST_ONE_ID);
         assertThat(post.tags).hasSize(2);
 
         //Test remove
         Post.removeTag(POST_ONE_ID, TAG_ONE);
-        post = Post.find.byId(POST_ONE_ID);
+        post = Post.find.byId("" + POST_ONE_ID);
         assertThat(post.tags).hasSize(1);
         assertThat(post.tags.get(0).name).isEqualTo(tagTwo);
     }
@@ -298,7 +298,7 @@ public class
      */
     private Post createPost() {
         Post p = Post.create(POST_ONE, POST_CONTENT, EMAIL, CATEGORY_ONE);
-        POST_ONE_ID = "" + p.id;
+        POST_ONE_ID = p.id;
         Post.addTag(POST_ONE_ID, TAG_ONE);
         return p;
     }
