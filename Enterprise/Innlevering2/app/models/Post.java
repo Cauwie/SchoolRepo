@@ -45,8 +45,8 @@ public class Post extends Model {
 	@ManyToMany(cascade=CascadeType.PERSIST)
     public List<Tag> tags;
 	
-	public static Finder<Integer, Post> find = new Finder<Integer, Post>(
-			Integer.class, Post.class);
+	public static Finder<String, Post> find = new Finder<String, Post>(
+            String.class, Post.class);
 
     public Post() {
         super();
@@ -84,7 +84,7 @@ public class Post extends Model {
         Tag tag = Tag.find.byId(tagName);
         if(tag == null) return;
 
-        Post post = Post.find.byId(id);
+        Post post = Post.find.byId(String.valueOf(id));
         if(!post.tags.contains(tag)) {
             post.tags.add(tag);
             post.saveManyToManyAssociations(TAGS_PROPNAME);
@@ -97,7 +97,7 @@ public class Post extends Model {
      * @param tagName tag to remove
      */
     public static void removeTag(int id, String tagName) {
-        Post p = Post.find.byId(id);
+        Post p = Post.find.byId(String.valueOf(id));
         p.tags.remove(Tag.find.byId(tagName));
         p.saveManyToManyAssociations(TAGS_PROPNAME);
     }
