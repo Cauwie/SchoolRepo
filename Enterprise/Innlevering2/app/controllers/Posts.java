@@ -12,6 +12,7 @@ import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scala.util.parsing.json.JSONArray;
 
 import javax.persistence.PersistenceException;
 import java.util.Iterator;
@@ -72,8 +73,8 @@ public class Posts extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result persist() {
         JsonNode request = request().body().asJson();
-        Logger.info("Saving Post from JSON: " + request.asText());
-
+        //Logger.info("Saving Post from JSON: " + request.asText());
+        Logger.info("Saving Post from JSON: " + request);
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
         JsonNode author = request.get("author");
@@ -89,14 +90,15 @@ public class Posts extends Controller {
         Post post = null;
 
         try {
+            Logger.info("Legger inn post...");
             post = Post.create(title.asText(), content.asText(),
                     author.asText(), category.asText());
-
+            Logger.info("Henter inn tags...");
             Iterator<JsonNode> tagsIterator = tags.getElements();
-
+            Logger.info("Legger inn tags...");
             while (tagsIterator.hasNext()) {
                 JsonNode n = tagsIterator.next();
-                Post.addTag(post.id, n.get("id").asText());
+                Post.addTag(post.id, n.get("name").asText());
             }
             post.save();
         } catch (PersistenceException e) {
@@ -116,7 +118,7 @@ public class Posts extends Controller {
     public static Result update(String id) {
 
         JsonNode request = request().body().asJson();
-        Logger.info("Saving Post from JSON: " + request.asText());
+        Logger.info("Saving Post from JSON: " + request);
 
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
@@ -124,6 +126,7 @@ public class Posts extends Controller {
         JsonNode category = request.get("category");
         JsonNode tags = request.get("tags");
         Iterator<JsonNode> i = request.getElements();
+
         while (i.hasNext()){
             Logger.info(i.next().asText());
         }
@@ -135,6 +138,15 @@ public class Posts extends Controller {
             post.author = User.find.byId(author.asText());
             post.category = Category.find.byId(category.asText());
             post.content = content.asText();
+
+            Logger.info("Is array: " + tags);
+            Iterator<JsonNode> tagsIterator = tags.getElements();
+            while (tagsIterator.hasNext()) {
+                JsonNode n = tagsIterator.next();
+                Logger.info(n.get("name").asText());
+                Post.addTag(post.id, n.get("name").asText());
+            }
+
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());

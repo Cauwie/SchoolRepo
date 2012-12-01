@@ -55,7 +55,7 @@ window.PostView = Backbone.View.extend({
             title:$('#title').val(),
             author:$('#author').find(":selected").text(),
             category:$('#category').find(":selected").text(),
-            tags:$('#tags').val(),
+            //tags:$('#tags').val(),
             content:$('#content').val()
         });
         var validPost = this.validatePost();

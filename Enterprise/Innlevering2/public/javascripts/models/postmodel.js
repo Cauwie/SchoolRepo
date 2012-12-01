@@ -9,15 +9,7 @@ window.Post = Backbone.Model.extend({
         "author":"",
         "content":"",
         "category":"",
-        "tags":[
-                    {"name":"tedsadsa","dateCreated":"1354394942970"},
-                    {"name":"TEfsdssST2","dateCreated":"1354394942970"},
-                    {"name":"TEdffdsST2","dateCreated":"1354394942970"},
-                    {"name":"TEsdssdffST2","dateCreated":"1354394942970"},
-                    {"name":"TEaaasaaST2","dateCreated":"1354394942970"},
-                    {"name":"TEddddST3","dateCreated":"1354394942970"},
-                    {"name":"TEffST4","dateCreated":"1354394942970"}
-               ]
+        "tags":[]
     },
 
     addTag:function (name) {
@@ -32,21 +24,8 @@ window.Post = Backbone.Model.extend({
                 self.reset(data);
             }
         });
-    },    /*
-    methodToURL: {
-        'read': '/post',
-        'create': '/post',
-        'update': '/post',
     },
 
-    sync: function(method, model, options) {
-        options = options || {};
-        options.url = model.methodToURL[method.toLowerCase()];
-
-        Backbone.sync(method, model, options);
-    },
-    */
-    //Empty Constructor
     initialize: function() { }
 });
 
