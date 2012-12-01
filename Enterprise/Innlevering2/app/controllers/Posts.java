@@ -78,6 +78,7 @@ public class Posts extends Controller {
             Logger.info("The Request was empty.");
             return badRequest("The Request was empty.");
         }
+
         Logger.info("Saving Post from JSON: " + request.asText());
 
         JsonNode title = request.get("title");
