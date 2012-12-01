@@ -14,6 +14,7 @@ window.PostView = Backbone.View.extend({
 
         this.searchTag = $('button#searchTag');
         this.tagName = $('input#tagName');
+
     },
 
     //Our render-function bootstraps the model JSON data into the template
@@ -22,6 +23,7 @@ window.PostView = Backbone.View.extend({
             post: this.model.toJSON(),
             categories: this.options.model2.toJSON(),
             users: this.options.model3.toJSON()
+
         }));
         $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
 
@@ -31,10 +33,6 @@ window.PostView = Backbone.View.extend({
     change:function (event) {
         var target = event.target;
         console.log('changing ' + target.id + ' from: ' + target.defaultValue + ' to: ' + target.value);
-        // You could change your model on the spot, like this:
-         //var change = {};
-         //change[target.name] = target.value;
-         //this.model.set(change);
     },
 
     events:{
@@ -44,12 +42,14 @@ window.PostView = Backbone.View.extend({
         "click button#cancel"           :   "cancel",
         "click button#addTag"           :   "addTag",
         "click button#hidePostErrors"   :   "hideErrors",
-        "keyup .search-query"           :   "search",
-        "keypress .search-query"        :   "onkeypress",
-        "click .tagItem"                :   "addTag"
+        "keyup input#searchTag"         :   "search",
+        "keypress input#searchTag"      :   "onkeypress",
+        "click .tagItem"                :   "addTag",
+        "click .tag"                    :   "removeTag"
     },
 
     savePost:function () {
+        alert(this.searchTag.val());
         var isNew = this.model.isNew();
         this.model.set({
             title:$('#title').val(),
@@ -79,7 +79,6 @@ window.PostView = Backbone.View.extend({
     },
 
     validatePost:function () {
-        alert("Hei");
         var errors = "";
         var result = true;
 
@@ -125,23 +124,39 @@ window.PostView = Backbone.View.extend({
     },
 
     addTag:function(event) {
-        //Add the new category to the collection
         var tagName = $(event.target).text();
-        //alert(this.model.tags.pop());
+        currentTag = app.tags.where({name:tagName}).pop();
+        this.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\"}"));
         alert(this.model.get('tags'));
-        this.model.get('tags').set({name:app.tags.get({name:tagName})});
+
         alert("Added tag:" + tagName);
-        //Clear the input field
         this.searchTag.val('');
+        this.render();
+    },
+
+    removeTag:function(event) {
+        var tagName = $(event.target).text();
+        this.findAndRemove(this.model.get('tags'), 'name', tagName);
+        alert("Removed " + tagName)
+        this.render();
+    },
+
+    findAndRemove: function(array, property, value) {
+       $.each(array, function(index, result) {
+          if(result[property] == value) {
+              //Remove from array
+              array.splice(index, 1);
+          }
+       });
     },
 
     search: function () {
-       var name = $('#searchTag').val();
-       console.log('search ' + name);
-       this.searchResults.findByName(name);
-       setTimeout(function () {
-           $('.dropdown').addClass('open');
-       });
+        var name = $('#searchTag').val();
+        console.log('search ' + name);
+        this.searchResults.findByName(name);
+        setTimeout(function () {
+            $('.dropdown').addClass('open');
+        });
     },
 
     onkeypress: function (event) {

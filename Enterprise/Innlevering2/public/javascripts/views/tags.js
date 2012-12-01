@@ -1,5 +1,4 @@
 window.TagListView = Backbone.View.extend({
-
     tagName:'ul',
 
     className:'dropdown-menu',

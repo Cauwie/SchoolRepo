@@ -8,7 +8,16 @@ window.Post = Backbone.Model.extend({
         "datePosted":null,
         "author":"",
         "content":"",
-        "category":""
+        "category":"",
+        "tags":[
+                    {"name":"tedsadsa","dateCreated":"1354394942970"},
+                    {"name":"TEfsdssST2","dateCreated":"1354394942970"},
+                    {"name":"TEdffdsST2","dateCreated":"1354394942970"},
+                    {"name":"TEsdssdffST2","dateCreated":"1354394942970"},
+                    {"name":"TEaaasaaST2","dateCreated":"1354394942970"},
+                    {"name":"TEddddST3","dateCreated":"1354394942970"},
+                    {"name":"TEffST4","dateCreated":"1354394942970"}
+               ]
     },
 
     addTag:function (name) {
