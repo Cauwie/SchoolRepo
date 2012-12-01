@@ -70,6 +70,7 @@ public class Post extends Model {
         Post post = new Post(new DateTime(), title, content,
                     User.find.byId(authorEmail), Category.find.byId(categoryName)
                 );
+
         post.save();
         return post;
     }

@@ -6,7 +6,6 @@ window.Tag = Backbone.Model.extend({
         this.reports = new TagCollection();
         this.reports.url = '/tags/' + this.id + '/reports';
     }
-
 });
 
 window.TagCollection = Backbone.Collection.extend({

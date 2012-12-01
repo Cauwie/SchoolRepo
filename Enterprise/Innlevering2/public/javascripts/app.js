@@ -8,7 +8,7 @@
 //Load the application once the DOM is ready, using jQuery.ready:
 
 Backbone.View.prototype.close = function () {
-    console.log('Closing view ' + this);
+    //console.log('Closing view ' + this);
     if (this.beforeClose) {
         this.beforeClose();
     }
