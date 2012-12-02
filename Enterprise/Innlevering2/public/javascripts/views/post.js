@@ -9,8 +9,7 @@ window.PostView = Backbone.View.extend({
     initialize: function () {
         //this.model.bind('change', this.render, this);
         //_.bindAll(this, "render");
-
-        _.bindAll(this.model);
+        _.bindAll(this);
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
 
@@ -55,10 +54,11 @@ window.PostView = Backbone.View.extend({
     savePost:function () {
         alert(this.searchTag.val());
         var isNew = this.model.isNew();
+        alert(app.users.where({'email':$('#author').find(":selected").text()}));
         this.model.set({
             title:$('#title').val(),
-            author:$('#author').find(":selected").text(),
-            category:$('#category').find(":selected").text(),
+            author:app.users.where({'email':$('#author').find(":selected").text()}).pop(),
+            category:app.categories.where({'name':$('#category').find(":selected").text()}).pop(),
             //tags:$('#tags').val(),
             content:$('#content').val()
         });
@@ -130,7 +130,8 @@ window.PostView = Backbone.View.extend({
     addTag:function(event) {
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
-        this.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\"}"));
+        this.model.get('tags').push(currentTag.toJSON());
+        //sthis.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\",\"dateCreated\":"));
         this.searchTag.val('');
         this.render();
     },
@@ -153,7 +154,9 @@ window.PostView = Backbone.View.extend({
     search: function () {
         var name = $('#searchTag').val();
         console.log('search ' + name);
-        this.searchResults.findByName(name);
+        if(!name.empty) {
+            this.searchResults.findByName(name);
+        }
         setTimeout(function () {
             $('.dropdown').addClass('open');
         });

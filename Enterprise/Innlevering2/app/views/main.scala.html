@@ -148,8 +148,6 @@
             <label>Tags:</label>
             <form class="navbar-search dropdown">
                 <input id="searchTag" type="text" class="dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
-                <!--<input id="tagsearch" type="text" data-provide="typeahead">-->
-                <!--<input type="text" placeholder="Enter Name" id="searchTag"/>-->
             </form>
             <br>
             <div id="tags" class="span12">
@@ -174,11 +172,7 @@
     </script>
 
     <script type="text/template" id="tag-item">
-        <button class="label label-info tagItem"><%= name %></button>
-    </script>
-
-    <script type="text/template" id="alert-template">
-
+        <span class="label label-info tagItem"><%= name %></span>
     </script>
     <!--- End Templates --->
 
