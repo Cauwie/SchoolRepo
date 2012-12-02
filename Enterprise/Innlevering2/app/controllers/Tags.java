@@ -35,9 +35,10 @@ public class Tags extends Controller {
     }
 
     public static Result retrieveByName(String name) {
-        Logger.debug("Getting list of tags by name");
+        Logger.debug("Getting list of tags by name:" + name);
 
-        List<Tag> tags = Tag.findByName(name);
+        List<Tag> tags = Tag.searchByName(name);
+        Logger.debug("List size: " + tags.size());
         return ok(Json.toJson(tags)).as("application/json");
     }
 

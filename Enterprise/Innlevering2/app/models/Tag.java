@@ -48,11 +48,15 @@ public class Tag extends Model {
 
     public static List<Tag> findByName(String name) {
         return find.where()
-                .eq("name", "%" + name + "%")
+                .eq("name", name)
                 .findList();
     }
 
-
+    public static List<Tag> searchByName(String name) {
+        return find.where()
+                .like("name", "%" + name + "%")
+                .findList();
+    }
 
     @Override
     public boolean equals(Object o) {

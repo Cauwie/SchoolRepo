@@ -3,7 +3,6 @@ window.TagListView = Backbone.View.extend({
 
     className:'dropdown-menu',
 
-    template: _.template($('#tag-item').html()),
     initialize:function () {
         var self = this;
         this.model.bind("reset", this.render, this);

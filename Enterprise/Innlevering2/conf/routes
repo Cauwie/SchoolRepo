@@ -17,12 +17,12 @@ POST    /category                           controllers.Categories.persist()
 DELETE  /category/:name                     controllers.Categories.delete(name:String)
 
 # Post
-GET     /post/:id                        controllers.Posts.retrieve(id:String)
+GET     /post/:id                           controllers.Posts.retrieve(id:String)
 GET     /posts                              controllers.Posts.retrieveAll()
 GET     /posts/:name                        controllers.Posts.retrieveByCategory(name:String)
 POST    /post                               controllers.Posts.persist()
-PUT     /post/:id                        controllers.Posts.update(id:String)
-DELETE  /post/:id                        controllers.Posts.delete(id:String)
+PUT     /post/:id                           controllers.Posts.update(id:String)
+DELETE  /post/:id                           controllers.Posts.delete(id:String)
 
 # Tag
 GET     /tag/:name                          controllers.Tags.retrieve(name:String)

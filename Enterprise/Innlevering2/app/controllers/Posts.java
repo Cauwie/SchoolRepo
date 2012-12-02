@@ -56,6 +56,7 @@ public class Posts extends Controller {
         if (post == null) {
             return notFound(id);
         }
+        //post.datePosted = CustomDate
         return ok(Json.toJson(post)).as("application/json");
     }
 
@@ -76,6 +77,7 @@ public class Posts extends Controller {
      */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result persist() {
+        /*
         JsonNode request = request().body().asJson();
 
         if (request.isNull()) {
@@ -83,7 +85,7 @@ public class Posts extends Controller {
             return badRequest("The Request was empty.");
         }
 
-        Logger.info("Saving Post from JSON: " + request.asText());
+        Logger.info("Saving Post from JSON: " + request);
 
         JsonNode title = request.get("title");
         JsonNode content = request.get("content");
@@ -117,6 +119,37 @@ public class Posts extends Controller {
         }
 
         return created(Json.toJson(post));
+
+          */
+        JsonNode request = request().body().asJson();
+
+        if (request.isNull()) {
+            Logger.info("The Request was empty.");
+            return badRequest("The Request was empty.");
+        }
+
+        Logger.info("Updating Post from JSON: " + request);
+
+        ObjectMapper mapper = new ObjectMapper();
+        Post post = null;
+        //Attempt to parse JSON
+        try {
+            post = mapper.readValue(request, Post.class);
+
+            post.save();
+        } catch (PersistenceException e) {
+            Logger.error(e.getMessage(), e.getCause());
+            return badRequest(e.getCause().getMessage());
+        } catch (JsonMappingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (JsonParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return created(Json.toJson(post));
+
     }
 
     /**
@@ -133,7 +166,7 @@ public class Posts extends Controller {
             return badRequest("The Request was empty.");
         }
 
-        Logger.info("Saving Post from JSON: " + request);
+        Logger.info("Updating Post from JSON: " + request);
 
         ObjectMapper mapper = new ObjectMapper();
         Post post = null;
