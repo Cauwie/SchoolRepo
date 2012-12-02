@@ -149,7 +149,6 @@ public class Posts extends Controller {
         }
 
         return created(Json.toJson(post));
-
     }
 
     /**
