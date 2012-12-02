@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -18,6 +19,7 @@ public class Category extends Model {
 	@Id
 	@Constraints.Required
 	@Formats.NonEmpty
+    @Column(unique=true)
 	public String name;
 
     @Constraints.Required
