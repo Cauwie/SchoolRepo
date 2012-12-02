@@ -8,18 +8,19 @@ window.PostView = Backbone.View.extend({
 
     initialize: function () {
         //this.model.bind('change', this.render, this);
-        _.bindAll(this.model);
+        //_.bindAll(this, "render");
+        _.bindAll(this);
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
 
+        this.currentTags = new TagCollection();
+        this.tagsView = new PostTagsView({model:this.currentTags});
         this.searchTag = $('button#searchTag');
-        this.tagName = $('input#tagName');
 
     },
 
     //Our render-function bootstraps the model JSON data into the template
     render: function() {
-
         if (this.model != null){
             $(this.el).html(this.template({
                 post: this.model.toJSON(),
@@ -28,7 +29,6 @@ window.PostView = Backbone.View.extend({
 
             }));
             $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
-
         }
         return this; //To allow for daisy-chaining calls
     },
@@ -54,10 +54,11 @@ window.PostView = Backbone.View.extend({
     savePost:function () {
         alert(this.searchTag.val());
         var isNew = this.model.isNew();
+        alert(app.users.where({'email':$('#author').find(":selected").text()}));
         this.model.set({
             title:$('#title').val(),
-            author:$('#author').find(":selected").text(),
-            category:$('#category').find(":selected").text(),
+            author:app.users.where({'email':$('#author').find(":selected").text()}).pop(),
+            category:app.categories.where({'name':$('#category').find(":selected").text()}).pop(),
             //tags:$('#tags').val(),
             content:$('#content').val()
         });
@@ -129,10 +130,8 @@ window.PostView = Backbone.View.extend({
     addTag:function(event) {
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
-        this.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\"}"));
-        alert(this.model.get('tags'));
-
-        alert("Added tag:" + tagName);
+        this.model.get('tags').push(currentTag.toJSON());
+        //sthis.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\",\"dateCreated\":"));
         this.searchTag.val('');
         this.render();
     },
@@ -140,7 +139,6 @@ window.PostView = Backbone.View.extend({
     removeTag:function(event) {
         var tagName = $(event.target).text();
         this.findAndRemove(this.model.get('tags'), 'name', tagName);
-        alert("Removed " + tagName)
         this.render();
     },
 
@@ -156,7 +154,9 @@ window.PostView = Backbone.View.extend({
     search: function () {
         var name = $('#searchTag').val();
         console.log('search ' + name);
-        this.searchResults.findByName(name);
+        if(!name.empty) {
+            this.searchResults.findByName(name);
+        }
         setTimeout(function () {
             $('.dropdown').addClass('open');
         });

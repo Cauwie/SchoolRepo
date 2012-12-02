@@ -5,6 +5,8 @@ import models.Post;
 import models.Tag;
 import models.User;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import play.Logger;
@@ -15,6 +17,7 @@ import play.mvc.Result;
 import scala.util.parsing.json.JSONArray;
 
 import javax.persistence.PersistenceException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -97,16 +100,16 @@ public class Posts extends Controller {
         Post post = null;
 
         try {
-            Logger.info("Legger inn post...");
             post = Post.create(title.asText(), content.asText(),
                     author.asText(), category.asText());
-            Logger.info("Henter inn tags...");
+
             Iterator<JsonNode> tagsIterator = tags.getElements();
-            Logger.info("Legger inn tags...");
+
             while (tagsIterator.hasNext()) {
                 JsonNode tag = tagsIterator.next();
                 Post.addTag(post.id, tag.get("name").asText());
             }
+
             post.save();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
@@ -125,46 +128,29 @@ public class Posts extends Controller {
     public static Result update(String id) {
 
         JsonNode request = request().body().asJson();
-
         if (request.isNull()) {
             Logger.info("The Request was empty.");
             return badRequest("The Request was empty.");
         }
 
-        Logger.info("Saving Post from JSON: " + request.asText());
+        Logger.info("Saving Post from JSON: " + request);
 
-        JsonNode title = request.get("title");
-        JsonNode content = request.get("content");
-        JsonNode author = request.get("author");
-        JsonNode category = request.get("category");
-        JsonNode tags = request.get("tags");
-
+        ObjectMapper mapper = new ObjectMapper();
         Post post = null;
+        //Attempt to parse JSON
         try {
-            post = Post.find.byId(id);
+            post = mapper.readValue(request, Post.class);
 
-            post.title = title.asText();
-            post.author = User.find.byId(author.asText());
-            post.category = Category.find.byId(category.asText());
-            post.content = content.asText();
-            ArrayList<Tag> tagsList = new ArrayList<Tag>();
-
-            Iterator<JsonNode> tagsIterator = tags.getElements();
-            while (tagsIterator.hasNext()) {
-                JsonNode tag = tagsIterator.next();
-                tagsList.add(Tag.find.byId(tag.get("name").asText()));
-
-                Logger.info(tag.get("name").asText());
-                Post.addTag(post.id, tag.get("name").asText());
-
-                Logger.info(tagsList.toString());
-            }
-            post.tags.retainAll(tagsList);
-
-            post.save();
+            post.update();
         } catch (PersistenceException e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
+        } catch (JsonMappingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (JsonParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return ok(Json.toJson(post)).as("application/json");
     }
