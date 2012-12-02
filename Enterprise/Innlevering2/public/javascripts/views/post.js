@@ -63,10 +63,9 @@ window.PostView = Backbone.View.extend({
             content:$('#content').val()
         });
         var validPost = this.validatePost();
-        var validNewPostTitle = this.validateNewPostTitle();
         if(validPost){
             if (isNew) {
-                if (validNewPostTitle) {
+                if (this.validateNewPostTitle()) {
                     alert("Save model");
                     var self = this;
                     app.postList.create(this.model, {
