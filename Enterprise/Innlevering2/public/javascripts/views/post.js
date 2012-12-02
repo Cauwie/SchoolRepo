@@ -8,12 +8,14 @@ window.PostView = Backbone.View.extend({
 
     initialize: function () {
         //this.model.bind('change', this.render, this);
+        _.bindAll(this, "render");
 
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
 
+        this.currentTags = new TagCollection();
+        this.tagsView = new PostTagsView({model:this.currentTags});
         this.searchTag = $('button#searchTag');
-        this.tagName = $('input#tagName');
 
     },
 
@@ -23,9 +25,10 @@ window.PostView = Backbone.View.extend({
             post: this.model.toJSON(),
             categories: this.options.model2.toJSON(),
             users: this.options.model3.toJSON()
-
         }));
+        this.tagsView.model = this.model.get('tags');
         $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
+        //$('#tags', this.el).html(this.tagsView.render().el);
 
         return this; //To allow for daisy-chaining calls
     },
@@ -127,9 +130,6 @@ window.PostView = Backbone.View.extend({
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
         this.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\"}"));
-        alert(this.model.get('tags'));
-
-        alert("Added tag:" + tagName);
         this.searchTag.val('');
         this.render();
     },
@@ -137,7 +137,6 @@ window.PostView = Backbone.View.extend({
     removeTag:function(event) {
         var tagName = $(event.target).text();
         this.findAndRemove(this.model.get('tags'), 'name', tagName);
-        alert("Removed " + tagName)
         this.render();
     },
 

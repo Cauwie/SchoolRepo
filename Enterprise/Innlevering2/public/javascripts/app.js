@@ -40,7 +40,7 @@ var AppRouter = Backbone.Router.extend({
 
     postDetails:function (title) {
         this.before(function () {
-            var post = app.postList.where({'title':title}).pop();
+            var post = app.postList.where({'title':title})[0];
             var categories = app.categories;
             var users = app.users;
             app.showView('#main-content', new PostView({model:post, model2:categories, model3:users}));
