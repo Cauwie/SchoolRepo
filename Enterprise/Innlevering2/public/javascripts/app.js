@@ -86,7 +86,6 @@ var AppRouter = Backbone.Router.extend({
             if(this.currentCategory != null) {
                 this.postList = new PostCollection();
                 this.postList.url = "posts/" + this.currentCategory;
-                //alert("TRALA")
                 this.postList.fetch({success:function () {
                     app.showView('#main-content', new PostListView({model:app.postList}));
                     //alert(app.postList.length())

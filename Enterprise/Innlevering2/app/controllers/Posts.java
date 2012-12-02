@@ -15,6 +15,7 @@ import play.mvc.Result;
 import scala.util.parsing.json.JSONArray;
 
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -146,13 +147,19 @@ public class Posts extends Controller {
             post.author = User.find.byId(author.asText());
             post.category = Category.find.byId(category.asText());
             post.content = content.asText();
+            ArrayList<Tag> tagsList = new ArrayList<Tag>();
 
             Iterator<JsonNode> tagsIterator = tags.getElements();
             while (tagsIterator.hasNext()) {
                 JsonNode tag = tagsIterator.next();
+                tagsList.add(Tag.find.byId(tag.get("name").asText()));
+
                 Logger.info(tag.get("name").asText());
                 Post.addTag(post.id, tag.get("name").asText());
+
+                Logger.info(tagsList.toString());
             }
+            post.tags.retainAll(tagsList);
 
             post.save();
         } catch (PersistenceException e) {
