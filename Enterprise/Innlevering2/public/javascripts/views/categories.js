@@ -8,7 +8,8 @@ window.CategoryView = Backbone.View.extend({
     template: _.template($('#sidebar-template').html()),
 
     events: {
-        'click button#addCategory' : 'onCategoryAdd'
+        'click button#addCategory'          :   'onCategoryAdd',
+        'click button#hideCategoryErrors'   :   'hideErrors'
     },
 
     initialize: function () {
@@ -25,9 +26,38 @@ window.CategoryView = Backbone.View.extend({
         return this; //To allow for daisy-chaining calls
     },
 
+    validateCategory:function () {
+        var errors = "";
+        var result = true;
+
+        if (this.model.where({'name':$('input#categoryName').val()}).length > 0) {
+            errors = "You can not define a <b>name</b> that already exists. <br>";
+            result = false;
+        }
+
+        //sjekk name
+        if(!$('input#categoryName').val()) {
+            errors = "You need to define a <b>name</b> for the category. <br>";
+            result = false;
+        }
+
+        if(!result) {
+            $("#categoryErrorMessages").html(errors);
+            $('#category-errors').show();
+        }
+        return result;
+    },
+
     //Called every time the Add-button is clicked
     onCategoryAdd: function() {
-        app.categories.create({name:$('input#categoryName').val()});
-        $('input#categoryName').val('');
+        var validCategory = this.validateCategory();
+        if (validCategory) {
+            app.categories.create({name:$('input#categoryName').val()});
+            $('input#categoryName').val('');
+        }
+    },
+
+    hideErrors:function() {
+        $('#category-errors').hide();
     }
 });
