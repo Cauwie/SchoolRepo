@@ -60,13 +60,20 @@
 
     <!--- Templates --->
     <script type="text/template" id="sidebar-template">
+        <div style="display:none" id="category-errors" class="alert alert-error span11" hidden>
+            <button id="hideCategoryErrors" type="button" class="close" >×</button>
+            <h4>Validation errors:</h4>
+            <div id="categoryErrorMessages">
+            </div>
+        </div>
+
         <div id="sidebar-add-categories" >
             <div class="well sidebar-nav">
                 <h2 class="nav-header">Add a new category</h2>
                 <button type="button" id="addCategory" class="btn btn-primary span3 pull-right">
                     Add
                 </button>
-                <input type="text" id="categoryName" class="span9 pull-left" placeholder="Type category name..."/>
+                <input type="text" required="true" id="categoryName" class="span9 pull-left" placeholder="Type category name..."/>
             </div>
         </div>
         <div id="sidebar-categories">
@@ -111,11 +118,11 @@
         <% } %>
 
 
-        <hr class="inverse">
+        <hr />
         <div style="display:none" id="post-errors" class="alert alert-error span11" hidden>
             <button id="hidePostErrors" type="button" class="close" >×</button>
             <h4>Validation errors:</h4>
-            <div id="errorMessages">
+            <div id="postErrorMessages">
             </div>
         </div>
         <div class="form-left-col span11">

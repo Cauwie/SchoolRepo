@@ -63,16 +63,19 @@ window.PostView = Backbone.View.extend({
             content:$('#content').val()
         });
         var validPost = this.validatePost();
+        var validNewPostTitle = this.validateNewPostTitle();
         if(validPost){
             if (isNew) {
-                alert("Save model");
-                var self = this;
-                app.postList.create(this.model, {
-                    success:function () {
-                        alert("Post successfully saved!");
-                        window.history.back();
-                    }
-                });
+                if (validNewPostTitle) {
+                    alert("Save model");
+                    var self = this;
+                    app.postList.create(this.model, {
+                        success:function () {
+                            alert("Post successfully saved!");
+                            window.history.back();
+                        }
+                    });
+                }
             } else {
                 alert("Update model");
                 this.model.save();
@@ -85,7 +88,9 @@ window.PostView = Backbone.View.extend({
     validatePost:function () {
         var errors = "";
         var result = true;
+        $("#postErrorMessages").html("");
 
+        //sjekk tittel
         if(!$('#title').val()) {
             errors = "You need to define a <b>title</b>. <br>";
             result = false;
@@ -107,7 +112,22 @@ window.PostView = Backbone.View.extend({
             result = false;
         }
         if(!result) {
-            $("#errorMessages").html(errors);
+            $("#postErrorMessages").html(errors);
+            $('#post-errors').show();
+        }
+        return result;
+    },
+
+    validateNewPostTitle:function() {
+        var error = "";
+        var result = true;
+
+        if (app.postList.where({'title':$('#title').val()}).length > 0) {
+            error = "You can not define a <b>title</b> that allready exists. <br>";
+            result = false;
+        }
+        if(!result) {
+            $("#postErrorMessages").append(error);
             $('#post-errors').show();
         }
         return result;

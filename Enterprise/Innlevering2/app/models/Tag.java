@@ -24,8 +24,7 @@ public class Tag extends Model {
 	@Formats.DateTime(pattern="yyyy-MM-dd")
 	public DateTime dateCreated;
 	
-	public static Finder<String, Tag> find = new Finder<String, Tag>(
-			String.class, Tag.class);
+	public static Finder<String, Tag> find = new Finder<String, Tag>(String.class, Tag.class);
 
     public Tag() {
         super();

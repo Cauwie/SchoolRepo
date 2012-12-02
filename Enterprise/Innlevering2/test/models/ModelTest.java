@@ -91,25 +91,6 @@ public class
     }
 
     @Test
-    public void testRetrieveUser() {
-        List<User> userList = User.find.all();
-        assertThat(userList).isNotNull();
-        assertThat(userList.size()).isEqualTo(1);
-
-        User aksel = User.find.byId(EMAIL);
-
-        assertThat(aksel).isNotNull();
-        assertThat(EMAIL).isEqualTo(aksel.email);
-        assertThat(aksel.firstName).isEqualTo("Aksel");
-        assertThat(aksel.lastName).isEqualTo("Gresvig");
-        assertThat(aksel.password).isEqualTo("secret");
-        assertThat(aksel.isAdmin).isTrue();
-
-        DateTime createDate = new DateTime(1950, 06, 22, 0, 0);
-        compareDate(aksel.dateOfBirth, createDate);
-    }
-
-    @Test
     public void testCreatePost() {
         Post createdPost = Post.create("title", "content", EMAIL, CATEGORY_ONE);
 
@@ -146,6 +127,25 @@ public class
 
         post = Post.find.byId(String.valueOf(createdPost.id));
         assertThat(post).isNull();
+    }
+
+    @Test
+    public void testRetrieveUser() {
+        List<User> userList = User.find.all();
+        assertThat(userList).isNotNull();
+        assertThat(userList.size()).isEqualTo(1);
+
+        User aksel = User.find.byId(EMAIL);
+
+        assertThat(aksel).isNotNull();
+        assertThat(EMAIL).isEqualTo(aksel.email);
+        assertThat(aksel.firstName).isEqualTo("Aksel");
+        assertThat(aksel.lastName).isEqualTo("Gresvig");
+        assertThat(aksel.password).isEqualTo("secret");
+        assertThat(aksel.isAdmin).isTrue();
+
+        DateTime createDate = new DateTime(1950, 06, 22, 0, 0);
+        compareDate(aksel.dateOfBirth, createDate);
     }
 
     @Test
@@ -330,6 +330,12 @@ public class
     public void testPrimaryKeyViolationForPost() {
         createPost();
         createPost();
+    }
+
+    @Test(expected = PersistenceException.class)
+     public void testPrimaryKeyViolationForTag() {
+        createTag();
+        createTag();
     }
 
     /**
