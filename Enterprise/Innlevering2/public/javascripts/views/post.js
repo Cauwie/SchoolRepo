@@ -8,7 +8,7 @@ window.PostView = Backbone.View.extend({
 
     initialize: function () {
         //this.model.bind('change', this.render, this);
-
+        _.bindAll(this.model);
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
 
@@ -19,14 +19,17 @@ window.PostView = Backbone.View.extend({
 
     //Our render-function bootstraps the model JSON data into the template
     render: function() {
-        $(this.el).html(this.template({
-            post: this.model.toJSON(),
-            categories: this.options.model2.toJSON(),
-            users: this.options.model3.toJSON()
 
-        }));
-        $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
+        if (this.model != null){
+            $(this.el).html(this.template({
+                post: this.model.toJSON(),
+                categories: this.options.model2.toJSON(),
+                users: this.options.model3.toJSON()
 
+            }));
+            $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
+
+        }
         return this; //To allow for daisy-chaining calls
     },
 

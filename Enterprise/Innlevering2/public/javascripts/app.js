@@ -26,6 +26,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
+
         $('body').click(function () {
             $('.dropdown').removeClass("open");
         });
