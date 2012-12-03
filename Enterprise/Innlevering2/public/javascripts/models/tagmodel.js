@@ -1,3 +1,4 @@
+//The Tag collection
 window.Tag = Backbone.Model.extend({
 
     urlRoot:"/tags",
@@ -8,6 +9,7 @@ window.Tag = Backbone.Model.extend({
     }
 });
 
+//The Tag collection
 window.TagCollection = Backbone.Collection.extend({
 
     model: Tag,

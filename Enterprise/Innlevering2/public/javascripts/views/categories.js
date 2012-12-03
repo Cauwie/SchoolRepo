@@ -32,7 +32,6 @@ window.CategoryView = Backbone.View.extend({
             result = false;
         }
 
-        //sjekk name
         if(!$('input#categoryName').val()) {
             errors = "You need to define a <b>name</b> for the category. <br>";
             result = false;

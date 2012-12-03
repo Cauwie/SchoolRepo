@@ -1,14 +1,11 @@
+//The Post view element
 window.PostView = Backbone.View.extend({
-    //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
     tagName: 'fieldset',
     className: 'well',
 
-    //Cache the template defined in the main html, using Underscore.JS
     template: _.template($('#post-template').html()),
 
     initialize: function () {
-        //this.model.bind('change', this.render, this);
-        //_.bindAll(this, "render");
         _.bindAll(this.model);
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
@@ -47,7 +44,7 @@ window.PostView = Backbone.View.extend({
         "click button#addTag"           :   "addTag",
         "click button#hidePostErrors"   :   "hideErrors",
         "keyup input#searchTag"         :   "search",
-        "keypress input#searchTag"      :   "onkeypress",
+        "keypress input#searchTag"      :   "onKeyPress",
         "click .tagItem"                :   "addTag",
         "click .tag"                    :   "removeTag"
     },
@@ -170,7 +167,7 @@ window.PostView = Backbone.View.extend({
     search: function () {
         var name = $('#searchTag').val();
         console.log('search ' + name);
-        //&& !name.indexOf("/") === 0
+
         if(!name.empty && name.replace(/\s/g, '').length) {
             this.searchResults.findByName(name);
         }
@@ -179,7 +176,7 @@ window.PostView = Backbone.View.extend({
         });
     },
 
-    onkeypress: function (event) {
+    onKeyPress: function (event) {
        if (event.keyCode == 13) {
            event.preventDefault();
        }

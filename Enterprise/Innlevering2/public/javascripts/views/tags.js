@@ -1,3 +1,4 @@
+//The TagList view element
 window.TagListView = Backbone.View.extend({
     tagName:'ul',
 
@@ -20,6 +21,7 @@ window.TagListView = Backbone.View.extend({
     }
 });
 
+//The TagListItem view element
 window.TagListItemView = Backbone.View.extend({
     tagName:"li",
     template: _.template($('#tag-item').html()),
@@ -35,6 +37,7 @@ window.TagListItemView = Backbone.View.extend({
     }
 });
 
+//The PostTags view element
 window.PostTagsView = Backbone.View.extend({
     tagName: 'div',
     className:'tags',

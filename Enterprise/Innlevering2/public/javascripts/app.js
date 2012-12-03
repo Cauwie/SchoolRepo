@@ -8,7 +8,6 @@
 //Load the application once the DOM is ready, using jQuery.ready:
 
 Backbone.View.prototype.close = function () {
-    //console.log('Closing view ' + this);
     if (this.beforeClose) {
         this.beforeClose();
     }
@@ -16,7 +15,6 @@ Backbone.View.prototype.close = function () {
     this.unbind();
 };
 
-//This view resembles the the main area of our app
 var AppRouter = Backbone.Router.extend({
     routes:{
         "":"list",
@@ -26,12 +24,12 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
-
         $('body').click(function () {
             $('.dropdown').removeClass("open");
         });
     },
 
+    //Displays all existing posts
     list:function () {
         this.currentCategory = null;
         this.before(function() {
@@ -39,6 +37,7 @@ var AppRouter = Backbone.Router.extend({
         });
     },
 
+    //Displays a post based on title
     postDetails:function (title) {
         this.before(function () {
             var post = app.postList.where({'title':title})[0];
@@ -48,6 +47,7 @@ var AppRouter = Backbone.Router.extend({
         });
     },
 
+    //Displays a form for new posts
     newPost:function () {
         this.before(function () {
             var categories = app.categories;
@@ -64,22 +64,16 @@ var AppRouter = Backbone.Router.extend({
         return view;
     },
 
+    //Displays all posts belonging to a given category
     byCategory:function (category) {
         this.currentCategory = category;
         app.postList = null;
         this.before(function () {
             app.showView('#main-content', new PostListView({model:app.postList}));
         });
-        /*this.before(function () {
-           // this.postList.url = "posts/" + category;
-           // this.postList.fetch();
-
-            app.postList = new PostListView(app.postList.where({'category':category}));
-
-          */
-
     },
 
+    //Helper function which ensures that the data is always present / up-to-date
     before:function (callback) {
         if (this.postList && this.currentCategory != null) {
             if (callback) callback();
@@ -89,7 +83,6 @@ var AppRouter = Backbone.Router.extend({
                 this.postList.url = "posts/" + this.currentCategory;
                 this.postList.fetch({success:function () {
                     app.showView('#main-content', new PostListView({model:app.postList}));
-                    //alert(app.postList.length())
                     if (callback) callback();
                 }});
             } else {
@@ -98,7 +91,6 @@ var AppRouter = Backbone.Router.extend({
 
                 this.postList.fetch({success:function () {
                  app.showView('#main-content', new PostListView({model:app.postList}));
-                 //alert(app.postList.length())
                  if (callback) callback();
                 }});
             }

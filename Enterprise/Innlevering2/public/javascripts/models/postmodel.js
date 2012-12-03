@@ -1,10 +1,9 @@
-//The Category model
+//The Post model
 window.Post = Backbone.Model.extend({
-    //idAttribute: 'title',
     urlRoot: '/post',
     defaults:{
         "id":null,
-        "title":null,
+        "title":"",
         "datePosted":null,
         "author":"",
         "content":"",
@@ -12,24 +11,10 @@ window.Post = Backbone.Model.extend({
         "tags":[]
     },
 
-    addTag:function (name) {
-        var url = (name == '') ? '/post' : "/post/" + this.model.get("id") + "/addTag/" + name;
-        console.log('Adding tag: ' + name);
-        var self = this;
-        $.ajax({
-            url:url,
-            dataType:"json",
-            success:function (data) {
-                console.log("search success: " + data.length);
-                self.reset(data);
-            }
-        });
-    },
-
     initialize: function() { }
 });
 
-//The Category collection
+//The Post collection
 window.PostCollection = Backbone.Collection.extend({
     model: Post,
 

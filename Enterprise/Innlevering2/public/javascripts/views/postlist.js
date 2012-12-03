@@ -1,3 +1,4 @@
+//The PostList view element
 window.PostListView = Backbone.View.extend({
 
     tagName:'ul',
@@ -19,6 +20,7 @@ window.PostListView = Backbone.View.extend({
     }
 });
 
+//The PostListItem view element
 window.PostListItemView = Backbone.View.extend({
 
     tagName:"li",
