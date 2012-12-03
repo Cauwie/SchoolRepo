@@ -125,11 +125,4 @@ public class Post extends Model {
                 .eq("category.name", categoryName)
                 .findList();
     }
-
-	/**
-	 * Converts the title to an ID-string (no spaces)
-	 */
-	public String getFormattedTitleString(String stringToFormat) {
-		return stringToFormat.replace(' ', '-').toLowerCase();
-	}
 }
