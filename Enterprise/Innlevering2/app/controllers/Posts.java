@@ -90,7 +90,13 @@ public class Posts extends Controller {
 
         Post post = null;
         try {
-            post = mapper.readValue(request, Post.class);
+            //post = mapper.readValue(request, Post.class);
+            JsonNode title = request.get("title");
+            JsonNode content = request.get("content");
+            JsonNode email = request.get("author").get("email");
+            JsonNode category = request.get("category").get("name");
+
+            post = Post.create(title.asText(), content.asText(), email.asText(), category.asText());
 
             Iterator<JsonNode> tagsIterator = request.get("tags").getElements();
             ArrayList<Tag> tags = new ArrayList<Tag>();
