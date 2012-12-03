@@ -42,8 +42,8 @@ public class Post extends Model {
 	
 	@ManyToOne
     public Category category;
-	//(cascade=CascadeType.PERSIST)
-	@ManyToMany
+
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     public List<Tag> tags;
 	
 	public static Finder<String, Post> find = new Finder<String, Post>(

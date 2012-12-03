@@ -9,7 +9,7 @@ window.PostView = Backbone.View.extend({
     initialize: function () {
         //this.model.bind('change', this.render, this);
         //_.bindAll(this, "render");
-        _.bindAll(this);
+        _.bindAll(this.model);
         this.searchResults = new TagCollection();
         this.searchTagResultsView = new TagListView({model: this.searchResults, className: 'dropdown-menu'});
 
@@ -29,6 +29,7 @@ window.PostView = Backbone.View.extend({
 
             }));
             $('.navbar-search', this.el).append(this.searchTagResultsView.render().el);
+
         }
         return this; //To allow for daisy-chaining calls
     },
@@ -52,32 +53,24 @@ window.PostView = Backbone.View.extend({
     },
 
     savePost:function () {
-        alert(this.searchTag.val());
         var isNew = this.model.isNew();
-        alert(app.users.where({'email':$('#author').find(":selected").text()}));
+        var validPost = this.validatePost();
         this.model.set({
             title:$('#title').val(),
-            author:app.users.where({'email':$('#author').find(":selected").text()}).pop(),
-            category:app.categories.where({'name':$('#category').find(":selected").text()}).pop(),
-            //tags:$('#tags').val(),
+            author:app.users.where({'email':$('#author').find(":selected").val()}).pop(),
+            category:app.categories.where({'name':$('#category').find(":selected").val()}).pop(),
             content:$('#content').val()
         });
-        var validPost = this.validatePost();
-        var validNewPostTitle = this.validateNewPostTitle();
+
         if(validPost){
             if (isNew) {
-                if (validNewPostTitle) {
-                    alert("Save model");
-                    var self = this;
-                    app.postList.create(this.model, {
-                        success:function () {
-                            alert("Post successfully saved!");
-                            window.history.back();
-                        }
-                    });
-                }
+                app.postList.create(this.model, {
+                    success:function () {
+                        alert("Post successfully saved!");
+                        window.history.back();
+                    }
+                });
             } else {
-                alert("Update model");
                 this.model.save();
                 window.history.back();
             }
@@ -90,46 +83,38 @@ window.PostView = Backbone.View.extend({
         var result = true;
         $("#postErrorMessages").html("");
 
-        //sjekk tittel
         if(!$('#title').val()) {
             errors = "You need to define a <b>title</b>. <br>";
             result = false;
         }
-        //sjekk forfatter
+
         if($('#author').find(":selected").text() == "--select a author--") {
             errors = errors + "You need to select an <b>author</b> <br>";
             result = false;
         }
-        //sjekk kategori
 
         if($('#category').find(":selected").text() == "--select a category--") {
             errors = errors + "You need to select a <b>category</b> <br>";
             result = false;
         }
-        //sjekk content
+
         if($('#content').val().length > 256) {
             errors = errors + "The maximum length of <b>content</b> is <b>256</b> <br>";
             result = false;
         }
+
+        if($('#title').val() != this.model.get('title')) {
+            if (app.postList.where({'title':$('#title').val()}).length > 0) {
+                errors = errors + "A post with that <b>title</b> already exists. <br>";
+                result = false;
+            }
+        }
+
         if(!result) {
             $("#postErrorMessages").html(errors);
             $('#post-errors').show();
         }
-        return result;
-    },
 
-    validateNewPostTitle:function() {
-        var error = "";
-        var result = true;
-
-        if (app.postList.where({'title':$('#title').val()}).length > 0) {
-            error = "You can not define a <b>title</b> that allready exists. <br>";
-            result = false;
-        }
-        if(!result) {
-            $("#postErrorMessages").append(error);
-            $('#post-errors').show();
-        }
         return result;
     },
 
@@ -151,9 +136,10 @@ window.PostView = Backbone.View.extend({
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
         this.model.get('tags').push(currentTag.toJSON());
-        //sthis.model.get('tags').push(jQuery.parseJSON("{\"name\":\"" + currentTag.get('name') + "\",\"dateCreated\":"));
+
         this.searchTag.val('');
-        this.render();
+        this.tagsView.model = this.model;
+        this.tagsView.render();
     },
 
     removeTag:function(event) {
@@ -165,7 +151,6 @@ window.PostView = Backbone.View.extend({
     findAndRemove: function(array, property, value) {
        $.each(array, function(index, result) {
           if(result[property] == value) {
-              //Remove from array
               array.splice(index, 1);
           }
        });

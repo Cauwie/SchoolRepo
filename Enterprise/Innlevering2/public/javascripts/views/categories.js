@@ -1,10 +1,8 @@
 //The Category view element
 window.CategoryView = Backbone.View.extend({
-    //The DOM element is a div with class="well sidebar-nav" (because of Twitter Bootstrap)
     tagName: 'div',
     className: 'sidebar-nav',
 
-    //Cache the template defined in the main html, using Underscore.JS
     template: _.template($('#sidebar-template').html()),
 
     events: {
@@ -17,7 +15,6 @@ window.CategoryView = Backbone.View.extend({
         this.model.bind('add', this.render, this);
     },
 
-    //Our render-function bootstraps the model JSON data into the template
     render: function() {
         this.$el.html(this.template({
             categories: this.model.toJSON()
@@ -48,7 +45,6 @@ window.CategoryView = Backbone.View.extend({
         return result;
     },
 
-    //Called every time the Add-button is clicked
     onCategoryAdd: function() {
         var validCategory = this.validateCategory();
         if (validCategory) {

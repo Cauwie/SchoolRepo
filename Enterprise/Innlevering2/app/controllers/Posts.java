@@ -56,7 +56,7 @@ public class Posts extends Controller {
         if (post == null) {
             return notFound(id);
         }
-        //post.datePosted = CustomDate
+
         return ok(Json.toJson(post)).as("application/json");
     }
 
@@ -66,6 +66,7 @@ public class Posts extends Controller {
         if (post == null) {
             return notFound(id);
         }
+
         post.delete();
         return ok(id).as("application/text");
     }
@@ -77,75 +78,25 @@ public class Posts extends Controller {
      */
     @BodyParser.Of(BodyParser.Json.class)
     public static Result persist() {
-        /*
         JsonNode request = request().body().asJson();
 
         if (request.isNull()) {
             Logger.info("The Request was empty.");
             return badRequest("The Request was empty.");
         }
-
-        Logger.info("Saving Post from JSON: " + request);
-
-        JsonNode title = request.get("title");
-        JsonNode content = request.get("content");
-        JsonNode author = request.get("author");
-        JsonNode category = request.get("category");
-        JsonNode tags = request.get("tags");
-
-        Logger.info("Title: " + title.asText());
-        Logger.info("Content: " + content.asText());
-        Logger.info("Author: " + author.asText());
-        Logger.info("Category: " + category.asText());
-        Logger.info("Tags: " + tags.asText());
-
-        Post post = null;
-
-        try {
-            post = Post.create(title.asText(), content.asText(),
-                    author.asText(), category.asText());
-
-            Iterator<JsonNode> tagsIterator = tags.getElements();
-
-            while (tagsIterator.hasNext()) {
-                JsonNode tag = tagsIterator.next();
-                Post.addTag(post.id, tag.get("name").asText());
-            }
-
-            post.save();
-        } catch (PersistenceException e) {
-            Logger.error(e.getMessage(), e.getCause());
-            return badRequest(e.getCause().getMessage());
-        }
-
-        return created(Json.toJson(post));
-
-          */
-        JsonNode request = request().body().asJson();
-
-        if (request.isNull()) {
-            Logger.info("The Request was empty.");
-            return badRequest("The Request was empty.");
-        }
-
         Logger.info("Updating Post from JSON: " + request);
 
         ObjectMapper mapper = new ObjectMapper();
+
         Post post = null;
-        //Attempt to parse JSON
         try {
             post = mapper.readValue(request, Post.class);
 
+            //post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
             post.save();
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
-        } catch (JsonMappingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (JsonParseException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
         return created(Json.toJson(post));
@@ -175,15 +126,9 @@ public class Posts extends Controller {
             post = mapper.readValue(request, Post.class);
 
             post.update();
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
-        } catch (JsonMappingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (JsonParseException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return ok(Json.toJson(post)).as("application/json");
     }

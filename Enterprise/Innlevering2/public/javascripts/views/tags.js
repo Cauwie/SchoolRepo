@@ -33,30 +33,19 @@ window.TagListItemView = Backbone.View.extend({
         $(this.el).html(this.template(this.model.toJSON()));
         return this;
     }
-
 });
 
 window.PostTagsView = Backbone.View.extend({
     tagName: 'div',
     className:'tags',
 
-    template: _.template($('#tag-item').html()),
+    template: _.template($('#tags-template').html()),
     initialize:function () {
-        var self = this;
-        _.bindAll(this, "render");
         this.model.bind("reset", this.render, this);
-        this.model.bind("add", function (tag) {
-            $(self.el).append(new TagListItemView({model:tag}).render().el);
-        });
     },
 
     render:function () {
-        $(this.el).empty();
-
-        _.each(this.model.models, function (tag) {
-            alert("HEI");
-            $(this.el).append(new TagListItemView({model:tag, tagName:span}).render().el);
-        }, this);
+        $('#tags').html(this.template({post:this.model.toJSON()}));
         return this;
     }
 });

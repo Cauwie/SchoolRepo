@@ -27,8 +27,6 @@
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -94,7 +92,7 @@
     <script type="text/template" id="post-item-template">
         <div class="post">
             <a href="#post/<%= title %>" id="post"><h1><%= title %></h1></a>
-            <hr>
+            <hr/>
             Posted:<%= datePosted %> <br>
             <%= content %> <br>
             <br>
@@ -105,8 +103,8 @@
             </div><br>
         </div>
         <footer class="footer">
-            <div class="pull-left">Author: <%= author.firstName + " " + author.lastName %> </div>
-            <div class="pull-right">Category: <%= category.name %> </div>
+            <p class="pull-left"><%= author.firstName + " " + author.lastName %> </p>
+            <p class="pull-right">category: <%= category.name %> </p>
         </footer>
     </script>
 
@@ -116,8 +114,6 @@
         <% } else { %>
         <h1><%= post.title%></h1>
         <% } %>
-
-
         <hr />
         <div style="display:none" id="post-errors" class="alert alert-error span11" hidden>
             <button id="hidePostErrors" type="button" class="close" >×</button>
@@ -125,44 +121,48 @@
             <div id="postErrorMessages">
             </div>
         </div>
-        <div class="form-left-col span11">
+
+        <div class="span11">
             <label>Title:</label>
             <input class="span12" type="text" id="title" name="title" value="<%= post.title %>" required />
-            <label>Author:</label>
-            <select class="span12" id="author" name="author" required>
-                <option value="">--select a author--</option>
-                <% _(users).each(function(user) { %>
-                    <% if(post.author.email == user.email) { %>
-                        <option value="<%= user.name %>" selected="true"><%= user.email %></option>
-                    <% } else { %>
-                        <option value="<%= user.name %>"><%= user.email %></option>
-                    <% } %>
-                <% }); %>
-            </select>
-
-            <label>Category:</label>
-            <select class="span12" id="category" name="category" required>
-                <option value="">--select a category--</option>
-                <% _(categories).each(function(category) { %>
-                    <% if(post.category.name == category.name) { %>
-                        <option value="<%= category.name %>" selected="true"><%= category.name %></option>
-                    <% } else { %>
-                        <option value="<%= category.name %>"><%= category.name %></option>
-                    <% } %>
-                <% }); %>
-            </select>
-
-            <label>Tags:</label>
-            <form class="navbar-search dropdown">
-                <input id="searchTag" type="text" class="dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
-            </form>
-            <br>
-            <div id="tags" class="span12">
-                <% _(post.tags).each(function(tag) { %>
-                <span class="tag label label-info"><%= tag.name %></span>
-                <% }); %>
+            <div class="span5 pull-left">
+                <label>Author:</label>
+                <select class="span12" id="author" name="author" required>
+                    <option value="">--select a author--</option>
+                    <% _(users).each(function(user) { %>
+                        <% if(post.author.email == user.email) { %>
+                            <option value="<%= user.email %>" selected="true"><%= user.firstName + " " + user.lastName %></option>
+                        <% } else { %>
+                            <option value="<%= user.email %>"><%= user.firstName + " " + user.lastName %></option>
+                        <% } %>
+                    <% }); %>
+                </select>
             </div>
-            <br>
+            <div class="span6 pull-right">
+                <label>Category:</label>
+                <select class="span12" id="category" name="category" required>
+                    <option value="">--select a category--</option>
+                    <% _(categories).each(function(category) { %>
+                        <% if(post.category.name == category.name) { %>
+                            <option value="<%= category.name %>" selected="true"><%= category.name %></option>
+                        <% } else { %>
+                            <option value="<%= category.name %>"><%= category.name %></option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="span12">
+                <label>Tags:</label>
+                <form class="navbar-search dropdown">
+                    <input id="searchTag" type="text" class="dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
+                </form>
+                <br>
+                <div id="tags" class="span12">
+                    <% _(post.tags).each(function(tag) { %>
+                    <span class="tag label label-info"><%= tag.name %></span>
+                    <% }); %>
+                </div>
+            </div>
 
         </div>
         <div class="form-right-col span11">
@@ -181,21 +181,23 @@
     <script type="text/template" id="tag-item">
         <span class="label label-info tagItem"><%= name %></span>
     </script>
+
+    <script type="text/template" id="tags-template">
+        <% _(post.tags).each(function(tag) { %>
+            <span class="tag label label-info"><%= tag.name %></span>
+        <% }); %>
+    </script>
     <!--- End Templates --->
 
     <!--- Imported at the bottom of the page so loading goes faster in browser -->
     <script src="@routes.Assets.at("javascripts/lib/jquery-1.7.1.min.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/lib/underscore-1.4.2-dev.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/lib/backbone-0.9.2-dev.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/lib/backbone-relational.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/models/categorymodel.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/models/postmodel.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/models/usermodel.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/models/tagmodel.js")" type="text/javascript"></script>
-
-    <script src="@routes.Assets.at("javascripts/views/error.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/views/post.js")" type="text/javascript"></script>
-
     <script src="@routes.Assets.at("javascripts/views/postlist.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/views/tags.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/views/categories.js")" type="text/javascript"></script>

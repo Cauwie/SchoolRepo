@@ -19,7 +19,7 @@ DELETE  /category/:name                     controllers.Categories.delete(name:S
 # Post
 GET     /post/:id                           controllers.Posts.retrieve(id:String)
 GET     /posts                              controllers.Posts.retrieveAll()
-GET     /posts/:name                        controllers.Posts.retrieveByCategory(name:String)
+GET     /posts/:category                    controllers.Posts.retrieveByCategory(category:String)
 POST    /post                               controllers.Posts.persist()
 PUT     /post/:id                           controllers.Posts.update(id:String)
 DELETE  /post/:id                           controllers.Posts.delete(id:String)
