@@ -136,7 +136,6 @@ window.PostView = Backbone.View.extend({
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
         this.model.get('tags').push(currentTag.toJSON());
-
         this.searchTag.val('');
         this.tagsView.model = this.model;
         this.tagsView.render();
@@ -156,10 +155,20 @@ window.PostView = Backbone.View.extend({
        });
     },
 
+    containsTag: function(array, property, value) {
+        $.each(array, function(index, result) {
+            if(result[property] == value) {
+                return true;
+            }
+        });
+        return false;
+    },
+
     search: function () {
         var name = $('#searchTag').val();
         console.log('search ' + name);
-        if(!name.empty) {
+        //&& !name.indexOf("/") === 0
+        if(!name.empty && name.replace(/\s/g, '').length) {
             this.searchResults.findByName(name);
         }
         setTimeout(function () {
