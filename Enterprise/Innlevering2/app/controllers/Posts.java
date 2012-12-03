@@ -61,7 +61,7 @@ public class Posts extends Controller {
     }
 
     public static Result delete(String id) {
-        Logger.debug("Deleting Post with title: " + id);
+        Logger.debug("Deleting Post with id: " + id);
         Post post = Post.find.byId(id);
         if (post == null) {
             return notFound(id);
@@ -91,9 +91,8 @@ public class Posts extends Controller {
         Post post = null;
         try {
             post = mapper.readValue(request, Post.class);
-
-            //post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
             post.save();
+            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
@@ -122,8 +121,8 @@ public class Posts extends Controller {
         //Attempt to parse JSON
         try {
             post = mapper.readValue(request, Post.class);
-
             post.update();
+            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
