@@ -98,9 +98,7 @@ public class Posts extends Controller {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
         }
-
         return created(Json.toJson(post));
-
     }
 
     /**
