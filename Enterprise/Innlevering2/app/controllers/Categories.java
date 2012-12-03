@@ -69,6 +69,7 @@ public class Categories extends Controller {
 
         JsonNode nameNode = request.get("name");
         Logger.info("Name: " + nameNode.asText());
+
         Category category = null;
 
         try {

@@ -71,17 +71,17 @@ public class Tags extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Saving Tag from JSON: " + request.asText());
 
-        ObjectMapper mapper = new ObjectMapper();
+        JsonNode name = request.get("name");
+
         Tag tag = null;
         //Attempt to parse JSON
         try {
-            tag = mapper.readValue(request, Tag.class);
-
-            if (tag.name.isEmpty()) {
+            if (name.asText().isEmpty()) {
                 Logger.error("Missing 'content' node");
                 return badRequest("Missing 'content' node");
             }
-            tag.save();
+
+            tag = Tag.create(name.asText());
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
