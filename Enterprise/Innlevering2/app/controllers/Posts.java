@@ -81,7 +81,7 @@ public class Posts extends Controller {
         JsonNode request = request().body().asJson();
 
         if (request.isNull()) {
-            Logger.info("The Request was empty.");
+            Logger.error("The Request was empty.");
             return badRequest("The Request was empty.");
         }
         Logger.info("Updating Post from JSON: " + request);
@@ -122,7 +122,7 @@ public class Posts extends Controller {
 
         JsonNode request = request().body().asJson();
         if (request.isNull()) {
-            Logger.info("The Request was empty.");
+            Logger.error("The Request was empty.");
             return badRequest("The Request was empty.");
         }
 

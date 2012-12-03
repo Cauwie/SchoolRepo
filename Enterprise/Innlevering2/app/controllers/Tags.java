@@ -77,8 +77,8 @@ public class Tags extends Controller {
         //Attempt to parse JSON
         try {
             if (name.asText().isEmpty()) {
-                Logger.error("Missing 'content' node");
-                return badRequest("Missing 'content' node");
+                Logger.error("Missing 'name' node");
+                return badRequest("Missing 'name' node");
             }
 
             tag = Tag.create(name.asText());

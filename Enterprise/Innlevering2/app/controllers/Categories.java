@@ -74,8 +74,8 @@ public class Categories extends Controller {
 
         try {
             if (nameNode.asText().isEmpty()) {
-                Logger.error("Missing 'content' node");
-                return badRequest("Missing 'content' node");
+                Logger.error("Missing 'name' node");
+                return badRequest("Missing 'name' node");
             }
             category = Category.create(nameNode.asText());
         } catch (PersistenceException e) {

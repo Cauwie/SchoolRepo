@@ -78,6 +78,18 @@ public class Users extends Controller {
                 Logger.error("Missing 'first name' node");
                 return badRequest("Missing 'first name' node");
             }
+            if (lNameNode.asText().isEmpty()) {
+                Logger.error("Missing 'last name' node");
+                return badRequest("Missing 'last name' node");
+            }
+            if (eMailNode.asText().isEmpty()) {
+                Logger.error("Missing 'email' node");
+                return badRequest("Missing 'email' node");
+            }
+            if (passNode.asText().isEmpty()) {
+                Logger.error("Missing 'password' node");
+                return badRequest("Missing 'password' node");
+            }
             user = User.create(fNameNode.asText(), lNameNode.asText(), eMailNode.asText(), passNode.asText());
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
@@ -96,24 +108,28 @@ public class Users extends Controller {
         JsonNode request = request().body().asJson();
         Logger.info("Updating User from JSON: " + request.asText());
 
-        JsonNode fNameNode = request.get("firstName");
-        JsonNode lNameNode = request.get("lastName");
-        JsonNode eMailNode = request.get("email");
-        JsonNode passNode = request.get("password");
-        JsonNode adminNode = request.get("isAdmin");
-
         ObjectMapper mapper = new ObjectMapper();
 
         User user = null;
 
         try {
             user = mapper.readValue(request, User.class);
-//            user = User.find.byId(eMailNode.asText());
-//            user.firstName = fNameNode.asText();
-//            user.lastName = lNameNode.asText();
-//            user.password = passNode.asText();
-//            user.isAdmin = adminNode.asBoolean();
-
+            if (user.firstName.isEmpty()) {
+                Logger.error("Missing 'first name' node");
+                return badRequest("Missing 'first name' node");
+            }
+            if (user.lastName.isEmpty()) {
+                Logger.error("Missing 'last name' node");
+                return badRequest("Missing 'last name' node");
+            }
+            if (user.email.isEmpty()) {
+                Logger.error("Missing 'email' node");
+                return badRequest("Missing 'email' node");
+            }
+            if (user.password.isEmpty()) {
+                Logger.error("Missing 'password' node");
+                return badRequest("Missing 'password' node");
+            }
             user.update();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
