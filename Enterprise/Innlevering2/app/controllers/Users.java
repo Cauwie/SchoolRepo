@@ -72,11 +72,11 @@ public class Users extends Controller {
         JsonNode passNode = request.get("password");
 
         User user = null;
-        //Attempt to parse JSON
+
         try {
-            if (user.email.isEmpty()) {
-                Logger.error("Missing 'content' node");
-                return badRequest("Missing 'content' node");
+            if (fNameNode.asText().isEmpty()) {
+                Logger.error("Missing 'first name' node");
+                return badRequest("Missing 'first name' node");
             }
             user = User.create(fNameNode.asText(), lNameNode.asText(), eMailNode.asText(), passNode.asText());
         } catch (Exception e) {
@@ -102,15 +102,19 @@ public class Users extends Controller {
         JsonNode passNode = request.get("password");
         JsonNode adminNode = request.get("isAdmin");
 
-        User user = null;
-        //Attempt to parse JSON
-        try {
-            user = User.find.byId(eMailNode.asText());
-            user.firstName = fNameNode.asText();
-            user.lastName = lNameNode.asText();
-            user.password = passNode.asText();
-            user.isAdmin = adminNode.asBoolean();
+        ObjectMapper mapper = new ObjectMapper();
 
+        User user = null;
+
+        try {
+            user = mapper.readValue(request, User.class);
+//            user = User.find.byId(eMailNode.asText());
+//            user.firstName = fNameNode.asText();
+//            user.lastName = lNameNode.asText();
+//            user.password = passNode.asText();
+//            user.isAdmin = adminNode.asBoolean();
+
+            user.update();
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
