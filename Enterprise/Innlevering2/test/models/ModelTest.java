@@ -243,7 +243,7 @@ public class ModelTest {
     @Test
     public void testSearchForTagByName() {
         createTag();
-        List<Tag> tags = Tag.findByName(TAG_ONE);
+        List<Tag> tags = Tag.searchByName(TAG_ONE);
         assertThat(tags).isNotNull();
         assertThat(tags.size()).isGreaterThan(0);
 
