@@ -91,8 +91,16 @@ public class Posts extends Controller {
         Post post = null;
         try {
             post = mapper.readValue(request, Post.class);
+
+            Iterator<JsonNode> tagsIterator = request.get("tags").getElements();
+            ArrayList<Tag> tags = new ArrayList<Tag>();
+
+            while (tagsIterator.hasNext()) {
+                Tag tempTag = Tag.find.byId(tagsIterator.next().get("name").asText());
+                tags.add(tempTag);
+            }
+            post.tags = tags;
             post.save();
-            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
@@ -122,7 +130,6 @@ public class Posts extends Controller {
         try {
             post = mapper.readValue(request, Post.class);
             post.update();
-            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
