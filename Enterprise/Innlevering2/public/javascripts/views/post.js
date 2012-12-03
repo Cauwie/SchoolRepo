@@ -69,7 +69,8 @@ window.PostView = Backbone.View.extend({
                 });
             } else {
                 this.model.save();
-                window.history.back();
+                app.postList.fetch();
+                window.location = "#";
             }
         }
         return false;
@@ -121,7 +122,8 @@ window.PostView = Backbone.View.extend({
                 success:function () {
                     app.postList.remove(this.model);
                     alert('Post deleted successfully');
-                    window.history.back();
+                    app.postList.fetch();
+                    window.location = "#";
                 },
                 id:this.model.get('id')
             });

@@ -157,7 +157,9 @@
                     <input id="searchTag" type="text" class="dropdown-toggle span12" placeholder="Search for tags.." autocomplete="off">
                 </form>
                 <br>
+
                 <div id="tags" class="span12">
+                    <small>Click existing tags to remove them</small><br>
                     <% _(post.tags).each(function(tag) { %>
                     <span class="tag label label-info"><%= tag.name %></span>
                     <% }); %>
@@ -183,6 +185,7 @@
     </script>
 
     <script type="text/template" id="tags-template">
+        <small>Click existing tags to remove them:</small><br>
         <% _(post.tags).each(function(tag) { %>
             <span class="tag label label-info"><%= tag.name %></span>
         <% }); %>
