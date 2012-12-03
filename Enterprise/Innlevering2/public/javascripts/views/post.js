@@ -135,10 +135,12 @@ window.PostView = Backbone.View.extend({
     addTag:function(event) {
         var tagName = $(event.target).text();
         currentTag = app.tags.where({name:tagName}).pop();
+        if(!this.containsTag(this.model.get('tags'), 'name', tagName)){
         this.model.get('tags').push(currentTag.toJSON());
         this.searchTag.val('');
         this.tagsView.model = this.model;
         this.tagsView.render();
+        }
     },
 
     removeTag:function(event) {
@@ -156,12 +158,13 @@ window.PostView = Backbone.View.extend({
     },
 
     containsTag: function(array, property, value) {
+        var found = false;
         $.each(array, function(index, result) {
             if(result[property] == value) {
-                return true;
+                found = true;
             }
         });
-        return false;
+        return found;
     },
 
     search: function () {

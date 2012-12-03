@@ -92,7 +92,6 @@ public class Posts extends Controller {
         try {
             post = mapper.readValue(request, Post.class);
             post.save();
-            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
@@ -122,7 +121,6 @@ public class Posts extends Controller {
         try {
             post = mapper.readValue(request, Post.class);
             post.update();
-            post.saveManyToManyAssociations(Post.TAGS_PROPNAME);
         } catch (Exception e) {
             Logger.error(e.getMessage(), e.getCause());
             return badRequest(e.getCause().getMessage());
