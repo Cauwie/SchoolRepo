@@ -147,7 +147,6 @@ public class Posts extends Controller {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
         return created(Json.toJson(post));
     }
 
