@@ -110,7 +110,7 @@ public class
         assertThat(post).isNotNull();
         post.content = testContent;
         assertThat(post.content).isEqualTo(testContent);
-        post.save();
+        post.update();
 
         Post postTwo = Post.find.byId(String.valueOf(POST_ONE_ID));
         assertThat(postTwo).isNotNull();
@@ -177,7 +177,7 @@ public class
         assertThat(aksel).isNotNull();
         aksel.firstName = testName;
         assertThat(aksel.firstName).isEqualTo(testName);
-        aksel.save();
+        aksel.update();
 
         User newAksel = User.find.byId(EMAIL);
         assertThat(newAksel).isNotNull();
