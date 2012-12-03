@@ -19,6 +19,7 @@ import runners.PlayJUnitRunner;
 import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -170,8 +171,7 @@ public class ModelTest {
     @Test
     public void testCreateCategory() {
         String categoryName = "Category two";
-        Category categoryTwo = new Category(categoryName, new DateTime());
-        categoryTwo.save();
+        Category categoryTwo = Category.create(categoryName);
 
         Category retrievedCategory = Category.find.byId(categoryName);
         assertThat(retrievedCategory).isNotNull();
@@ -227,6 +227,30 @@ public class ModelTest {
 
         Tag noTag = Tag.find.byId(TAG_ONE);
         assertThat(noTag).isNull();
+    }
+
+    @Test
+    public void testFindTagByName() {
+        createTag();
+        List<Tag> tags = Tag.findByName(TAG_ONE);
+        assertThat(tags).isNotNull();
+        assertThat(tags.size()).isGreaterThan(0);
+
+        Tag tag = tags.get(0);
+        assertThat(tag.name).isEqualToIgnoringCase(TAG_ONE);
+    }
+
+    @Test
+    public void testSearchForTagByName() {
+        createTag();
+        List<Tag> tags = Tag.findByName(TAG_ONE);
+        assertThat(tags).isNotNull();
+        assertThat(tags.size()).isGreaterThan(0);
+
+        for (Tag t: tags) {
+            assertThat(t).isNotNull();
+            assertThat(t.name).contains(TAG_ONE);
+        }
     }
 
     @Test
