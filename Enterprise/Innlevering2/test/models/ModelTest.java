@@ -32,8 +32,7 @@ import static org.fest.assertions.Assertions.assertThat;
  *
  */
 @RunWith(PlayJUnitRunner.class)
-public class
-        ModelTest {
+public class ModelTest {
 
     //IDs
 	private static String EMAIL = "aksel@agresvig.com";
